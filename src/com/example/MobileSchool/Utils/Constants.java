@@ -15,4 +15,7 @@ public class Constants {
 
     // Push
     public static String PUSH_CUSTOM_INTENT = "com.example.PrototypeTalent.CUSTOM_INTENT";
+
+    // SharedPreferences
+    public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
 }

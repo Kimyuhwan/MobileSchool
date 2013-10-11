@@ -19,9 +19,6 @@ public class MyActivity extends Activity {
 
     private Button startServiceButton;
     private Button stopServiceButton;
-    private Button teacherActivityButton;
-    private Button studentActivityButton;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,6 @@ public class MyActivity extends Activity {
     private void _initUI() {
         startServiceButton = (Button) findViewById(R.id.btn_startService);
         stopServiceButton = (Button) findViewById(R.id.btn_stopSerive);
-        teacherActivityButton = (Button) findViewById(R.id.btn_teacherActivity);
-        studentActivityButton = (Button) findViewById(R.id.btn_studentActivity);
 
         startServiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,24 +48,6 @@ public class MyActivity extends Activity {
                 stopService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
             }
         });
-
-        teacherActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Click: teacherActivityButton");
-                //startActivity(new Intent(getApplicationContext(), ))
-            }
-        });
-
-        studentActivityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Click: studentActivityButton");
-
-            }
-        });
     }
-
-
 
 }

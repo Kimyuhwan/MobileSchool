@@ -21,23 +21,5 @@
         android:text="Stop Service"
         android:id="@+id/btn_stopSerive" android:layout_gravity="center"/>
 
-    <Space
-        android:layout_width="fill_parent"
-        android:layout_height="20px"
-        android:id="@+id/space"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TeacherActivity"
-        android:id="@+id/btn_teacherActivity"
-        android:layout_gravity="center"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="StudentActivity"
-        android:id="@+id/btn_studentActivity"
-        android:layout_gravity="center"/>
 </LinearLayout>
 

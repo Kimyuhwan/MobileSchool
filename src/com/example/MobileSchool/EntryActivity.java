@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.example.MobileSchool.Activities.MyActivity;
+import com.example.MobileSchool.Activities.LogInActivity;
 import com.example.MobileSchool.Utils.Constants;
 
 /**
@@ -22,7 +22,7 @@ public class EntryActivity extends Activity {
         setContentView(R.layout.entry);
         Log.d(TAG, "EntryActivity : onCreate");
 
-        _nextActivity(MyActivity.class);
+        _nextActivity(LogInActivity.class);
     }
 
     private void _nextActivity(Class next) {
