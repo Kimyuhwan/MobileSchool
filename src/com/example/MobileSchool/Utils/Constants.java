@@ -18,4 +18,7 @@ public class Constants {
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
+
+    // Account
+    public static String ACCOUNT_EMPTY = "EMPTY";
 }

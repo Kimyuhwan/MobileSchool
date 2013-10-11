@@ -20,6 +20,11 @@
         android:layout_height="wrap_content"
         android:text="Stop Service"
         android:id="@+id/btn_stopSerive" android:layout_gravity="center"/>
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="LogIn"
+            android:id="@+id/btn_logIn"/>
 
 </LinearLayout>
 

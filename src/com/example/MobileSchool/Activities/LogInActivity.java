@@ -2,11 +2,11 @@ package com.example.MobileSchool.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.example.MobileSchool.Manager.AccountManager;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 
@@ -21,11 +21,15 @@ public class LogInActivity extends Activity {
     private Button teacherActivityButton;
     private Button studentActivityButton;
 
+    private AccountManager accountManager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        Log.d(TAG, "LogInActivity : onCreate");
 
+        accountManager = new AccountManager(this);
         _initUI();
     }
 
@@ -38,7 +42,7 @@ public class LogInActivity extends Activity {
             public void onClick(View view) {
                 Log.d(TAG, "Click: teacherActivityButton");
                 // Teacher Test Account
-                _saveAccount("teacher");
+                accountManager.saveAccount("teacher");
                 startActivity(new Intent(getApplicationContext(), TeacherActivity.class));
             }
         });
@@ -48,18 +52,13 @@ public class LogInActivity extends Activity {
             public void onClick(View view) {
                 Log.d(TAG, "Click: studentActivityButton");
                 // Student Test Account
-                _saveAccount("student");
+                accountManager.saveAccount("student");
                 startActivity(new Intent(getApplicationContext(), StudentActivity.class));
             }
         });
     }
 
-    private void _saveAccount(String id) {
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.TAG, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.SHAREDPREFERENCES_USER_ID, id);
-        editor.commit();
-    }
+
 
 
 }

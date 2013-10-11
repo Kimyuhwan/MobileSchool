@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
+import com.example.MobileSchool.Manager.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.ServerMessage;
 import org.json.JSONObject;
@@ -20,19 +21,22 @@ public class AjaxCallSender {
     private AQuery aq;
     private AjaxCallback ajaxCallBack;
 
+    private AccountManager accountManager;
+
     public AjaxCallSender(Context context) {
         aq = new AQuery(context);
         ajaxCallBack = new AjaxCallBackReceiver();
+        accountManager = new AccountManager(context);
     }
 
     public void screenStatusUpdate(boolean isScreenOn) {
         if(isScreenOn) {
-            String url = ServerMessage.URL_SCREEN_MONITORING + "yuhwan/on/";
+            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/on/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
             Log.d(TAG, "ScreenStatusUpdate URL : " + url);
         }
         else {
-            String url = ServerMessage.URL_SCREEN_MONITORING + "yuhwan/off/";
+            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/off/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
             Log.d(TAG, "ScreenStatusUpdate URL: " + url);
         }
