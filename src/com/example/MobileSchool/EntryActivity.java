@@ -27,7 +27,7 @@ public class EntryActivity extends Activity {
 
     private void _nextActivity(Class next) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {e.printStackTrace();}
         startActivity(new Intent(this, next));
     }
