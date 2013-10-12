@@ -10,4 +10,9 @@
             android:layout_height="wrap_content"
             android:text="student"
             android:id="@+id/txtView_student" android:layout_gravity="center"/>
+    <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Notification"
+            android:id="@+id/btn_sendNotification"/>
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.os.IBinder;
 import com.example.MobileSchool.Activities.MyActivity;
 import com.example.MobileSchool.BroadCastReceiver.ScreenStatusBroadcastReceiver;
 import com.example.MobileSchool.Communication.PushReceiver;
+import com.example.MobileSchool.Manager.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -28,6 +29,8 @@ public class ManagerRegistrationService extends Service {
     private BroadcastReceiver screenStatusBroadcastReceiver;
     private BroadcastReceiver pushReceiver;
 
+    private AccountManager accountManager;
+
     @Override
     public void onCreate() {
 
@@ -40,13 +43,16 @@ public class ManagerRegistrationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        // Initialize AccountManager
+        accountManager = new AccountManager(this);
+
         // Set Push Notification Framework (Parse)
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
         PushService.setDefaultPushCallback(this, MyActivity.class);
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         List<String> channels = new LinkedList<String>();
-        channels.add("prototype");  // Will be updated to user Id
-        installation.put("channels",channels);
+        channels.add(accountManager.getUserId());  // Will be updated to user Id
+        installation.put("channels", channels);
         installation.saveInBackground();
 
         // Set broadcastReceiver

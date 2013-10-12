@@ -10,11 +10,11 @@ public class Constants {
     public static String TAG = "PrototypeTalent";
 
     // Parse
-    public static String PARSE_APPLICATION_ID = "OjgsFTUbSrcS4FNcOnlSSu9JMGCeb61xVJ3AIhXw";
-    public static String PARSE_CLIENT_KEY = "raArsyICDTAllMY2ybDckrFX56Poa7cmNrZFEDyH";
+    public static String PARSE_APPLICATION_ID = "SfY8SbpgXz11WGUa32OyxJp7P2vqwGbtB1zz73sn";
+    public static String PARSE_CLIENT_KEY = "9dJXjReap5vMCnyShPlUb7WU6bNKkg1KnOkpYHPG";
 
     // Push
-    public static String PUSH_CUSTOM_INTENT = "com.example.PrototypeTalent.CUSTOM_INTENT";
+    public static String PUSH_CUSTOM_INTENT = "com.example.MobileSchool.CUSTOM_INTENT";
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
