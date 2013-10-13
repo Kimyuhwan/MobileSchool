@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.example.MobileSchool.Activities.MyActivity;
+import com.example.MobileSchool.Activities.MobileSchoolActivity;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Utils.Constants;
 
@@ -26,7 +26,7 @@ public class EntryActivity extends Activity {
         ajaxCallSender = new AjaxCallSender(this);
         ajaxCallSender.appOnUpdate();
 
-        _nextActivity(MyActivity.class);
+        _nextActivity(MobileSchoolActivity.class);
     }
 
     private void _nextActivity(Class next) {
