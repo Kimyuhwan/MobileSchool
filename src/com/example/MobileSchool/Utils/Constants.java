@@ -24,4 +24,8 @@ public class Constants {
     public static String ACCOUNT_EMPTY = "EMPTY";
 
 
+    // Fragment
+    public static String FRAGMENT_TITLE_HOME = "Home";
+    public static String FRAGMENT_TITLE_SETTING = "Setting";
+
 }

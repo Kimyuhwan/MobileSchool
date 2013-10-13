@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import com.example.MobileSchool.Activities.TeacherRoomActivity;
+import com.example.MobileSchool.Activities.SchoolActivity;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import org.json.JSONException;
@@ -48,14 +48,14 @@ public class PushReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 500, 250, 500});
 
-        Intent teacherRoomIntent = new Intent(context, TeacherRoomActivity.class);
+        Intent schoolIntent = new Intent(context, SchoolActivity.class);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(TeacherRoomActivity.class);
-        stackBuilder.addNextIntent(teacherRoomIntent);
-        PendingIntent teacherRoomPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+        stackBuilder.addParentStack(SchoolActivity.class);
+        stackBuilder.addNextIntent(schoolIntent);
+        PendingIntent schoolPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        mBuilder.setContentIntent(teacherRoomPendingIntent);
+        mBuilder.setContentIntent(schoolPendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.getNotification());

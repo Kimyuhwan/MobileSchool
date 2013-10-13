@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.example.MobileSchool.Activities.MobileSchoolActivity;
-import com.example.MobileSchool.Communication.AjaxCallSender;
+import com.example.MobileSchool.Activities.SchoolActivity;
 import com.example.MobileSchool.Utils.Constants;
 
 /**
@@ -16,17 +15,14 @@ import com.example.MobileSchool.Utils.Constants;
  */
 public class EntryActivity extends Activity {
     private String TAG = Constants.TAG;
-    private AjaxCallSender ajaxCallSender;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.entry);
+        setContentView(R.layout.entry_activity);
         Log.d(TAG, "EntryActivity : onCreate");
-        ajaxCallSender = new AjaxCallSender(this);
-        ajaxCallSender.appOnUpdate();
 
-        _nextActivity(MobileSchoolActivity.class);
+        _nextActivity(SchoolActivity.class);
     }
 
     private void _nextActivity(Class next) {

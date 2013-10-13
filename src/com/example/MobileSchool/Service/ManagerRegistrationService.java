@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
-import com.example.MobileSchool.Activities.MyActivity;
+import com.example.MobileSchool.Activities.SchoolActivity;
 import com.example.MobileSchool.BroadCastReceiver.DeviceStatusBroadcastReceiver;
 import com.example.MobileSchool.Communication.PushReceiver;
 import com.example.MobileSchool.Manager.AccountManager;
@@ -48,7 +48,7 @@ public class ManagerRegistrationService extends Service {
 
         // Set Push Notification Framework (Parse)
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
-        PushService.setDefaultPushCallback(this, MyActivity.class);
+        PushService.setDefaultPushCallback(this, SchoolActivity.class);
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         List<String> channels = new LinkedList<String>();
         channels.add(accountManager.getUserId());  // Will be updated to user Id
