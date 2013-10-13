@@ -29,16 +29,22 @@ public class AjaxCallSender {
         accountManager = new AccountManager(context);
     }
 
-    public void screenStatusUpdate(boolean isScreenOn) {
+    public void deviceStatusUpdate(boolean isScreenOn) {
         if(isScreenOn) {
             String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/on/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
-            Log.d(TAG, "ScreenStatusUpdate URL : " + url);
+            Log.d(TAG, "DeviceStatusUpdate URL : " + url);
         }
         else {
             String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/off/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
-            Log.d(TAG, "ScreenStatusUpdate URL: " + url);
+            Log.d(TAG, "DeviceStatusUpdate URL: " + url);
         }
+    }
+
+    public void appOnUpdate() {
+        String url = ServerMessage.URL_APP_MONITORING + accountManager.getUserId() + "/on/";
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AppOnUpdate URL : " + url);
     }
 }

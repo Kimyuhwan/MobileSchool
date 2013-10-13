@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import com.example.MobileSchool.Activities.MyActivity;
-import com.example.MobileSchool.BroadCastReceiver.ScreenStatusBroadcastReceiver;
+import com.example.MobileSchool.BroadCastReceiver.DeviceStatusBroadcastReceiver;
 import com.example.MobileSchool.Communication.PushReceiver;
 import com.example.MobileSchool.Manager.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
@@ -56,8 +56,8 @@ public class ManagerRegistrationService extends Service {
         installation.saveInBackground();
 
         // Set broadcastReceiver
-        screenStatusBroadcastReceiver = new ScreenStatusBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        screenStatusBroadcastReceiver = new DeviceStatusBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_USER_PRESENT);
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(screenStatusBroadcastReceiver, intentFilter);
 

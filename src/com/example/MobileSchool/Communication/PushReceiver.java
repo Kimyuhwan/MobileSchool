@@ -1,9 +1,16 @@
 package com.example.MobileSchool.Communication;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import com.example.MobileSchool.Activities.MyActivity;
+import com.example.MobileSchool.Activities.TeacherRoomActivity;
+import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,13 +30,46 @@ public class PushReceiver extends BroadcastReceiver {
         Log.d(TAG, "PushReceiver : onReceive");
         try {
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-            String pushMessage = json.getString("message");
-            _handleMessage(pushMessage, intent);
-            Log.d(TAG, "PushReceiver pushMessage : " + pushMessage);
+            String type = json.getString("type");
+            if(type.equals("notification"))
+                _makeNotification(json, context);
+            else if(type.equals("message"))
+                _handleMessage(json, context);
+
         } catch (JSONException e) {e.printStackTrace();}
     }
 
-    private void _handleMessage(String pushMessage, Intent intent) {
+    private void _makeNotification(JSONObject jsonObject, Context context) {
+        Log.d(TAG, "PushReceiver//MakeNotification : Test");
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_launcher)
+                .setContentTitle("Test")
+                .setContentText("Test")
+                .setAutoCancel(true)
+                .setVibrate(new long[]{0, 500, 250, 500});
+
+        Intent teacherRoomIntent = new Intent(context, TeacherRoomActivity.class);
+
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(TeacherRoomActivity.class);
+        stackBuilder.addNextIntent(teacherRoomIntent);
+        PendingIntent teacherRoomPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(teacherRoomPendingIntent);
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.getNotification());
+
+    }
+
+    private void _handleMessage(JSONObject jsonObject, Context context) {
+
+        try {
+            String pushMessage = jsonObject.getString("message");
+            Log.d(TAG, "PushReceiver//HandleMessage : " + pushMessage);
+
+        } catch (JSONException e) { e.printStackTrace();}
 
     }
 }

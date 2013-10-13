@@ -23,6 +23,12 @@
         <activity android:name=".Activities.LogInActivity"/>
         <activity android:name=".Activities.StudentActivity"/>
         <activity android:name=".Activities.TeacherActivity"/>
+        <activity android:name=".Activities.TeacherRoomActivity" android:parentActivityName=".Activities.TeacherActivity">
+            <meta-data
+                android:name = "android.support.PARENT_ACTIVITY"
+                android:value = ".Activities.TeacherActivity">
+            </meta-data>
+        </activity>
 
 
         <service android:name=".Service.ManagerRegistrationService"/>

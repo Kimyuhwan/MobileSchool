@@ -15,10 +15,13 @@ public class Constants {
 
     // Push
     public static String PUSH_CUSTOM_INTENT = "com.example.MobileSchool.CUSTOM_INTENT";
+    public static Integer PUSH_NOTIFICATION_UNIQUE_ID = 5474;
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
 
     // Account
     public static String ACCOUNT_EMPTY = "EMPTY";
+
+
 }
