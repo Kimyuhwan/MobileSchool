@@ -50,7 +50,6 @@ public class SchoolActivity extends Activity {
         ajaxCallSender = new AjaxCallSender(this);
         ajaxCallSender.appOnUpdate();
 
-
         _initDrawer();
         _changeFragment(0, new HomeFragment());
     }

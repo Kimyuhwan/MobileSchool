@@ -6,13 +6,17 @@ import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.WindowManager;
+import com.example.MobileSchool.Activities.DialogBox;
 import com.example.MobileSchool.Activities.SchoolActivity;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,8 +34,10 @@ public class PushReceiver extends BroadcastReceiver {
         try {
             JSONObject json = new JSONObject(intent.getExtras().getString("com.parse.Data"));
             String type = json.getString("type");
-            if(type.equals("notification"))
+            if(type.equals("notification")) {
                 _makeNotification(json, context);
+                _makeDialog(json, context);
+            }
             else if(type.equals("message"))
                 _handleMessage(json, context);
 
@@ -39,8 +45,6 @@ public class PushReceiver extends BroadcastReceiver {
     }
 
     private void _makeNotification(JSONObject jsonObject, Context context) {
-        Log.d(TAG, "PushReceiver//MakeNotification : Test");
-
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Test")
@@ -58,8 +62,15 @@ public class PushReceiver extends BroadcastReceiver {
         mBuilder.setContentIntent(schoolPendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.getNotification());
+        notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.build());
+    }
 
+    private void _makeDialog(JSONObject jsonObject, Context context) {
+        Log.d(TAG, "PushReceiver//MakeDialog : Test");
+
+        Intent intent = new Intent(context, DialogBox.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 
     private void _handleMessage(JSONObject jsonObject, Context context) {
