@@ -2,14 +2,10 @@
 <resources>
     <string name="app_name">MobileSchool</string>
     <string-array name="planets_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>MobileSchool</item>
+        <item>History</item>
+        <item>Setting</item>
     </string-array>
-
+    <string name="drawer_open">MobileSchool</string>
+    <string name="drawer_close">MobileSchool</string>
 </resources>

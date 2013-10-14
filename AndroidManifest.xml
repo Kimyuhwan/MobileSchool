@@ -19,17 +19,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activities.MobileSchoolActivity"/>
-        <activity android:name=".Activities.MyActivity"/>
-        <activity android:name=".Activities.LogInActivity"/>
-        <activity android:name=".Activities.StudentActivity"/>
-        <activity android:name=".Activities.TeacherActivity"/>
-        <activity android:name=".Activities.TeacherRoomActivity" android:parentActivityName=".Activities.TeacherActivity">
-            <meta-data
-                android:name = "android.support.PARENT_ACTIVITY"
-                android:value = ".Activities.TeacherActivity">
-            </meta-data>
-        </activity>
+        <activity android:name=".Activities.SchoolActivity" android:theme="@android:style/Theme.Holo.Light"/>
+        <activity android:name=".Activities.StudentWaitingActivity"/>
+        <activity android:name=".Activities.DialogBox"
+                  android:label="DialogBox"
+                  android:theme="@android:style/Theme.Holo.Light.Dialog"/>
 
 
         <service android:name=".Service.ManagerRegistrationService"/>
