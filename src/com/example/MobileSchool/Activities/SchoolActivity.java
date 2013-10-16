@@ -33,7 +33,7 @@ public class SchoolActivity extends Activity {
 
     private String TAG = Constants.TAG;
 
-    private String[] planetTitles;
+    private String[] menuTitles;
     private CharSequence title;
 
     private DrawerLayout drawerLayout;
@@ -57,13 +57,13 @@ public class SchoolActivity extends Activity {
     private void _initDrawer() {
 
         // Set Drawer
-        planetTitles = getResources().getStringArray(R.array.planets_array);
+        menuTitles = getResources().getStringArray(R.array.menu_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, planetTitles));
+                R.layout.drawer_list_item, menuTitles));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // Set ActionBar
@@ -128,7 +128,7 @@ public class SchoolActivity extends Activity {
 
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
-        setTitle(planetTitles[position]);
+        setTitle(menuTitles[position]);
         drawerLayout.closeDrawer(drawerList);
     }
 

@@ -19,13 +19,19 @@ public class Constants {
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
+    public static String SHAREDPREFERENCES_USER_SID = TAG + "_USER_SID";
+    public static String SHAREDPREFERENCES_QUEUE_ID = TAG + "_QUEUE_ID";
+    public static String SHAREDPREFERENCES_PHONE_NUMBER = TAG + "_PHONE_NUMBER";
 
     // Account
     public static String ACCOUNT_EMPTY = "EMPTY";
 
-
     // Fragment
     public static String FRAGMENT_TITLE_HOME = "Home";
     public static String FRAGMENT_TITLE_SETTING = "Setting";
+
+
+
+
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MobileSchool</string>
-    <string-array name="planets_array">
+    <string-array name="menu_array">
         <item>MobileSchool</item>
         <item>History</item>
         <item>Setting</item>

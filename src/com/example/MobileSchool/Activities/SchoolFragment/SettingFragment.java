@@ -27,7 +27,7 @@ public class SettingFragment extends Fragment {
     private String TAG = Constants.TAG;
 
     private AccountManager accountManager;
-    private PushSender pushSender;
+
 
     private Button teacherActivityButton;
     private Button studentActivityButton;
@@ -46,7 +46,6 @@ public class SettingFragment extends Fragment {
         Log.d(TAG, "SettingFragment : onCreateView");
 
         accountManager = new AccountManager(getActivity().getApplicationContext());
-        pushSender = new PushSender(getActivity().getApplicationContext());
         _initUI(rootView);
 
         return rootView;
@@ -65,7 +64,8 @@ public class SettingFragment extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "Click: teacher Account Button");
                 // Teacher Test Account
-                accountManager.saveAccount("teacher");
+//                accountManager.saveAccount("teacher");
+                accountManager.saveAccount("tkkk","93");
             }
         });
 
@@ -74,7 +74,8 @@ public class SettingFragment extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "Click: student Account Button");
                 // Student Test Account
-                accountManager.saveAccount("student");
+//                accountManager.saveAccount("student");
+                accountManager.saveAccount("kk","43");
             }
         });
 
@@ -97,12 +98,7 @@ public class SettingFragment extends Fragment {
         sendNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Send Notification");
-                // Now Because of send notification test, student sends push to teacher directly, but later student will call server with ajax and server will send notification to teacher
-                String myId = accountManager.getUserId();
-                String teacherId = "teacher";
-                String message = "2013.10.13 send Notification Test";
-                pushSender.pushToDevice(myId, teacherId, message);
+
             }
         });
     }

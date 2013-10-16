@@ -1,7 +1,10 @@
 package com.example.MobileSchool.Activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.KeyguardManager;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +23,9 @@ import java.util.TimerTask;
  * User: yuhwan
  * Date: 13. 10. 14.
  * Time: 오전 9:43
+ *
+ * Under construction...
+ *
  */
 
 public class DialogBox extends Activity {
@@ -32,8 +38,9 @@ public class DialogBox extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_box);
         Log.d(TAG, "DialogBox : onCreate");
+        setContentView(R.layout.dialog_box);
+        _initFlag();
         _initUI();
 
         final Timer timer = new Timer();
@@ -43,9 +50,15 @@ public class DialogBox extends Activity {
                 DialogBox.this.finish();
                 timer.cancel();
             }
-        }, 6000);
+        }, 5000);
     }
 
+    private void _initFlag() {
+        getWindow().setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                           | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                           | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+    }
 
     private void _initUI() {
         dialogCheckButton = (Button) findViewById(R.id.btn_check_dialog);

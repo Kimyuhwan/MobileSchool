@@ -5,8 +5,10 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.telephony.TelephonyManager;
 import com.example.MobileSchool.Activities.SchoolActivity;
 import com.example.MobileSchool.BroadCastReceiver.DeviceStatusBroadcastReceiver;
+import com.example.MobileSchool.BroadCastReceiver.TelephonyBroadcastReceiver;
 import com.example.MobileSchool.Communication.PushReceiver;
 import com.example.MobileSchool.Manager.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
@@ -28,6 +30,7 @@ public class ManagerRegistrationService extends Service {
     private String TAG = Constants.TAG;
     private BroadcastReceiver screenStatusBroadcastReceiver;
     private BroadcastReceiver pushReceiver;
+    private BroadcastReceiver telephonyBroadcastReceiver;
 
     private AccountManager accountManager;
 
@@ -65,6 +68,10 @@ public class ManagerRegistrationService extends Service {
         pushReceiver = new PushReceiver();
         registerReceiver(pushReceiver, new IntentFilter(Constants.PUSH_CUSTOM_INTENT));
 
+        // Set CallBroadCastReceiver
+//        telephonyBroadcastReceiver = new TelephonyBroadcastReceiver();
+//        registerReceiver(telephonyBroadcastReceiver, new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED));
+
         return START_STICKY; // Continue running until it is explicitly stopped.
     }
 
@@ -72,5 +79,6 @@ public class ManagerRegistrationService extends Service {
     public void onDestroy() {
         unregisterReceiver(screenStatusBroadcastReceiver);
         unregisterReceiver(pushReceiver);
+        unregisterReceiver(telephonyBroadcastReceiver);
     }
 }

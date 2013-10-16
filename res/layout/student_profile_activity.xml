@@ -6,8 +6,8 @@
               android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Student Room!!"
-        android:id="@+id/txtView_StudentRoom"/>
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Teacher profile!!"
+            android:id="@+id/txtView_TeacherRoom"/>
 </LinearLayout>
