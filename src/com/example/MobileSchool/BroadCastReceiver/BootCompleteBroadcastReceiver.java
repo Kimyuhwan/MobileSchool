@@ -3,7 +3,6 @@ package com.example.MobileSchool.BroadCastReceiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.example.MobileSchool.Service.ManagerRegistrationService;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,18 +1,21 @@
-package com.example.MobileSchool.Activities.SchoolFragment;
+package com.example.MobileSchool.Fragment;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
-import com.example.MobileSchool.Manager.AccountManager;
+import com.example.MobileSchool.Utils.GlobalApplication;
+import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.R;
-import com.example.MobileSchool.Service.ManagerRegistrationService;
+import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Utils.Constants;
+import org.json.JSONObject;
 
 
 /**
@@ -22,12 +25,14 @@ import com.example.MobileSchool.Utils.Constants;
  * Time: 오후 6:28
  */
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends Fragment implements FragmentMethod{
 
     private String TAG = Constants.TAG;
 
+    private GlobalApplication globalApplication;
     private AccountManager accountManager;
-
+    private PushSender pushSender;
+    private AjaxCallSender ajaxCallSender;
 
     private Button teacherActivityButton;
     private Button studentActivityButton;
@@ -45,10 +50,18 @@ public class SettingFragment extends Fragment {
         getActivity().setTitle(Constants.FRAGMENT_TITLE_SETTING);
         Log.d(TAG, "SettingFragment : onCreateView");
 
+        globalApplication = (GlobalApplication) getActivity().getApplication();
         accountManager = new AccountManager(getActivity().getApplicationContext());
+        pushSender = new PushSender(getActivity().getApplicationContext());
+        ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+        _initFragment();
         _initUI(rootView);
 
         return rootView;
+    }
+
+    private void _initFragment() {
+        globalApplication.setFragment("Home", new HomeFragment());
     }
 
     private void _initUI(View rootView) {
@@ -101,6 +114,11 @@ public class SettingFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void handleAjaxCallBack(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
 }

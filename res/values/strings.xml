@@ -2,9 +2,15 @@
 <resources>
     <string name="app_name">MobileSchool</string>
     <string-array name="menu_array">
-        <item>MobileSchool</item>
-        <item>History</item>
-        <item>Setting</item>
+        <item>Section_School</item>
+        <item>Item_Home</item>
+        <item>Item_History</item>
+        <item>Item_Setting</item>
+        <item>Section_Preparation</item>
+        <item>Item_Guide</item>
+        <item>Item_Profile</item>
+        <item>Section_Class</item>
+        <item>Item_Script</item>
     </string-array>
     <string name="drawer_open">MobileSchool</string>
     <string name="drawer_close">MobileSchool</string>

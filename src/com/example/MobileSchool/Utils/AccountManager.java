@@ -1,8 +1,7 @@
-package com.example.MobileSchool.Manager;
+package com.example.MobileSchool.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.example.MobileSchool.Utils.Constants;
 
 /**
  * User: yuhwan
@@ -26,32 +25,8 @@ public class AccountManager {
         editor.commit();
     }
 
-    public void setQueueId(String queueId) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.SHAREDPREFERENCES_QUEUE_ID, queueId);
-        editor.commit();
-    }
-
-    public void setOppositePhoneNumber(String phoneNumber) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(Constants.SHAREDPREFERENCES_PHONE_NUMBER, phoneNumber);
-        editor.commit();
-    }
-
     public String getUserId() {
         return sharedPreferences.getString(Constants.SHAREDPREFERENCES_USER_ID, Constants.ACCOUNT_EMPTY);
-    }
-
-    public String getUserSId() {
-        return sharedPreferences.getString(Constants.SHAREDPREFERENCES_USER_SID, Constants.ACCOUNT_EMPTY);
-    }
-
-    public String getQueueID() {
-        return sharedPreferences.getString(Constants.SHAREDPREFERENCES_QUEUE_ID, Constants.ACCOUNT_EMPTY);
-    }
-
-    public String getOppositePhoneNubmer() {
-        return sharedPreferences.getString(Constants.SHAREDPREFERENCES_PHONE_NUMBER, Constants.ACCOUNT_EMPTY);
     }
 
     public boolean isStudent() {

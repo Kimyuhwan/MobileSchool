@@ -1,10 +1,8 @@
-package com.example.MobileSchool.Activities;
+package com.example.MobileSchool.Fragment;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.KeyguardManager;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;

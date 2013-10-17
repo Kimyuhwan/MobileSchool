@@ -22,11 +22,11 @@ public class DeviceStatusBroadcastReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             ajaxCallSender = new AjaxCallSender(context);
             ajaxCallSender.deviceStatusUpdate(true);
-            Log.d(TAG, "DeviceStatusBroadcastReceiver: UserPresent");
+            Log.d(TAG, "UserPresent");
         } else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
             ajaxCallSender = new AjaxCallSender(context);
             ajaxCallSender.deviceStatusUpdate(false);
-            Log.d(TAG, "DeviceStatusBroadcastReceiver: Screen Off");
+            Log.d(TAG, "Screen Off");
         }
     }
 }

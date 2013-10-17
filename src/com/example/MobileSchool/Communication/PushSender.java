@@ -2,7 +2,6 @@ package com.example.MobileSchool.Communication;
 
 import android.content.Context;
 import com.example.MobileSchool.Utils.Constants;
-import com.example.MobileSchool.Utils.ServerMessage;
 import com.parse.ParseInstallation;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
@@ -31,31 +30,10 @@ public class PushSender {
         JSONObject data = new JSONObject();
         try {
             data.put("action", Constants.PUSH_CUSTOM_INTENT);
-            data.put("type", "notification");
+            data.put("type", Constants.PUSH_TYPE_NOTIFICATION);
         } catch (JSONException e) { e.printStackTrace(); }
 
         // Push
-        ParsePush push = new ParsePush();
-        push.setQuery(parseQuery);
-        push.setData(data);
-        push.sendInBackground();
-    }
-
-    public void pushStudentFind(String targetId) {
-        // Set Query
-        ParseQuery parseQuery = ParseInstallation.getQuery();
-        parseQuery.whereEqualTo("channels",targetId);
-        parseQuery.whereEqualTo("deviceType", "android");
-
-        // Make Json
-        JSONObject data = new JSONObject();
-        try {
-            data.put("action", Constants.PUSH_CUSTOM_INTENT);
-            data.put("type", "command");
-            data.put("command", ServerMessage.COMMUNICATION_MSG_FIND);
-        } catch (JSONException e) { e.printStackTrace(); }
-
-        // Send push notification to query
         ParsePush push = new ParsePush();
         push.setQuery(parseQuery);
         push.setData(data);

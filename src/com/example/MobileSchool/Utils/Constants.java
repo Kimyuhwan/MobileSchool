@@ -14,8 +14,28 @@ public class Constants {
     public static String PARSE_CLIENT_KEY = "9dJXjReap5vMCnyShPlUb7WU6bNKkg1KnOkpYHPG";
 
     // Push
-    public static String PUSH_CUSTOM_INTENT = "com.example.MobileSchool.CUSTOM_INTENT";
     public static Integer PUSH_NOTIFICATION_UNIQUE_ID = 5474;
+    public static String PUSH_CUSTOM_INTENT = "com.example.MobileSchool.CUSTOM_INTENT";
+    public static String PUSH_CUSTOM_NOTIFICATION_EVENT = "com.example.MobileSchool.ACTION_CLICK";
+
+    public static String PUSH_TYPE_NOTIFICATION = "noti";
+    public static String PUSH_TYPE_MESSAGE = "msg";
+
+    public static String PUSH_KEY_RESULT = "result";
+    public static String PUSH_KEY_CODE = "code";
+    public static String PUSH_KEY_TEACHER_INFO = "teacher_info";
+    public static String PUSH_KEY_STUDENT_INFO = "student_info";
+
+    public static String PUSH_VALUE_TEACHER_ID = "tid";
+    public static String PUSH_VALUE_STUDENT_ID = "sid";
+
+    public static String PUSH_CODE_TEACHER_CONFIRM = "TC";
+    public static String PUSH_CODE_STUDENT_START = "SS";
+    public static String PUSH_CODE_PUSH_TEACHER_INFO = "PTI";
+    public static String PUSH_CODE_PUSH_STUDENT_ANSWER = "PSA";
+    public static String PUSH_CODE_PUSH_TEACHER = "PT";
+    public static String PUSH_CODE_TEACHER_FINISH = "TF";
+    public static String PUSH_CODE_STUDENT_FINISH = "SF";
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";

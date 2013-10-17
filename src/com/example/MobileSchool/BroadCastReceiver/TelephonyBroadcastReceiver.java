@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.example.MobileSchool.ClassEntryActivity;
-import com.example.MobileSchool.Manager.AccountManager;
+import com.example.MobileSchool.Communication.AjaxCallSender;
+import com.example.MobileSchool.Communication.PushSender;
+import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 
 /**
@@ -22,6 +24,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     private Context context;
     private Bundle extras;
     private AccountManager accountManager;
+    private AjaxCallSender ajaxCallSender;
 
     private String incomingNumber = "";
 
@@ -29,7 +32,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         this.context = context;
         accountManager = new AccountManager(context);
-
+        ajaxCallSender = new AjaxCallSender(context);
         // If the classReady is on .. (not always!)
 
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
@@ -52,9 +55,9 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
-                    try {
-                        sleep(100);
-                    } catch (InterruptedException e) { e.printStackTrace(); }
+                        // Answer
+                        ajaxCallSender.answer();
+                        // Start Activity
                         Intent intent = new Intent(context, ClassEntryActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         context.startActivity(intent);

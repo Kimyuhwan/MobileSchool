@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.example.MobileSchool.Activities.SchoolActivity;
+import com.example.MobileSchool.Fragment.ScriptFragment;
 import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Utils.GlobalApplication;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,11 +17,14 @@ import com.example.MobileSchool.Utils.Constants;
 public class EntryActivity extends Activity {
     private String TAG = Constants.TAG;
 
+    private GlobalApplication globalApplication;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.entry_activity);
         Log.d(TAG, "EntryActivity : onCreate");
+        globalApplication = (GlobalApplication) getApplication();
 
         _nextActivity(SchoolActivity.class);
     }

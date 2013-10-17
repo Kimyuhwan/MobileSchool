@@ -1,8 +1,9 @@
-package com.example.MobileSchool.Activities;
+package com.example.MobileSchool;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,14 +12,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.example.MobileSchool.Activities.SchoolFragment.HistoryFragment;
-import com.example.MobileSchool.Activities.SchoolFragment.HomeFragment;
-import com.example.MobileSchool.Activities.SchoolFragment.SettingFragment;
+import android.widget.TextView;
+import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
-import com.example.MobileSchool.R;
+import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.Constants;
 
 
@@ -29,7 +30,7 @@ import com.example.MobileSchool.Utils.Constants;
  * Time: 오후 4:36
  */
 
-public class SchoolActivity extends Activity {
+public class SchoolActivity extends FragmentActivity {
 
     private String TAG = Constants.TAG;
 
@@ -42,6 +43,8 @@ public class SchoolActivity extends Activity {
 
     private AjaxCallSender ajaxCallSender;
 
+    private GlobalApplication globalApplication;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,22 +52,26 @@ public class SchoolActivity extends Activity {
         Log.d(TAG, "SchoolActivity : onCreate");
         ajaxCallSender = new AjaxCallSender(this);
         ajaxCallSender.appOnUpdate();
+        globalApplication = (GlobalApplication) getApplicationContext();
+        globalApplication.setSchoolActivity(this);
 
         _initDrawer();
-        _changeFragment(0, new HomeFragment());
+        initFragment();
     }
 
     private void _initDrawer() {
-
         // Set Drawer
         menuTitles = getResources().getStringArray(R.array.menu_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, menuTitles));
+//        drawerList.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_list_item, menuTitles));
+        drawerList.setAdapter(new TestAdapter(this,
+                  R.layout.drawer_list_item, menuTitles));
         drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
 
         // Set ActionBar
         title = getTitle();
@@ -83,6 +90,10 @@ public class SchoolActivity extends Activity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+    }
+
+    public void initFragment() {
+        _changeFragment(globalApplication.getFragmentPosition(), globalApplication.getFragment());
     }
 
     @Override
@@ -114,22 +125,61 @@ public class SchoolActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
-                case 0: _changeFragment(position, new HomeFragment()); break;
-                case 1: _changeFragment(position, new HistoryFragment()); break;
-                case 2: _changeFragment(position, new SettingFragment()); break;
+                case 1: _changeFragment(position, new HomeFragment()); break;
+                case 2: _changeFragment(position, new HistoryFragment()); break;
+                case 3: _changeFragment(position, new SettingFragment()); break;
+                case 5: _changeFragment(position, new GuideFragment()); break;
+                case 6: _changeFragment(position, new ProfileFragment()); break;
+                case 8: _changeFragment(position, new ScriptFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }
     }
 
     private void _changeFragment(int position, Fragment fragment) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         // update selected item and title, then close the drawer
         drawerList.setItemChecked(position, true);
         setTitle(menuTitles[position]);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    class TestAdapter extends ArrayAdapter<String> {
+
+        private String[] items;
+
+        public TestAdapter(Context context, int resource, String[] objects) {
+            super(context, resource, objects);
+            items = objects;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView textView  = (TextView) super.getView(position, convertView, parent);
+            String itemTitle = items[position].split("_")[1];
+
+            if(!isItem(position)) {
+                textView.setPadding(16,0,16,0);
+            }
+
+            textView.setText(itemTitle);
+            return textView;
+        }
+
+        @Override
+        public boolean isEnabled(int position) {
+            return isItem(position);
+        }
+
+        private boolean isItem(int position) {
+            boolean result = true;
+            String itemType = items[position].split("_")[0];
+            if(itemType.equals("Section"))
+                return false;
+            return result;
+        }
     }
 
 }

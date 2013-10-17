@@ -1,4 +1,4 @@
-package com.example.MobileSchool.Service;
+package com.example.MobileSchool.BroadCastReceiver;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
-import com.example.MobileSchool.Activities.SchoolActivity;
-import com.example.MobileSchool.BroadCastReceiver.DeviceStatusBroadcastReceiver;
-import com.example.MobileSchool.BroadCastReceiver.TelephonyBroadcastReceiver;
+import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Communication.PushReceiver;
-import com.example.MobileSchool.Manager.AccountManager;
+import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
@@ -31,6 +29,7 @@ public class ManagerRegistrationService extends Service {
     private BroadcastReceiver screenStatusBroadcastReceiver;
     private BroadcastReceiver pushReceiver;
     private BroadcastReceiver telephonyBroadcastReceiver;
+    private BroadcastReceiver notificationClickBroadcastReceiver;
 
     private AccountManager accountManager;
 
@@ -69,8 +68,12 @@ public class ManagerRegistrationService extends Service {
         registerReceiver(pushReceiver, new IntentFilter(Constants.PUSH_CUSTOM_INTENT));
 
         // Set CallBroadCastReceiver
-//        telephonyBroadcastReceiver = new TelephonyBroadcastReceiver();
-//        registerReceiver(telephonyBroadcastReceiver, new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED));
+        telephonyBroadcastReceiver = new TelephonyBroadcastReceiver();
+        registerReceiver(telephonyBroadcastReceiver, new IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED));
+
+        // Set NotificationClickBroadcastReceiver
+        notificationClickBroadcastReceiver = new NotificationClickBroadcastReceiver();
+        registerReceiver(notificationClickBroadcastReceiver, new IntentFilter(Constants.PUSH_CUSTOM_NOTIFICATION_EVENT));
 
         return START_STICKY; // Continue running until it is explicitly stopped.
     }
@@ -80,5 +83,6 @@ public class ManagerRegistrationService extends Service {
         unregisterReceiver(screenStatusBroadcastReceiver);
         unregisterReceiver(pushReceiver);
         unregisterReceiver(telephonyBroadcastReceiver);
+        unregisterReceiver(notificationClickBroadcastReceiver);
     }
 }
