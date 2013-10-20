@@ -7,7 +7,7 @@ package com.example.MobileSchool.Utils;
  * Time: 오후 4:46
  */
 public class Constants {
-    public static String TAG = "PrototypeTalent";
+    public static String TAG = "A-School";
 
     // Parse
     public static String PARSE_APPLICATION_ID = "SfY8SbpgXz11WGUa32OyxJp7P2vqwGbtB1zz73sn";
@@ -38,19 +38,23 @@ public class Constants {
     public static String PUSH_CODE_STUDENT_FINISH = "SF";
 
     // SharedPreferences
+    public static String SHAREDPREFERENCES_MY_INFO = TAG + "_MY_INFO";
     public static String SHAREDPREFERENCES_USER_ID = TAG + "_USER_ID";
     public static String SHAREDPREFERENCES_USER_SID = TAG + "_USER_SID";
     public static String SHAREDPREFERENCES_QUEUE_ID = TAG + "_QUEUE_ID";
     public static String SHAREDPREFERENCES_PHONE_NUMBER = TAG + "_PHONE_NUMBER";
 
     // Account
-    public static String ACCOUNT_EMPTY = "EMPTY";
+    public static String SHAREDPREFERENCES_EMPTY = "EMPTY";
 
     // Fragment
     public static String FRAGMENT_TITLE_HOME = "Home";
     public static String FRAGMENT_TITLE_SETTING = "Setting";
 
-
+    // Old Call Back Response
+    public static String RESPONSE_LOGIN_SUCCESS = "success_account_login";
+    public static String RESPONSE_LOGIN_FAIL_WRONG_ID = "failed_wrong_id";
+    public static String RESPONSE_LOGIN_FAIL_WRONG_PASSWORD = "failed_wrong_password";
 
 
 

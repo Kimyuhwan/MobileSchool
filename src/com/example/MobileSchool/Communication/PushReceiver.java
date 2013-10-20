@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
-import com.example.MobileSchool.ClassEntryActivity;
-import com.example.MobileSchool.Fragment.DialogBox;
+import com.example.MobileSchool.Activities.EntryActivity;
+import com.example.MobileSchool.Activities.DialogBox;
 import com.example.MobileSchool.Fragment.ProfileFragment;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.R;
@@ -98,7 +98,7 @@ public class PushReceiver extends BroadcastReceiver {
                Log.d(TAG, "Student Id : " + studentId);
 
                // Class Entry Start
-               Intent intent = new Intent(context, ClassEntryActivity.class);
+               Intent intent = new Intent(context, EntryActivity.class);
                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                context.startActivity(intent);
             }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
  * Time: 오후 7:19
  */
 
-public class HistoryFragment extends Fragment implements FragmentMethod {
+public class HistoryFragment extends Fragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
     private String title = "History";

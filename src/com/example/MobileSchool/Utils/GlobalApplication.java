@@ -48,16 +48,16 @@ public class GlobalApplication extends Application {
 
     public int getFragmentPosition() {
         if(fragmentName == null)
-            return 1;
+            return 0;
         else
             return _getPosition(fragmentName);
     }
 
     private int _getPosition(String fragmentName) {
-        String[] menu_array = getResources().getStringArray(R.array.menu_array);
+        String[] menu_array = getResources().getStringArray(R.array.Home_menu_array);
         int index = 0;
         for(String menu : menu_array) {
-            if(fragmentName.equals(menu.split("_")[1]))
+            if(fragmentName.equals(menu))
                  return index;
             index++;
         }

@@ -18,15 +18,6 @@ public class ServerMessage {
     public static String URL_ANSWER = SERVER_ADDRESS + "answer/";
 
     // Old Message
-    public static String URL_MATCH_MAKE = SERVER_ADDRESS + "teacher/match/make/";
-    public static String URL_MATCH_FIND = SERVER_ADDRESS + "student/match/find/";
-    public static String URL_MATCH_JOIN = SERVER_ADDRESS + "teacher/match/join/";
-
-    // Communication between devices
-    public static String COMMUNICATION_MSG_FIND = "COMMUNICATION_MSG_FIND";
-
-    // Receive from Server (Old)
-    public static String RESPONSE_MATCH_MAKE = "success_teacher_match_make";
-    public static String RESPONSE_MATCH_JOIN = "success_teacher_match_join";
+    public static String URL_LOGIN = SERVER_ADDRESS + "account/login/";
 
 }

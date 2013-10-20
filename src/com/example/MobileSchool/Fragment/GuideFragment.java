@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.example.MobileSchool.SchoolActivity;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -21,7 +21,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 16
  * Time: 오후 11:15
  */
-public class GuideFragment extends Fragment implements FragmentMethod {
+public class GuideFragment extends Fragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Guide";
 

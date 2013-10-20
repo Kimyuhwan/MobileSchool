@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.R;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 17
  * Time: 오후 9:01
  */
-public class ScriptFragment extends Fragment implements FragmentMethod{
+public class ScriptFragment extends Fragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Script";
 

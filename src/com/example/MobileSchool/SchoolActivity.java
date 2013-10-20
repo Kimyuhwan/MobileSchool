@@ -55,23 +55,37 @@ public class SchoolActivity extends FragmentActivity {
         globalApplication = (GlobalApplication) getApplicationContext();
         globalApplication.setSchoolActivity(this);
 
-        _initDrawer();
+        initDrawer("home");
         initFragment();
     }
 
-    private void _initDrawer() {
+    public void initDrawer(String type) {
+        ListView.OnItemClickListener onItemClickListener;
+
+        if(type.equals("home")) {
+            menuTitles = getResources().getStringArray(R.array.Home_menu_array);
+            onItemClickListener = new HomeDrawerItemClickListener();
+        }
+        else if(type.equals("waiting")) {
+            menuTitles = getResources().getStringArray(R.array.Waiting_menu_array);
+            onItemClickListener = new WaitingDrawerItemClickListener();
+        }
+        else {
+            menuTitles = getResources().getStringArray(R.array.Class_menu_array);
+            onItemClickListener = new ClassDrawerItemClickListener();
+        }
+        _setDrawer(onItemClickListener);
+    }
+
+    private void _setDrawer(ListView.OnItemClickListener onItemClickListener) {
         // Set Drawer
-        menuTitles = getResources().getStringArray(R.array.menu_array);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-//        drawerList.setAdapter(new ArrayAdapter<String>(this,
-//                R.layout.drawer_list_item, menuTitles));
-        drawerList.setAdapter(new TestAdapter(this,
-                  R.layout.drawer_list_item, menuTitles));
-        drawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+        drawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, menuTitles));
+        drawerList.setOnItemClickListener(onItemClickListener);
 
         // Set ActionBar
         title = getTitle();
@@ -112,28 +126,13 @@ public class SchoolActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
+        // true, then it has handled the app main_icon touch event
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            switch (position) {
-                case 1: _changeFragment(position, new HomeFragment()); break;
-                case 2: _changeFragment(position, new HistoryFragment()); break;
-                case 3: _changeFragment(position, new SettingFragment()); break;
-                case 5: _changeFragment(position, new GuideFragment()); break;
-                case 6: _changeFragment(position, new ProfileFragment()); break;
-                case 8: _changeFragment(position, new ScriptFragment()); break;
-                default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
-            }
-        }
     }
 
     private void _changeFragment(int position, Fragment fragment) {
@@ -146,40 +145,42 @@ public class SchoolActivity extends FragmentActivity {
         drawerLayout.closeDrawer(drawerList);
     }
 
-    class TestAdapter extends ArrayAdapter<String> {
 
-        private String[] items;
-
-        public TestAdapter(Context context, int resource, String[] objects) {
-            super(context, resource, objects);
-            items = objects;
-        }
-
+    private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView textView  = (TextView) super.getView(position, convertView, parent);
-            String itemTitle = items[position].split("_")[1];
-
-            if(!isItem(position)) {
-                textView.setPadding(16,0,16,0);
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0: _changeFragment(position, new HomeFragment()); break;
+                case 1: _changeFragment(position, new HistoryFragment()); break;
+                case 2: _changeFragment(position, new SettingFragment()); break;
+                default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
-
-            textView.setText(itemTitle);
-            return textView;
-        }
-
-        @Override
-        public boolean isEnabled(int position) {
-            return isItem(position);
-        }
-
-        private boolean isItem(int position) {
-            boolean result = true;
-            String itemType = items[position].split("_")[0];
-            if(itemType.equals("Section"))
-                return false;
-            return result;
         }
     }
+
+    private class WaitingDrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0: _changeFragment(position, new HomeFragment()); break;
+                case 1: _changeFragment(position, new HistoryFragment()); break;
+                case 2: _changeFragment(position, new SettingFragment()); break;
+                default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
+            }
+        }
+    }
+
+    private class ClassDrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            switch (position) {
+                case 0: _changeFragment(position, new HomeFragment()); break;
+                case 1: _changeFragment(position, new HistoryFragment()); break;
+                case 2: _changeFragment(position, new SettingFragment()); break;
+                default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
+            }
+        }
+    }
+
 
 }

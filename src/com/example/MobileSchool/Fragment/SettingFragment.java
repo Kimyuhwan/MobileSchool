@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Time: 오후 6:28
  */
 
-public class SettingFragment extends Fragment implements FragmentMethod{
+public class SettingFragment extends Fragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
 
@@ -77,7 +78,6 @@ public class SettingFragment extends Fragment implements FragmentMethod{
             public void onClick(View view) {
                 Log.d(TAG, "Click: teacher Account Button");
                 // Teacher Test Account
-//                accountManager.saveAccount("teacher");
                 accountManager.saveAccount("tkkk","93");
             }
         });
@@ -87,7 +87,6 @@ public class SettingFragment extends Fragment implements FragmentMethod{
             public void onClick(View view) {
                 Log.d(TAG, "Click: student Account Button");
                 // Student Test Account
-//                accountManager.saveAccount("student");
                 accountManager.saveAccount("kk","43");
             }
         });

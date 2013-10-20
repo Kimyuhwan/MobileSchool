@@ -1,5 +1,6 @@
 package com.example.MobileSchool.Communication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,6 +11,9 @@ import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.ServerMessage;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,6 +47,14 @@ public class AjaxCallSender {
         globalApplication = (GlobalApplication) context.getApplicationContext();
     }
 
+    public AjaxCallSender(Context context, Activity activity) {
+        this.context = context;
+        aq = new AQuery(context);
+        ajaxCallBack = new AjaxCallBackReceiver(context, activity);
+        accountManager = new AccountManager(context);
+        globalApplication = (GlobalApplication) context.getApplicationContext();
+    }
+
     public void deviceStatusUpdate(boolean isScreenOn) {
         if(isScreenOn) {
             String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/on/";
@@ -59,6 +71,15 @@ public class AjaxCallSender {
         String url = ServerMessage.URL_APP_MONITORING + accountManager.getUserId() + "/on/";
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AppOnUpdate URL : " + url);
+    }
+
+    public void login(String id, String password) {
+        String url = ServerMessage.URL_LOGIN;
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id", id);
+        params.put("pw", password);
+        aq.ajax(url, params, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AppOnUpdate URL : " + url + " ( " + id + ", " + password + " ) ");
     }
 
     public void start() {

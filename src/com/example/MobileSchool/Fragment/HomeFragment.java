@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
-import com.example.MobileSchool.SchoolActivity;
+import android.widget.TextView;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -27,7 +27,7 @@ import org.json.JSONObject;
  * Time: 오후 7:19
  */
 
-public class HomeFragment extends Fragment implements FragmentMethod{
+public class HomeFragment extends Fragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
 
@@ -36,9 +36,8 @@ public class HomeFragment extends Fragment implements FragmentMethod{
     private PushSender pushSender;
     private AjaxCallSender ajaxCallSender;
 
-    private Switch rightNowSwitch;
-    private Button sendNotificationButton;
-    private Button newClassButton;
+    private TextView startingPointTextView;
+    private Button startingPointButton;
 
     public HomeFragment() {}
 
@@ -46,7 +45,7 @@ public class HomeFragment extends Fragment implements FragmentMethod{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "HomeFragment : onCreateView");
-        View rootView = inflater.inflate(R.layout.home_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.disp_home, container, false);
         getActivity().setTitle(Constants.FRAGMENT_TITLE_HOME);
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
@@ -65,40 +64,28 @@ public class HomeFragment extends Fragment implements FragmentMethod{
     }
 
     private void _initUI(View rootView) {
-        rightNowSwitch = (Switch) rootView.findViewById(R.id.btn_rightNow);
-        rightNowSwitch.setChecked(false);
-        sendNotificationButton = (Button) rootView.findViewById(R.id.btn_sendNotification);
-        newClassButton = (Button) rootView.findViewById(R.id.btn_newClass);
-
-        // Set Listener
-        rightNowSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) Log.d(TAG, "Right Now! : On");
-                else Log.d(TAG, "Right Now! : Off");
-            }
-        });
-
-        sendNotificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Send Notification");
-                // Temporal Function
-                // Now Because of send notification test, student sends push to teacher directly, but later student will call server with ajax and server will send notification to teacher
-                String myId = accountManager.getUserId();
-                String teacherId = "tkkk";
-                String message = "2013.10.14 send Notification Test";
-                pushSender.pushToDevice(myId, teacherId, message);
-            }
-        });
-
-        newClassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Start new Class");
-                ajaxCallSender.start();
-            }
-        });
+        startingPointButton = (Button) rootView.findViewById(R.id.home_button_starting_point);
+        startingPointTextView = (TextView) rootView.findViewById(R.id.home_textView_starting_point);
+        if(accountManager.isStudent()) {
+            startingPointButton.setText(R.string.home_button_starting_point_student);
+            startingPointTextView.setText(R.string.home_textView_starting_point_student);
+            startingPointButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "HomeFragment starting point button : click (student)");
+                    ajaxCallSender.start();
+                }
+            });
+        } else {
+            startingPointButton.setText(R.string.home_button_starting_point_teacher);
+            startingPointTextView.setText(R.string.home_textView_starting_point_teacher);
+            startingPointButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "HomeFragment starting point button : click (teacher)");
+                }
+            });
+        }
     }
 
     @Override

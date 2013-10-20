@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 16
  * Time: 오후 11:15
  */
-public class ProfileFragment extends Fragment implements FragmentMethod{
+public class ProfileFragment extends Fragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Profile";
 
@@ -63,7 +64,7 @@ public class ProfileFragment extends Fragment implements FragmentMethod{
     private void _initUIForTeacher() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
 //        callIntent.setData(Uri.parse("tel:" + accountManager.getOppositePhoneNubmer()));
-        callIntent.setData(Uri.parse("tel:" + "01034240163"));
+        callIntent.setData(Uri.parse("tel:" + "01090145180"));
         startActivity(callIntent);
     }
 

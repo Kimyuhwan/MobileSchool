@@ -1,11 +1,12 @@
 package com.example.MobileSchool.Communication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
-import com.example.MobileSchool.Fragment.FragmentMethod;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import org.json.JSONObject;
@@ -18,10 +19,13 @@ import org.json.JSONObject;
  */
 public class AjaxCallBackReceiver extends AjaxCallback<JSONObject> {
     private String TAG = Constants.TAG;
+
     private Context context;
+    private Fragment fragment;
+    private Activity activity;
 
     private AccountManager accountManager;
-    private Fragment fragment;
+
 
     public AjaxCallBackReceiver(Context context) {
         this.context = context;
@@ -34,10 +38,18 @@ public class AjaxCallBackReceiver extends AjaxCallback<JSONObject> {
         accountManager = new AccountManager(context);
     }
 
+    public AjaxCallBackReceiver(Context context, Activity activity) {
+        this.context = context;
+        this.activity = activity;
+        accountManager = new AccountManager(context);
+    }
+
     @Override
     public void callback(String url, JSONObject object, AjaxStatus status) {
-        if(fragment != null)
-            ((FragmentMethod) fragment).handleAjaxCallBack(object);
+        if(activity != null)
+            ((BaseMethod) activity).handleAjaxCallBack(object);
+        else if(fragment != null)
+            ((BaseMethod) fragment).handleAjaxCallBack(object);
         else
             _handleResult(object);
     }

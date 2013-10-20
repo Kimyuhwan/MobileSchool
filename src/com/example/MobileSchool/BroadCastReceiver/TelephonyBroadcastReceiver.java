@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import com.example.MobileSchool.ClassEntryActivity;
+import com.example.MobileSchool.Activities.EntryActivity;
 import com.example.MobileSchool.Communication.AjaxCallSender;
-import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 
@@ -58,7 +57,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
                         // Answer
                         ajaxCallSender.answer();
                         // Start Activity
-                        Intent intent = new Intent(context, ClassEntryActivity.class);
+                        Intent intent = new Intent(context, EntryActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                         context.startActivity(intent);
                 }

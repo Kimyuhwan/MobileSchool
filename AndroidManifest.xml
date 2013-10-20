@@ -14,17 +14,19 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Utils.GlobalApplication">
-        <activity android:name=".EntryActivity"
-                  android:label="@string/app_name">
+        <activity android:name=".Activities.IntroActivity"
+                  android:theme="@style/Theme.Openschool" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ClassEntryActivity" android:taskAffinity="com.android.phone"/>
-        <activity android:name=".SchoolActivity" android:theme="@android:style/Theme.Holo.Light"/>
-        <activity android:name=".Fragment.DialogBox"
+        <activity android:name=".SchoolActivity" android:theme="@style/Theme.Openschool"/>
+        <activity android:name=".Activities.LogInActivity" android:theme="@style/Theme.Openschool"/>
+        <activity android:name=".Activities.EntryActivity" android:taskAffinity="com.android.phone"/>
+
+        <activity android:name=".Activities.DialogBox"
                   android:label="DialogBox"
                   android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
 
@@ -44,7 +46,6 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".BroadCastReceiver.NotificationClickBroadcastReceiver"/>
         <receiver android:name=".BroadCastReceiver.TelephonyBroadcastReceiver"/>
         <receiver android:name=".Communication.PushReceiver"/>
