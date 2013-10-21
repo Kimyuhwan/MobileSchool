@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
+import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
@@ -31,6 +32,10 @@ public class IntroActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.disp_intro);
         Log.d(TAG, "IntroActivity : onCreate");
+
+        //Check Service
+        if(ManagerRegistrationService.managerRegistrationService == null)
+            startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
 
         accountManager = new AccountManager(this);
         MyInfo myInfo = accountManager.getMyInfo();

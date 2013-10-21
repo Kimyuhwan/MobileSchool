@@ -18,6 +18,8 @@ public class GlobalApplication extends Application {
     private String fragmentName = null;
     private Fragment fragment = null;
 
+    private int drawerType = -1;
+
     private String targetStudentId;
     private String targetTeacherId;
 
@@ -53,8 +55,19 @@ public class GlobalApplication extends Application {
             return _getPosition(fragmentName);
     }
 
+    public void setDrawerType(int type) {
+        drawerType = type;
+    }
+
+    public int getDrawerType() {
+        if(drawerType == -1)
+            return R.array.Home_menu_array;
+        else
+            return drawerType;
+    }
+
     private int _getPosition(String fragmentName) {
-        String[] menu_array = getResources().getStringArray(R.array.Home_menu_array);
+        String[] menu_array = getResources().getStringArray(getDrawerType());
         int index = 0;
         for(String menu : menu_array) {
             if(fragmentName.equals(menu))

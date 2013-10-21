@@ -59,6 +59,7 @@ public class AjaxCallSender {
         if(isScreenOn) {
             String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/on/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
+            Log.d(TAG, "DeviceStatusUpdate URL: " + url);
         }
         else {
             String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/off/";

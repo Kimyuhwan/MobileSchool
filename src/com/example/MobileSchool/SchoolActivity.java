@@ -1,5 +1,6 @@
 package com.example.MobileSchool;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -55,25 +57,23 @@ public class SchoolActivity extends FragmentActivity {
         globalApplication = (GlobalApplication) getApplicationContext();
         globalApplication.setSchoolActivity(this);
 
-        initDrawer("home");
+        initDrawer();
         initFragment();
     }
 
-    public void initDrawer(String type) {
-        ListView.OnItemClickListener onItemClickListener;
+    public void initDrawer() {
+        int drawerType = globalApplication.getDrawerType();
+        menuTitles = getResources().getStringArray(drawerType);
 
-        if(type.equals("home")) {
-            menuTitles = getResources().getStringArray(R.array.Home_menu_array);
+        ListView.OnItemClickListener onItemClickListener;
+        if(drawerType == R.array.Home_menu_array)
             onItemClickListener = new HomeDrawerItemClickListener();
-        }
-        else if(type.equals("waiting")) {
-            menuTitles = getResources().getStringArray(R.array.Waiting_menu_array);
+        else if(drawerType == R.array.Waiting_menu_array)
             onItemClickListener = new WaitingDrawerItemClickListener();
-        }
-        else {
-            menuTitles = getResources().getStringArray(R.array.Class_menu_array);
+        else
             onItemClickListener = new ClassDrawerItemClickListener();
-        }
+
+
         _setDrawer(onItemClickListener);
     }
 
@@ -162,9 +162,8 @@ public class SchoolActivity extends FragmentActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
-                case 0: _changeFragment(position, new HomeFragment()); break;
-                case 1: _changeFragment(position, new HistoryFragment()); break;
-                case 2: _changeFragment(position, new SettingFragment()); break;
+                case 0: _changeFragment(position, new GuideFragment()); break;
+                case 1: _changeFragment(position, new ScriptFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }

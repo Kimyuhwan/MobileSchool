@@ -25,6 +25,8 @@ import java.util.List;
  */
 public class ManagerRegistrationService extends Service {
 
+    public static ManagerRegistrationService managerRegistrationService = null;
+
     private String TAG = Constants.TAG;
     private BroadcastReceiver screenStatusBroadcastReceiver;
     private BroadcastReceiver pushReceiver;
@@ -35,7 +37,7 @@ public class ManagerRegistrationService extends Service {
 
     @Override
     public void onCreate() {
-
+       managerRegistrationService = this;
     }
 
     @Override
@@ -59,9 +61,9 @@ public class ManagerRegistrationService extends Service {
 
         // Set broadcastReceiver
         screenStatusBroadcastReceiver = new DeviceStatusBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter(Intent.ACTION_USER_PRESENT);
-        intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(screenStatusBroadcastReceiver, intentFilter);
+        IntentFilter screenintentFilter = new IntentFilter(Intent.ACTION_USER_PRESENT);
+        screenintentFilter.addAction(Intent.ACTION_SCREEN_OFF);
+        registerReceiver(screenStatusBroadcastReceiver, screenintentFilter);
 
         // Set PushReceiver
         pushReceiver = new PushReceiver();
@@ -73,7 +75,9 @@ public class ManagerRegistrationService extends Service {
 
         // Set NotificationClickBroadcastReceiver
         notificationClickBroadcastReceiver = new NotificationClickBroadcastReceiver();
-        registerReceiver(notificationClickBroadcastReceiver, new IntentFilter(Constants.PUSH_CUSTOM_NOTIFICATION_EVENT));
+        IntentFilter notifiIntentFilter = new IntentFilter(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT);
+        notifiIntentFilter.addAction(Constants.PUSH_CUSTOM_NOTIFICATION_CANCEL_EVENT);
+        registerReceiver(notificationClickBroadcastReceiver, notifiIntentFilter);
 
         return START_STICKY; // Continue running until it is explicitly stopped.
     }

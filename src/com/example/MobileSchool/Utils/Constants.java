@@ -7,7 +7,7 @@ package com.example.MobileSchool.Utils;
  * Time: 오후 4:46
  */
 public class Constants {
-    public static String TAG = "A-School";
+    public static String TAG = "OpenSchool";
 
     // Parse
     public static String PARSE_APPLICATION_ID = "SfY8SbpgXz11WGUa32OyxJp7P2vqwGbtB1zz73sn";
@@ -16,7 +16,8 @@ public class Constants {
     // Push
     public static Integer PUSH_NOTIFICATION_UNIQUE_ID = 5474;
     public static String PUSH_CUSTOM_INTENT = "com.example.MobileSchool.CUSTOM_INTENT";
-    public static String PUSH_CUSTOM_NOTIFICATION_EVENT = "com.example.MobileSchool.ACTION_CLICK";
+    public static String PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT = "com.example.MobileSchool.ACTION_CONFIRM";
+    public static String PUSH_CUSTOM_NOTIFICATION_CANCEL_EVENT = "com.example.MobileSchool.ACTION_CANCEL";
 
     public static String PUSH_TYPE_NOTIFICATION = "noti";
     public static String PUSH_TYPE_MESSAGE = "msg";

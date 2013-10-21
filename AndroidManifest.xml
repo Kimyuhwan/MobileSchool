@@ -26,10 +26,6 @@
         <activity android:name=".Activities.LogInActivity" android:theme="@style/Theme.Openschool"/>
         <activity android:name=".Activities.EntryActivity" android:taskAffinity="com.android.phone"/>
 
-        <activity android:name=".Activities.DialogBox"
-                  android:label="DialogBox"
-                  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/>
-
         <service android:name=".BroadCastReceiver.ManagerRegistrationService"/>
         <service android:name="com.parse.PushService" />
 

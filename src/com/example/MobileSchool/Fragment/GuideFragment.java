@@ -41,7 +41,7 @@ public class GuideFragment extends Fragment implements BaseMethod {
         accountManager = new AccountManager(getActivity().getApplicationContext());
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
-        _initFragment();
+        _initToHome();
 
         if(accountManager.isStudent())
             _initUIForStudent();
@@ -51,8 +51,9 @@ public class GuideFragment extends Fragment implements BaseMethod {
         return rootView;
     }
 
-    private void _initFragment() {
+    private void _initToHome() {
         globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.setDrawerType(R.array.Home_menu_array);
     }
 
     private void _initUIForStudent() {
@@ -72,9 +73,12 @@ public class GuideFragment extends Fragment implements BaseMethod {
             if(result.equals("success") && code.equals(Constants.PUSH_CODE_TEACHER_CONFIRM)) {
                 JSONObject studentInfo = object.getJSONObject(Constants.PUSH_KEY_STUDENT_INFO);
                 String sid = studentInfo.getString(Constants.PUSH_VALUE_STUDENT_ID);
+                // 학생 정보 저장
+
                 globalApplication.setTargetStudentId(sid);
                 globalApplication.setFragment("Profile",new ProfileFragment());
                 globalApplication.getSchoolActivity().initFragment();
+
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

@@ -2,17 +2,17 @@ package com.example.MobileSchool.Communication;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.support.v4.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.RemoteViews;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Toast;
 import com.example.MobileSchool.Activities.EntryActivity;
-import com.example.MobileSchool.Activities.DialogBox;
 import com.example.MobileSchool.Fragment.ProfileFragment;
-import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -37,42 +37,40 @@ public class PushReceiver extends BroadcastReceiver {
         globalApplication = (GlobalApplication) context.getApplicationContext();
         try {
             JSONObject object = new JSONObject(intent.getExtras().getString("com.parse.Data"));
-            if(object.getString("type").equals(Constants.PUSH_TYPE_NOTIFICATION))
-                _makeNotification(object, context);                  //_makeDialog(json, context);
+            if(object.getString("type").equals(Constants.PUSH_TYPE_NOTIFICATION)) {
+                Log.d(TAG, "PushNotification notification : " + object);
+                _makeNotification(context);
+                _makeToast(context);
+            }
             else if(object.getString("type").equals(Constants.PUSH_TYPE_MESSAGE))
                 _handleMessage(object, context);
         } catch (JSONException e) {e.printStackTrace();}
     }
 
-    private void _makeNotification(JSONObject object, Context context) {
-        Log.d(TAG, "PushNotification notification : " + object);
-
-        RemoteViews remoteViews = new RemoteViews("com.example.MobileSchool", R.layout.notification);
-        remoteViews.setTextViewText(R.id.title, "Notification Test");
-        remoteViews.setTextViewText(R.id.text, "NotificationTest");
-        remoteViews.setImageViewResource(R.id.imagenotileft, R.drawable.ic_launcher);
-
-        Intent clickIntent = new Intent(Constants.PUSH_CUSTOM_NOTIFICATION_EVENT);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.imagenotileft, pendingIntent);
+    private void _makeNotification(Context context) {
+        Intent confirmIntent = new Intent(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT);
+        PendingIntent confirmPendingIntent = PendingIntent.getBroadcast(context, 0, confirmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_launcher)
-                .setContentTitle("MobileSchool")
-                .setContentText("Do you want join us?")
-                .setContent(remoteViews)
+                .setContentTitle("The time is now")
+                .setContentText("새로운 수업을 시작해주세요!")
+                .setContentIntent(confirmPendingIntent)
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 500, 250, 500});
 
-        Intent schoolIntent = new Intent(context, SchoolActivity.class);
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-        stackBuilder.addParentStack(SchoolActivity.class);
-        stackBuilder.addNextIntent(schoolIntent);
-        PendingIntent schoolPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(schoolPendingIntent);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.build());
+    }
+
+    private void _makeToast(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View layout = inflater.inflate(R.layout.toast_layout, null);
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void _handleMessage(JSONObject object, Context context) {
@@ -86,6 +84,7 @@ public class PushReceiver extends BroadcastReceiver {
                String teacherId = teacherInfo.getString(Constants.PUSH_VALUE_TEACHER_ID);
                Log.d(TAG, "Teacher Id : " + teacherId);
                globalApplication.setTargetTeacherId(teacherId);
+               // 여기에서 선생님 정보 저장
 
                // Change to Profile Page
                globalApplication.setFragment("Profile",new ProfileFragment());
@@ -105,10 +104,5 @@ public class PushReceiver extends BroadcastReceiver {
         } catch (JSONException e) { e.printStackTrace();}
     }
 
-    private void _makeDialog(JSONObject jsonObject, Context context) {
-        Intent intent = new Intent(context, DialogBox.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 
 }

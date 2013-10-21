@@ -4,7 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import com.example.MobileSchool.Activities.EntryActivity;
 import com.example.MobileSchool.Fragment.GuideFragment;
+import com.example.MobileSchool.R;
+import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.Constants;
 
@@ -20,8 +23,13 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "NotificationClickBroadcastReceiver : click");
-        globalApplication = (GlobalApplication) context.getApplicationContext();
-        globalApplication.setFragment("Guide", new GuideFragment());
+        if(intent.getAction().equals(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT)) {
+            Log.d(TAG, "NotificationClickBroadcastReceiver : confirm");
+            globalApplication = (GlobalApplication) context.getApplicationContext();
+            globalApplication.setFragment("Guide", new GuideFragment());
+            globalApplication.setDrawerType(R.array.Waiting_menu_array);
+            globalApplication.getSchoolActivity().initDrawer();
+            globalApplication.getSchoolActivity().initFragment();
+        }
     }
 }
