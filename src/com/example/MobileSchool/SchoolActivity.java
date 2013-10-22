@@ -21,8 +21,15 @@ import android.widget.TextView;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
+import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.Constants;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -46,6 +53,8 @@ public class SchoolActivity extends FragmentActivity {
     private AjaxCallSender ajaxCallSender;
 
     private GlobalApplication globalApplication;
+    private AccountManager accountManager;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +65,11 @@ public class SchoolActivity extends FragmentActivity {
         ajaxCallSender.appOnUpdate();
         globalApplication = (GlobalApplication) getApplicationContext();
         globalApplication.setSchoolActivity(this);
+        accountManager = new AccountManager(this);
+
+        //Check Service
+        if(ManagerRegistrationService.managerRegistrationService == null)
+            startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
 
         initDrawer();
         initFragment();
@@ -63,6 +77,7 @@ public class SchoolActivity extends FragmentActivity {
 
     public void initDrawer() {
         int drawerType = globalApplication.getDrawerType();
+
         menuTitles = getResources().getStringArray(drawerType);
 
         ListView.OnItemClickListener onItemClickListener;
@@ -72,7 +87,6 @@ public class SchoolActivity extends FragmentActivity {
             onItemClickListener = new WaitingDrawerItemClickListener();
         else
             onItemClickListener = new ClassDrawerItemClickListener();
-
 
         _setDrawer(onItemClickListener);
     }
@@ -98,12 +112,11 @@ public class SchoolActivity extends FragmentActivity {
                 R.string.drawer_close
         ) {
 
-            public void onDrawerClosed(View view) {getActionBar().setTitle(title);}
-            public void onDrawerOpened(View drawerView) {getActionBar().setTitle(title);}
         };
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+
     }
 
     public void initFragment() {
@@ -135,6 +148,13 @@ public class SchoolActivity extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.setDrawerType(R.array.Home_menu_array);
+    }
+
     private void _changeFragment(int position, Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -145,14 +165,13 @@ public class SchoolActivity extends FragmentActivity {
         drawerLayout.closeDrawer(drawerList);
     }
 
-
     private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0: _changeFragment(position, new HomeFragment()); break;
-                case 1: _changeFragment(position, new HistoryFragment()); break;
-                case 2: _changeFragment(position, new SettingFragment()); break;
+                case 1: _changeFragment(position, new MyInfoFragment()); break;
+                case 2: _changeFragment(position, new HistoryFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }
@@ -163,7 +182,7 @@ public class SchoolActivity extends FragmentActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0: _changeFragment(position, new GuideFragment()); break;
-                case 1: _changeFragment(position, new ScriptFragment()); break;
+                case 1: _changeFragment(position, new ProfileFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }
@@ -175,7 +194,6 @@ public class SchoolActivity extends FragmentActivity {
             switch (position) {
                 case 0: _changeFragment(position, new HomeFragment()); break;
                 case 1: _changeFragment(position, new HistoryFragment()); break;
-                case 2: _changeFragment(position, new SettingFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }

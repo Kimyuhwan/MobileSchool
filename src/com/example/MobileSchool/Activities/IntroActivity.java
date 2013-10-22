@@ -7,11 +7,13 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
+import com.example.MobileSchool.Fragment.GuideFragment;
 import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Utils.GlobalApplication;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,10 +35,6 @@ public class IntroActivity extends Activity {
         setContentView(R.layout.disp_intro);
         Log.d(TAG, "IntroActivity : onCreate");
 
-        //Check Service
-        if(ManagerRegistrationService.managerRegistrationService == null)
-            startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
-
         accountManager = new AccountManager(this);
         MyInfo myInfo = accountManager.getMyInfo();
         Log.d(TAG, "IntroActivity myInfo : " + myInfo);
@@ -49,7 +47,9 @@ public class IntroActivity extends Activity {
         final Intent intent;
         if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
         else intent = new Intent(getApplicationContext(), SchoolActivity.class);
-
+//        GlobalApplication globalApplication = (GlobalApplication) getApplication();
+//        globalApplication.setFragment("Guide", new GuideFragment());
+//        globalApplication.setDrawerType(R.array.Waiting_menu_array);
         mRunnable = new Runnable() {
             @Override
             public void run() {

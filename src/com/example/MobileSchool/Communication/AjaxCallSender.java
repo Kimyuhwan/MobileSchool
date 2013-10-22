@@ -57,19 +57,19 @@ public class AjaxCallSender {
 
     public void deviceStatusUpdate(boolean isScreenOn) {
         if(isScreenOn) {
-            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/on/";
+            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUniqueId() + "/on/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
             Log.d(TAG, "DeviceStatusUpdate URL: " + url);
         }
         else {
-            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUserId() + "/off/";
+            String url = ServerMessage.URL_SCREEN_MONITORING + accountManager.getUniqueId() + "/off/";
             aq.ajax(url, JSONObject.class, ajaxCallBack);
             Log.d(TAG, "DeviceStatusUpdate URL: " + url);
         }
     }
 
     public void appOnUpdate() {
-        String url = ServerMessage.URL_APP_MONITORING + accountManager.getUserId() + "/on/";
+        String url = ServerMessage.URL_APP_MONITORING + accountManager.getUniqueId() + "/on/";
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AppOnUpdate URL : " + url);
     }
@@ -84,19 +84,19 @@ public class AjaxCallSender {
     }
 
     public void start() {
-        String url = ServerMessage.URL_START + accountManager.getUserId();
+        String url = ServerMessage.URL_START + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AjaxCall start : " + url);
     }
 
     public void confirm() {
-        String url = ServerMessage.URL_CONFIRM + accountManager.getUserId();
+        String url = ServerMessage.URL_CONFIRM + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AjaxCall confirm : " + url);
     }
 
     public void answer() {
-        String url = ServerMessage.URL_ANSWER + accountManager.getUserId() + "/from/" + globalApplication.getTargetTeacherId();
+        String url = ServerMessage.URL_ANSWER + accountManager.getUniqueId() + "/from/" + globalApplication.getTargetTeacherId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AjaxCall answer : " + url);
     }

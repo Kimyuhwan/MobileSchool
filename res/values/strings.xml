@@ -22,13 +22,25 @@
     <string name="drawer_open">OpenSchool</string>
     <string name="drawer_close">OpenSchool</string>
     <string name="imageView_main_icon_description">MainIcon</string>
+    <string name="imageView_profile_icon_description">ProfileIcon</string>
     <string name="login_editText_id">ID</string>
     <string name="login_editText_password">Password</string>
     <string name="login_button_login">Log In</string>
     <string name="login_button_registration">Registration</string>
     <string name="home_textView_introduction_title">Open School</string>
     <string name="home_textView_introduction_body"> Open School is an mobile service which provides alternative education. It is an educational service with a special curriculum based on slack time which are nontraditional education. This school allows students to study English with more flexible time by facilitating talent donation from general people. </string>
+    <string name="guide_textView_guide_title">Guideline</string>
+    <string name="guide_textView_connecting">Connecting ...</string>
+    <string name="guide_teacher_textView_guide_first">Don\'t make all the decisions. Create opportunities for students to pursue their own interests and skills. </string>
+    <string name="guide_teacher_textView_guide_second">Talk less. Minimise standing out front and talking at them.</string>
+    <string name="guide_teacher_textView_guide_third">Ask for feedback. Get your students to write down what they learned, whether they enjoyed a particular learning experience. </string>
+    <string name="guide_teacher_textView_guide_fourth">Encourage goal setting and reflection. Help students to define goals for their learning.</string>
+    <string name="guide_teacher_textView_guide_fifth">Focus on learning, not work. Make sure you and your students know the reason for every learning experience. </string>
+    <string name="profile_textView_call_information_teacher_msg">Automatically calling soon!</string>
+    <string name="profile_textView_call_information_student_msg">He will call you soon!</string>
+    <string name="profile_textView_default_msg">Connecting ...</string>
     <string name="toast_textView_notification">새로운 수업을 시작해주세요!</string>
+    <string name="toast_textView_warning">현재 가능한 수업이 없습니다!</string>
 
     <!-- app -->
     <string name="toast_login_wrong_id">존재하지 않는 ID 입니다.</string>
@@ -37,5 +49,8 @@
     <string name="home_button_starting_point_teacher">Right Now</string>
     <string name="home_textView_starting_point_student">Taking class? </string>
     <string name="home_textView_starting_point_teacher">Available now? </string>
+    <string name="guide_textView_connected">Connected !</string>
+    <string name="guide_textView_no_class">There is no available class</string>
+
 
 </resources>

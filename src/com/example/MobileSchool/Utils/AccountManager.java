@@ -45,12 +45,12 @@ public class AccountManager {
         editor.commit();
     }
 
-    public String getUserId() {
+    public String getUniqueId() {
         MyInfo myInfo = getMyInfo();
         if(myInfo == null)
             return Constants.SHAREDPREFERENCES_EMPTY;
         else {
-            String userId = getMyInfo().getAccount_id();
+            String userId = getMyInfo().getUnique_id();
             Log.d(TAG, "GetUserId : " + userId);
             return userId;
         }

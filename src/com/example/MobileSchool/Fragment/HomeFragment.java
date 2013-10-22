@@ -2,6 +2,7 @@ package com.example.MobileSchool.Fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
@@ -39,6 +41,8 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private TextView startingPointTextView;
     private Button startingPointButton;
 
+
+
     public HomeFragment() {}
 
     @Override
@@ -52,10 +56,8 @@ public class HomeFragment extends Fragment implements BaseMethod {
         accountManager = new AccountManager(getActivity().getApplicationContext());
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
-
         _initFragment();
         _initUI(rootView);
-
         return rootView;
     }
 
@@ -83,6 +85,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
                 @Override
                 public void onClick(View v) {
                     Log.d(TAG, "HomeFragment starting point button : click (teacher)");
+                    // Available
                 }
             });
         }
@@ -96,7 +99,10 @@ public class HomeFragment extends Fragment implements BaseMethod {
             String result = object.getString(Constants.PUSH_KEY_RESULT);
             String code = object.getString(Constants.PUSH_KEY_CODE);
             if(result.equals("success") && code.equals(Constants.PUSH_CODE_STUDENT_START)) {
-                globalApplication.setFragment("Guide",new GuideFragment());
+                globalApplication.setWaitingTime(object.getInt(Constants.PUSH_KEY_WAITING) * 1000);
+                globalApplication.setFragment("Guide", new GuideFragment());
+                globalApplication.setDrawerType(R.array.Waiting_menu_array);
+                globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
             }
         } catch (JSONException e) { e.printStackTrace(); }

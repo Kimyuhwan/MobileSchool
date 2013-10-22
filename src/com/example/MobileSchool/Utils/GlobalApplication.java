@@ -2,7 +2,9 @@ package com.example.MobileSchool.Utils;
 
 import android.app.Application;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import com.example.MobileSchool.Fragment.HomeFragment;
+import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
 
@@ -13,15 +15,36 @@ import com.example.MobileSchool.SchoolActivity;
  */
 public class GlobalApplication extends Application {
 
+    private String TAG = Constants.TAG;
     private SchoolActivity schoolActivity;
 
     private String fragmentName = null;
     private Fragment fragment = null;
 
+    private PartnerInfo partnerInfo;
+
     private int drawerType = -1;
+    private boolean classConnected = false;
+    private int waitingTime;
 
     private String targetStudentId;
     private String targetTeacherId;
+
+    public int getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+    public void setPartnerInfo(PartnerInfo partnerInfo) {
+        this.partnerInfo = partnerInfo;
+    }
+
+    public PartnerInfo getPartnerInfo() {
+        return this.partnerInfo;
+    }
 
     public void setSchoolActivity(SchoolActivity schoolActivity) {
         this.schoolActivity = schoolActivity;
@@ -56,7 +79,7 @@ public class GlobalApplication extends Application {
     }
 
     public void setDrawerType(int type) {
-        drawerType = type;
+        this.drawerType = type;
     }
 
     public int getDrawerType() {
@@ -67,9 +90,11 @@ public class GlobalApplication extends Application {
     }
 
     private int _getPosition(String fragmentName) {
+        Log.d(TAG, "Position fragmentName : " + fragmentName);
         String[] menu_array = getResources().getStringArray(getDrawerType());
         int index = 0;
         for(String menu : menu_array) {
+            Log.d(TAG, "Position drawerType : " + menu);
             if(fragmentName.equals(menu))
                  return index;
             index++;
@@ -92,5 +117,14 @@ public class GlobalApplication extends Application {
 
     public String getTargetTeacherId() {
         return targetTeacherId;
+    }
+
+    // Class Information
+    public boolean isClassConnected() {
+        return classConnected;
+    }
+
+    public void setClassConnected(boolean classConnected) {
+        this.classConnected = classConnected;
     }
 }

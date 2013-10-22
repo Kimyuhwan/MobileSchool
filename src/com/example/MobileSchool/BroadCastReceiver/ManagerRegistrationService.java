@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
-import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Communication.PushReceiver;
+import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.parse.Parse;
@@ -47,15 +47,14 @@ public class ManagerRegistrationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // Initialize AccountManager
-        accountManager = new AccountManager(this);
+        accountManager = new AccountManager(getApplicationContext());
 
         // Set Push Notification Framework (Parse)
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
         PushService.setDefaultPushCallback(this, SchoolActivity.class);
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         List<String> channels = new LinkedList<String>();
-        channels.add(accountManager.getUserId());  // Will be updated to user Id
+        channels.add(accountManager.getUniqueId());  // Will be updated to user Id
         installation.put("channels", channels);
         installation.saveInBackground();
 

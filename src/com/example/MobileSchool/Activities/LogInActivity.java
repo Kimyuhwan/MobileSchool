@@ -90,7 +90,7 @@ public class LogInActivity extends Activity implements BaseMethod{
                 user = object.getJSONObject("teacher");
                 type = "teacher";
             }
-            MyInfo myInfo = new MyInfo(object.getString("account_id"), user.getString("id"),user.getString("name"),user.getString("phone"), user.getInt("age"), user.getString("gender"), type);
+            MyInfo myInfo = new MyInfo(object.getString("account_id"), user.getString("uid"),user.getString("name"),user.getString("phone"), user.getInt("age"), user.getString("gender"), type);
             accountManager.saveMyInfo(myInfo);
             Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

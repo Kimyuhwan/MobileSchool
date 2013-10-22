@@ -5,14 +5,17 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.MobileSchool.Activities.EntryActivity;
 import com.example.MobileSchool.Fragment.ProfileFragment;
+import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -31,6 +34,8 @@ public class PushReceiver extends BroadcastReceiver {
     private String TAG = Constants.TAG;
 
     private GlobalApplication globalApplication;
+
+    private TextView connectingTextView;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -66,6 +71,8 @@ public class PushReceiver extends BroadcastReceiver {
     private void _makeToast(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View layout = inflater.inflate(R.layout.toast_layout, null);
+        TextView textView = (TextView) layout.findViewById(R.id.toast_textView_notification);
+        textView.setText(R.string.toast_textView_notification);
         Toast toast = new Toast(context.getApplicationContext());
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -79,16 +86,18 @@ public class PushReceiver extends BroadcastReceiver {
         try {
             String code = object.getString(Constants.PUSH_KEY_CODE);
             if(code.equals(Constants.PUSH_CODE_PUSH_TEACHER_INFO)) {
-               JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
-               JSONObject teacherInfo = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
-               String teacherId = teacherInfo.getString(Constants.PUSH_VALUE_TEACHER_ID);
-               Log.d(TAG, "Teacher Id : " + teacherId);
-               globalApplication.setTargetTeacherId(teacherId);
-               // 여기에서 선생님 정보 저장
+                connectingTextView = (TextView) globalApplication.getSchoolActivity().findViewById(R.id.guide_textView_connecting);
+                connectingTextView.setText(R.string.guide_textView_connected);
+                connectingTextView.clearAnimation();
 
-               // Change to Profile Page
-               globalApplication.setFragment("Profile",new ProfileFragment());
-               globalApplication.getSchoolActivity().initFragment();
+                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
+                JSONObject teacherJson = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
+                PartnerInfo partnerInfo = new PartnerInfo(teacherJson.getString("tid"), teacherJson.getString("name"), teacherJson.getString("phoneNumber"), teacherJson.getInt("age"),teacherJson.getInt("gender"), teacherJson.getString("type"));
+                globalApplication.setPartnerInfo(partnerInfo);
+                globalApplication.setClassConnected(true);
+
+                globalApplication.setFragment("Profile",new ProfileFragment());
+                globalApplication.getSchoolActivity().initFragment();
             }
             else if(code.equals(Constants.PUSH_CODE_PUSH_STUDENT_ANSWER)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);

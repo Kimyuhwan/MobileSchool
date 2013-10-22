@@ -26,6 +26,7 @@ public class Constants {
     public static String PUSH_KEY_CODE = "code";
     public static String PUSH_KEY_TEACHER_INFO = "teacher_info";
     public static String PUSH_KEY_STUDENT_INFO = "student_info";
+    public static String PUSH_KEY_WAITING = "wating";
 
     public static String PUSH_VALUE_TEACHER_ID = "tid";
     public static String PUSH_VALUE_STUDENT_ID = "sid";
@@ -37,6 +38,8 @@ public class Constants {
     public static String PUSH_CODE_PUSH_TEACHER = "PT";
     public static String PUSH_CODE_TEACHER_FINISH = "TF";
     public static String PUSH_CODE_STUDENT_FINISH = "SF";
+    public static String PUSH_CODE_NO_STUDENT = "NS";
+
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_MY_INFO = TAG + "_MY_INFO";
