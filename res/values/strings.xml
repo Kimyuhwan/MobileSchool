@@ -23,8 +23,8 @@
     <string name="drawer_close">OpenSchool</string>
     <string name="imageView_main_icon_description">MainIcon</string>
     <string name="imageView_profile_icon_description">ProfileIcon</string>
-    <string name="login_editText_id">ID</string>
-    <string name="login_editText_password">Password</string>
+    <string name="login_editText_hint_id">ID</string>
+    <string name="login_editText_hint_password">Password</string>
     <string name="login_button_login">Log In</string>
     <string name="login_button_registration">Registration</string>
     <string name="home_textView_introduction_title">Open School</string>
@@ -51,6 +51,17 @@
     <string name="home_textView_starting_point_teacher">Available now? </string>
     <string name="guide_textView_connected">Connected !</string>
     <string name="guide_textView_no_class">There is no available class</string>
+
+    <!-- registration -->
+    <string name="registration_editText_hint_id">ID</string>
+    <string name="registration_editText_hint_password">Password</string>
+    <string name="registration_editText_hint_name">Name</string>
+    <string name="registration_radioButton_gender_male">남자</string>
+    <string name="registration_radioButton_gender_female">여자</string>
+    <string name="registration_radioButton_type_student">학생</string>
+    <string name="registration_radioButton_type_teacher">선생님</string>
+    <string name="registration_editText_hint_phone">Phone number</string>
+    <string name="registration_button_confirm">Confirm</string>
 
 
 </resources>

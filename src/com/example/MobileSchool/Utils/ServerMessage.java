@@ -16,8 +16,12 @@ public class ServerMessage {
     public static String URL_START = SERVER_ADDRESS + "start/";
     public static String URL_CONFIRM = SERVER_ADDRESS + "confirm/";
     public static String URL_ANSWER = SERVER_ADDRESS + "answer/";
+    public static String URL_DIALOGUE_TEACHER = SERVER_ADDRESS + "get/dialogue/for/teacher/";
+    public static String URL_DIALOGUE_STUDENT = SERVER_ADDRESS + "get/dialogue/for/student/";
 
     // Old Message
     public static String URL_LOGIN = SERVER_ADDRESS + "account/login/";
+    public static String URL_TEACHER_REGISTER = SERVER_ADDRESS + "teacher/register/";
+    public static String URL_STUDENT_REGISTER = SERVER_ADDRESS + "student/register/";
 
 }

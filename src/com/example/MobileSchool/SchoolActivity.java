@@ -21,12 +21,13 @@ import android.widget.TextView;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
-import com.example.MobileSchool.Utils.AccountManager;
-import com.example.MobileSchool.Utils.GlobalApplication;
-import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Model.Content;
+import com.example.MobileSchool.Utils.*;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +40,7 @@ import java.util.List;
  * Time: 오후 4:36
  */
 
-public class SchoolActivity extends FragmentActivity {
+public class SchoolActivity extends FragmentActivity implements BaseMethod{
 
     private String TAG = Constants.TAG;
 
@@ -53,6 +54,7 @@ public class SchoolActivity extends FragmentActivity {
     private AjaxCallSender ajaxCallSender;
     private GlobalApplication globalApplication;
     private AccountManager accountManager;
+    private ContentManager contentManager;
 
 
     @Override
@@ -60,15 +62,21 @@ public class SchoolActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.school_activity);
         Log.d(TAG, "SchoolActivity : onCreate");
-        ajaxCallSender = new AjaxCallSender(this);
-        ajaxCallSender.appOnUpdate();
         globalApplication = (GlobalApplication) getApplicationContext();
         globalApplication.setSchoolActivity(this);
+        ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
         accountManager = new AccountManager(this);
+        contentManager = new ContentManager(this);
+
+        ajaxCallSender.appOnUpdate();
 
         //Check Service
         if(ManagerRegistrationService.managerRegistrationService == null)
             startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
+
+        //Check today Dialog
+        if(!contentManager.existTodayDialog())
+            ajaxCallSender.getDialogue();
 
         initDrawer();
         initFragment();
@@ -168,6 +176,18 @@ public class SchoolActivity extends FragmentActivity {
         drawerList.setItemChecked(position, true);
         setTitle(menuTitles[position]);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    @Override
+    public void handleAjaxCallBack(JSONObject object) {
+        Log.d(TAG, "SchoolActivity : handleAjaxCallBack Object => " + object);
+        try {
+            String code = object.getString("code");
+            if(code.equals(Constants.PUSH_CODE_DAILY_DIALOGUE)) {
+                Content content = new Content(object.getString("expression"), object.getString("script"), object.getString("tip"));
+                contentManager.saveTodayContent(content);
+            }
+        } catch (JSONException e) { e.printStackTrace(); }
     }
 
     private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {

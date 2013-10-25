@@ -39,6 +39,7 @@ public class Constants {
     public static String PUSH_CODE_TEACHER_FINISH = "TF";
     public static String PUSH_CODE_STUDENT_FINISH = "SF";
     public static String PUSH_CODE_NO_STUDENT = "NS";
+    public static String PUSH_CODE_DAILY_DIALOGUE = "DD";
 
 
     // SharedPreferences
@@ -59,6 +60,18 @@ public class Constants {
     public static String RESPONSE_LOGIN_SUCCESS = "success_account_login";
     public static String RESPONSE_LOGIN_FAIL_WRONG_ID = "failed_wrong_id";
     public static String RESPONSE_LOGIN_FAIL_WRONG_PASSWORD = "failed_wrong_password";
+    public static String RESPONSE_REGISTRATION_TEACHER_SUCCESS = "success_teacher_register";
+    public static String RESPONSE_REGISTRATION_STUDENT_SUCCESS = "success_student_register";
+    public static String RESPONSE_REGISTRATION_FAIL = "failed_id_already_exists";
+
+    // Registration
+    public static String REGISTRATION_GENDER_MALE = "male";
+    public static String REGISTRATION_GENDER_FEMALE = "female";
+    public static String REGISTRATION_TYPE_STUDENT = "student";
+    public static String REGISTRATION_TYPE_TEACHER = "teacher";
+
+    // Contents
+    public static String CONTENTS = "contents";
 
 
 

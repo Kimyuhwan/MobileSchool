@@ -91,8 +91,7 @@ public class ProfileFragment extends Fragment implements BaseMethod {
             public void run() {
                 if(globalApplication.isSchoolActivityFront()) {
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-    //        callIntent.setData(Uri.parse("tel:" + accountManager.getOppositePhoneNubmer()));
-                    callIntent.setData(Uri.parse("tel:" + "01043630334"));
+                    callIntent.setData(Uri.parse("tel:" + globalApplication.getPartnerInfo().getPhoneNumber()));
                     startActivity(callIntent);
                 }
             }

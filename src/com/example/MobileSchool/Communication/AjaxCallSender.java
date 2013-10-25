@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
+import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
@@ -81,6 +82,36 @@ public class AjaxCallSender {
         params.put("pw", password);
         aq.ajax(url, params, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AppOnUpdate URL : " + url + " ( " + id + ", " + password + " ) ");
+    }
+
+    public void register(MyInfo myInfo) {
+        String url = "";
+        if(myInfo.getType().equals(Constants.REGISTRATION_TYPE_STUDENT))
+          url = ServerMessage.URL_STUDENT_REGISTER;
+        else
+          url = ServerMessage.URL_TEACHER_REGISTER;
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("account_id", myInfo.getAccount_id());
+        params.put("pw", myInfo.getPassword());
+        params.put("name", myInfo.getName());
+        params.put("gender", myInfo.getGender());
+        params.put("age", myInfo.getAge());
+        params.put("phone", myInfo.getPhoneNumber());
+        params.put("email", myInfo.getAccount_id() + "@nclab.kaist.ac.kr");
+
+        aq.ajax(url, params, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AppOnUpdate URL : " + url + " ( " + myInfo.getAccount_id() + ", " + myInfo.getPassword() + ", " + myInfo.getName() + ", " + myInfo.getGender() + ", " + myInfo.getAge() + ", " + myInfo.getPhoneNumber() + ", " + myInfo.getType() + ")" );
+    }
+
+    public void getDialogue() {
+        String url = "";
+        if(accountManager.isStudent())
+            url = ServerMessage.URL_DIALOGUE_STUDENT;
+        else
+            url = ServerMessage.URL_DIALOGUE_TEACHER;
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall start : " + url);
     }
 
     public void start() {

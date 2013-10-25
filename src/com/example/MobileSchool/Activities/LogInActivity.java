@@ -35,6 +35,7 @@ public class LogInActivity extends Activity implements BaseMethod{
     private EditText idEditText;
     private EditText passwordEditText;
     private Button loginButton;
+    private Button registrationButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,11 +54,20 @@ public class LogInActivity extends Activity implements BaseMethod{
         idEditText = (EditText) findViewById(R.id.login_editText_id);
         passwordEditText = (EditText) findViewById(R.id.login_editText_password);
         loginButton = (Button) findViewById(R.id.login_button_login);
+        registrationButton = (Button) findViewById(R.id.login_button_registration);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                  ajaxCallSender.login(idEditText.getText().toString(), passwordEditText.getText().toString());
+            }
+        });
+
+        registrationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
+                finish();
             }
         });
     }

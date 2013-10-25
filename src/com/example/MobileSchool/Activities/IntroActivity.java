@@ -47,9 +47,6 @@ public class IntroActivity extends Activity {
         final Intent intent;
         if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
         else intent = new Intent(getApplicationContext(), SchoolActivity.class);
-//        GlobalApplication globalApplication = (GlobalApplication) getApplication();
-//        globalApplication.setFragment("Guide", new GuideFragment());
-//        globalApplication.setDrawerType(R.array.Waiting_menu_array);
         mRunnable = new Runnable() {
             @Override
             public void run() {

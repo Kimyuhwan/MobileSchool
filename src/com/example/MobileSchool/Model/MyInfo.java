@@ -8,12 +8,22 @@ package com.example.MobileSchool.Model;
 public class MyInfo {
     // Model Class which represents myself.
     private String account_id;
+    private String password;
     private String unique_id;
     private String name;
     private String phoneNumber;
     private int age;
     private String gender;
     private String type;
+
+    public MyInfo(String account_id, String password, String name, String gender, String type, String phoneNumber) {
+        this.account_id = account_id;
+        this.password = password;
+        this.name = name;
+        this.gender = gender;
+        this.type = type;
+        this.phoneNumber = phoneNumber;
+    }
 
     public MyInfo(String account_id, String unique_id, String name, String phoneNumber, int age, String gender, String type) {
         this.account_id = account_id;
@@ -27,6 +37,10 @@ public class MyInfo {
 
     public String getAccount_id() {
         return account_id;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getUnique_id() {
