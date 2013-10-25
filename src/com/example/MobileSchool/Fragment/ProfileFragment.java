@@ -1,5 +1,7 @@
 package com.example.MobileSchool.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -87,14 +89,14 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                Intent callIntent = new Intent(Intent.ACTION_CALL);
-////        callIntent.setData(Uri.parse("tel:" + accountManager.getOppositePhoneNubmer()));
-//                callIntent.setData(Uri.parse("tel:" + "01090145180"));
-//                startActivity(callIntent);
-//                getActivity().finish();
+                if(globalApplication.isSchoolActivityFront()) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+    //        callIntent.setData(Uri.parse("tel:" + accountManager.getOppositePhoneNubmer()));
+                    callIntent.setData(Uri.parse("tel:" + "01043630334"));
+                    startActivity(callIntent);
+                }
             }
         }, 3000);
-
     }
 
     @Override

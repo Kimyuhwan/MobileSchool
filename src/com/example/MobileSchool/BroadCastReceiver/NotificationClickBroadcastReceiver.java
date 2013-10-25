@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.example.MobileSchool.Activities.EntryActivity;
+import com.example.MobileSchool.Activities.IntroActivity;
 import com.example.MobileSchool.Fragment.GuideFragment;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
@@ -25,11 +26,20 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT)) {
             Log.d(TAG, "NotificationClickBroadcastReceiver : confirm");
+
             globalApplication = (GlobalApplication) context.getApplicationContext();
             globalApplication.setFragment("Guide", new GuideFragment());
             globalApplication.setDrawerType(R.array.Waiting_menu_array);
-            globalApplication.getSchoolActivity().initDrawer();
-            globalApplication.getSchoolActivity().initFragment();
+
+            if(globalApplication.isSchoolActivityFront()) {
+                globalApplication.getSchoolActivity().initDrawer();
+                globalApplication.getSchoolActivity().initFragment();
+            } else {
+                globalApplication.getSchoolActivity().finish();
+                Intent guideIntent = new Intent(context, SchoolActivity.class);
+                guideIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(guideIntent);
+            }
         }
     }
 }

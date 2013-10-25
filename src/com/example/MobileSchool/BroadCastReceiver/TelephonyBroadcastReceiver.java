@@ -8,8 +8,11 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.example.MobileSchool.Activities.EntryActivity;
 import com.example.MobileSchool.Communication.AjaxCallSender;
+import com.example.MobileSchool.Fragment.HomeFragment;
+import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Utils.GlobalApplication;
 
 /**
  * User: yuhwan
@@ -25,6 +28,8 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     private AccountManager accountManager;
     private AjaxCallSender ajaxCallSender;
 
+    private GlobalApplication globalApplication;
+
     private String incomingNumber = "";
 
     @Override
@@ -32,6 +37,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         this.context = context;
         accountManager = new AccountManager(context);
         ajaxCallSender = new AjaxCallSender(context);
+        globalApplication = (GlobalApplication) context.getApplicationContext();
         // If the classReady is on .. (not always!)
 
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
@@ -54,12 +60,12 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
-                        // Answer
-                        ajaxCallSender.answer();
-                        // Start Activity
-                        Intent intent = new Intent(context, EntryActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        context.startActivity(intent);
+                    // Answer
+                    ajaxCallSender.answer();
+                    // Start Activity
+                    Intent intent = new Intent(context, EntryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    context.startActivity(intent);
                 }
             };
             thread.start();

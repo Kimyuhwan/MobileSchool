@@ -33,7 +33,7 @@ public class ScriptFragment extends Fragment implements BaseMethod {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.script_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.disp_script, container, false);
         getActivity().setTitle(title);
         Log.d(TAG, "ScriptFragment : onCreate");
 
@@ -41,13 +41,8 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         accountManager = new AccountManager(getActivity().getApplicationContext());
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
-        _initFragment();
 
         return rootView;
-    }
-
-    private void _initFragment() {
-        globalApplication.setFragment("Home", new HomeFragment());
     }
 
     @Override

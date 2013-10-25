@@ -96,7 +96,7 @@ public class AjaxCallSender {
     }
 
     public void answer() {
-        String url = ServerMessage.URL_ANSWER + accountManager.getUniqueId() + "/from/" + globalApplication.getTargetTeacherId();
+        String url = ServerMessage.URL_ANSWER + accountManager.getUniqueId() + "/from/" + globalApplication.getPartnerInfo().getUnique_id();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
         Log.d(TAG, "AjaxCall answer : " + url);
     }

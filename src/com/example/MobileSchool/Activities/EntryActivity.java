@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.Fragment.ScriptFragment;
+import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 
@@ -23,7 +25,9 @@ public class EntryActivity extends Activity {
         Log.d(TAG, "EntryActivity: onCreate");
 
         globalApplication = (GlobalApplication) getApplication();
+
         globalApplication.setFragment("Script",new ScriptFragment());
+        globalApplication.setDrawerType(R.array.Class_menu_array);
 
         Intent intent = new Intent(EntryActivity.this, IntroActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);

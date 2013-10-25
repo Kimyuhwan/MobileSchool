@@ -17,6 +17,7 @@ public class GlobalApplication extends Application {
 
     private String TAG = Constants.TAG;
     private SchoolActivity schoolActivity;
+    private boolean isSchoolActivityFront;
 
     private String fragmentName = null;
     private Fragment fragment = null;
@@ -29,6 +30,15 @@ public class GlobalApplication extends Application {
 
     private String targetStudentId;
     private String targetTeacherId;
+
+
+    public boolean isSchoolActivityFront() {
+        return isSchoolActivityFront;
+    }
+
+    public void setSchoolActivityFront(boolean schoolActivityFront) {
+        isSchoolActivityFront = schoolActivityFront;
+    }
 
     public int getWaitingTime() {
         return waitingTime;

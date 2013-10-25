@@ -51,7 +51,6 @@ public class GuideFragment extends Fragment implements BaseMethod {
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
 
         getActivity().setTitle(title);
-
         if(accountManager.isStudent()) {
             rootView = inflater.inflate(R.layout.disp_guide_student, container, false);
             if(globalApplication.isClassConnected())
@@ -83,11 +82,13 @@ public class GuideFragment extends Fragment implements BaseMethod {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                _makeToast();
-                globalApplication.setFragment("Home", new HomeFragment());
-                globalApplication.setDrawerType(R.array.Home_menu_array);
-                globalApplication.getSchoolActivity().initDrawer();
-                globalApplication.getSchoolActivity().initFragment();
+                if(globalApplication.isSchoolActivityFront()) {
+                    _makeToast();
+                    globalApplication.setFragment("Home", new HomeFragment());
+                    globalApplication.setDrawerType(R.array.Home_menu_array);
+                    globalApplication.getSchoolActivity().initDrawer();
+                    globalApplication.getSchoolActivity().initFragment();
+                }
             }
         }, globalApplication.getWaitingTime());
     }
@@ -95,7 +96,6 @@ public class GuideFragment extends Fragment implements BaseMethod {
     private void _initUIForStudentConnected(View rootView) {
         connectingTextView = (TextView) rootView.findViewById(R.id.guide_textView_connecting);
         connectingTextView.setText(R.string.guide_textView_connected);
-        // 60초 후에 안오면 돌아가기.
     }
 
     private void _initUIForTeacherUnconnected(View rootView) {
@@ -137,8 +137,10 @@ public class GuideFragment extends Fragment implements BaseMethod {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                    if(globalApplication.isSchoolActivityFront()) {
                         globalApplication.setFragment("Profile", new ProfileFragment());
                         globalApplication.getSchoolActivity().initFragment();
+                    }
                     }
                 }, 2000);
             } else if(result.equals("success") && code.equals(Constants.PUSH_CODE_NO_STUDENT)) {
@@ -149,8 +151,10 @@ public class GuideFragment extends Fragment implements BaseMethod {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                    if(globalApplication.isClassConnected()) {
                         globalApplication.setFragment("Home", new HomeFragment());
                         globalApplication.getSchoolActivity().initFragment();
+                    }
                     }
                 }, 3000);
             }
@@ -159,11 +163,11 @@ public class GuideFragment extends Fragment implements BaseMethod {
 
 
     private void _makeToast() {
-        LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        LayoutInflater inflater = (LayoutInflater) globalApplication.getSchoolActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.toast_layout, null);
         TextView textView = (TextView) layout.findViewById(R.id.toast_textView_notification);
         textView.setText(R.string.toast_textView_warning);
-        Toast toast = new Toast(getActivity().getApplicationContext());
+        Toast toast = new Toast(globalApplication.getSchoolActivity().getApplicationContext());
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);

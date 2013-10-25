@@ -51,7 +51,6 @@ public class SchoolActivity extends FragmentActivity {
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private AjaxCallSender ajaxCallSender;
-
     private GlobalApplication globalApplication;
     private AccountManager accountManager;
 
@@ -116,7 +115,6 @@ public class SchoolActivity extends FragmentActivity {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
     }
 
     public void initFragment() {
@@ -149,8 +147,15 @@ public class SchoolActivity extends FragmentActivity {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onResume() {
+        super.onResume();
+        globalApplication.setSchoolActivityFront(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        globalApplication.setSchoolActivityFront(false);
         globalApplication.setFragment("Home", new HomeFragment());
         globalApplication.setDrawerType(R.array.Home_menu_array);
     }
@@ -192,12 +197,12 @@ public class SchoolActivity extends FragmentActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
-                case 0: _changeFragment(position, new HomeFragment()); break;
-                case 1: _changeFragment(position, new HistoryFragment()); break;
+                case 0: _changeFragment(position, new ScriptFragment()); break;
+                case 1: _changeFragment(position, new ProfileFragment()); break;
+//                case 2: _changeFragment(position, new ProfileFragment()); break;   // Evaluation
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }
     }
-
 
 }

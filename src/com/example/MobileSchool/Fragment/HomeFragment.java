@@ -104,6 +104,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
                 globalApplication.setDrawerType(R.array.Waiting_menu_array);
                 globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
+                Log.d(TAG, "Student homefragment initDrawer()");
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }
