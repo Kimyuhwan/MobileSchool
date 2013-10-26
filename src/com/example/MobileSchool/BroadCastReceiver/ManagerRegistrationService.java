@@ -10,6 +10,7 @@ import com.example.MobileSchool.Communication.PushReceiver;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Utils.GlobalApplication;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
@@ -34,6 +35,7 @@ public class ManagerRegistrationService extends Service {
     private BroadcastReceiver notificationClickBroadcastReceiver;
 
     private AccountManager accountManager;
+    private GlobalApplication globalApplication;
 
     @Override
     public void onCreate() {
@@ -47,7 +49,8 @@ public class ManagerRegistrationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        accountManager = new AccountManager(getApplicationContext());
+        globalApplication = (GlobalApplication) getApplication();
+        accountManager = globalApplication.getAccountManager();
 
         // Set Push Notification Framework (Parse)
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,24 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Model.Content;
 import com.example.MobileSchool.Utils.*;
-import com.parse.Parse;
-import com.parse.ParseInstallation;
-import com.parse.PushService;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -60,13 +51,13 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.school_activity);
+        setContentView(R.layout.activity_school);
         Log.d(TAG, "SchoolActivity : onCreate");
         globalApplication = (GlobalApplication) getApplicationContext();
         globalApplication.setSchoolActivity(this);
+        accountManager = globalApplication.getAccountManager();
+        contentManager = globalApplication.getContentManager();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
-        accountManager = new AccountManager(this);
-        contentManager = new ContentManager(this);
 
         ajaxCallSender.appOnUpdate();
 
@@ -105,7 +96,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
 
         drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         drawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, menuTitles));
+                R.layout.item_drawer, menuTitles));
         drawerList.setOnItemClickListener(onItemClickListener);
 
         // Set ActionBar
@@ -218,7 +209,6 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             switch (position) {
                 case 0: _changeFragment(position, new ScriptFragment()); break;
-                case 1: _changeFragment(position, new ProfileFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }

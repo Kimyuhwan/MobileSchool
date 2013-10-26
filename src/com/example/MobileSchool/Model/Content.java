@@ -20,23 +20,11 @@ public class Content {
         return expression;
     }
 
-    public void setExpression(String expression) {
-        this.expression = expression;
-    }
-
     public String getScript() {
         return script;
     }
 
-    public void setScript(String script) {
-        this.script = script;
-    }
-
     public String getTip() {
         return tip;
-    }
-
-    public void setTip(String tip) {
-        this.tip = tip;
     }
 }

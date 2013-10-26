@@ -35,9 +35,10 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
-        accountManager = new AccountManager(context);
-        ajaxCallSender = new AjaxCallSender(context);
         globalApplication = (GlobalApplication) context.getApplicationContext();
+        accountManager = globalApplication.getAccountManager();
+        ajaxCallSender = new AjaxCallSender(context);
+
         // If the classReady is on .. (not always!)
 
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
@@ -52,6 +53,8 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
              _onCalling();
         else if(telephonyState.equals(TelephonyManager.EXTRA_STATE_RINGING))
             _onRinging();
+        else if(telephonyState.equals(TelephonyManager.EXTRA_STATE_IDLE))
+            _onIdle();
     }
 
     private void _onCalling() {
@@ -63,6 +66,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
                     // Answer
                     ajaxCallSender.answer();
                     // Start Activity
+                    globalApplication.getSchoolActivity().finish();
                     Intent intent = new Intent(context, EntryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                     context.startActivity(intent);
@@ -76,5 +80,18 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         String incomingNumber = extras.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
         Log.d(TAG, "TelephonyBroadcastReceiver start : onRinging from " + incomingNumber);
         this.incomingNumber = incomingNumber;
+    }
+
+    private void _onIdle() {
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                globalApplication.getSchoolActivity().finish();
+                Intent intent = new Intent(context, EntryActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                context.startActivity(intent);
+            }
+        };
+        thread.start();
     }
 }

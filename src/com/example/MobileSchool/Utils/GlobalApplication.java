@@ -16,36 +16,48 @@ import com.example.MobileSchool.SchoolActivity;
 public class GlobalApplication extends Application {
 
     private String TAG = Constants.TAG;
+
+    // Data Object
     private SchoolActivity schoolActivity;
-    private boolean isSchoolActivityFront;
-
-    private String fragmentName = null;
-    private Fragment fragment = null;
-
+    private AccountManager accountManager;
+    private ContentManager contentManager;
     private PartnerInfo partnerInfo;
 
-    private int drawerType = -1;
+    // Status Check Variable
+    private boolean isSchoolActivityFront;
+    private String fragmentName = null;
+    private Fragment fragment = null;
     private boolean classConnected = false;
+    private int drawerType = -1;
+
+    // Temporal storage
     private int waitingTime;
 
-    private String targetStudentId;
-    private String targetTeacherId;
-
-
-    public boolean isSchoolActivityFront() {
-        return isSchoolActivityFront;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        if(accountManager == null)
+            accountManager = new AccountManager(this);
+        if(contentManager == null)
+            contentManager = new ContentManager(this);
     }
 
-    public void setSchoolActivityFront(boolean schoolActivityFront) {
-        isSchoolActivityFront = schoolActivityFront;
+
+    // Data Object Functions
+    public void setSchoolActivity(SchoolActivity schoolActivity) {
+        this.schoolActivity = schoolActivity;
     }
 
-    public int getWaitingTime() {
-        return waitingTime;
+    public SchoolActivity getSchoolActivity() {
+        return schoolActivity;
     }
 
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
+    public AccountManager getAccountManager() {
+        return accountManager;
+    }
+
+    public ContentManager getContentManager() {
+        return contentManager;
     }
 
     public void setPartnerInfo(PartnerInfo partnerInfo) {
@@ -56,22 +68,19 @@ public class GlobalApplication extends Application {
         return this.partnerInfo;
     }
 
-    public void setSchoolActivity(SchoolActivity schoolActivity) {
-        this.schoolActivity = schoolActivity;
+
+    // Status Check Functions
+    public boolean isSchoolActivityFront() {
+        return isSchoolActivityFront;
     }
 
-    public SchoolActivity getSchoolActivity() {
-        return schoolActivity;
+    public void setSchoolActivityFront(boolean schoolActivityFront) {
+        isSchoolActivityFront = schoolActivityFront;
     }
 
     public void setFragment(String fragmentName, Fragment fragment) {
         this.fragmentName = fragmentName;
         this.fragment = fragment;
-    }
-
-    public void freeFragment() {
-        fragmentName = null;
-        fragment = null;
     }
 
     public Fragment getFragment() {
@@ -88,6 +97,24 @@ public class GlobalApplication extends Application {
             return _getPosition(fragmentName);
     }
 
+    private int _getPosition(String fragmentName) {
+        Log.d(TAG, "Position fragmentName : " + fragmentName);
+        String[] menu_array = getResources().getStringArray(getDrawerType());
+        int index = 0;
+        for(String menu : menu_array) {
+            Log.d(TAG, "Position drawerType : " + menu);
+            if(fragmentName.equals(menu))
+                return index;
+            index++;
+        }
+        return 0;
+    }
+
+    public void freeFragment() {
+        fragmentName = null;
+        fragment = null;
+    }
+
     public void setDrawerType(int type) {
         this.drawerType = type;
     }
@@ -99,37 +126,6 @@ public class GlobalApplication extends Application {
             return drawerType;
     }
 
-    private int _getPosition(String fragmentName) {
-        Log.d(TAG, "Position fragmentName : " + fragmentName);
-        String[] menu_array = getResources().getStringArray(getDrawerType());
-        int index = 0;
-        for(String menu : menu_array) {
-            Log.d(TAG, "Position drawerType : " + menu);
-            if(fragmentName.equals(menu))
-                 return index;
-            index++;
-        }
-        return 0;
-    }
-
-    // Target Information
-    public void setTargetStudentId(String oppositeId) {
-        this.targetStudentId = oppositeId;
-    }
-
-    public String getTargetStudentId() {
-        return targetStudentId;
-    }
-
-    public void setTargetTeacherId(String oppositeId) {
-        this.targetTeacherId = oppositeId;
-    }
-
-    public String getTargetTeacherId() {
-        return targetTeacherId;
-    }
-
-    // Class Information
     public boolean isClassConnected() {
         return classConnected;
     }
@@ -137,4 +133,16 @@ public class GlobalApplication extends Application {
     public void setClassConnected(boolean classConnected) {
         this.classConnected = classConnected;
     }
+
+
+    //  Temporal storage Functions
+    public int getWaitingTime() {
+        return waitingTime;
+    }
+
+    public void setWaitingTime(int waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+
 }

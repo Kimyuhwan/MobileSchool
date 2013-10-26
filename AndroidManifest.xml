@@ -26,6 +26,7 @@
         <activity android:name=".Activities.LogInActivity" android:theme="@style/Theme.Openschool"/>
         <activity android:name=".Activities.RegistrationActivity" android:theme="@style/Theme.Openschool"/>
         <activity android:name=".Activities.EntryActivity" android:taskAffinity="com.android.phone"/>
+        <activity android:name=".Activities.EvaluationActivity" android:theme="@style/Theme.Openschool"/>
 
         <service android:name=".BroadCastReceiver.ManagerRegistrationService"/>
         <service android:name="com.parse.PushService" />

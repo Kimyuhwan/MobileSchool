@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 import com.example.MobileSchool.Model.Content;
-import com.example.MobileSchool.Model.MyInfo;
 import com.google.gson.Gson;
 import org.joda.time.LocalDate;
 

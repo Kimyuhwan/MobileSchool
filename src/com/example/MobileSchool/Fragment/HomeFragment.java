@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
         getActivity().setTitle(Constants.FRAGMENT_TITLE_HOME);
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
-        accountManager = new AccountManager(getActivity().getApplicationContext());
+        accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         _initFragment();
@@ -68,13 +68,6 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private void _initUI(View rootView) {
         startingPointButton = (Button) rootView.findViewById(R.id.home_button_starting_point);
         startingPointTextView = (TextView) rootView.findViewById(R.id.home_textView_starting_point);
-        temporalButton = (Button) rootView.findViewById(R.id.home_button_temporal);
-        temporalButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        });
 
         if(accountManager.isStudent()) {
             startingPointButton.setText(R.string.home_button_starting_point_student);

@@ -46,7 +46,7 @@ public class LogInActivity extends Activity implements BaseMethod{
 
         globalApplication = (GlobalApplication) getApplication();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
-        accountManager = new AccountManager(this);
+        accountManager = globalApplication.getAccountManager();
         _initUI();
     }
 

@@ -9,6 +9,7 @@ import com.androidquery.callback.AjaxStatus;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
+import com.example.MobileSchool.Utils.GlobalApplication;
 import org.json.JSONObject;
 
 /**
@@ -24,24 +25,18 @@ public class AjaxCallBackReceiver extends AjaxCallback<JSONObject> {
     private Fragment fragment;
     private Activity activity;
 
-    private AccountManager accountManager;
-
-
     public AjaxCallBackReceiver(Context context) {
         this.context = context;
-        accountManager = new AccountManager(context);
     }
 
     public AjaxCallBackReceiver(Context context, Fragment fragment) {
         this.context = context;
         this.fragment = fragment;
-        accountManager = new AccountManager(context);
     }
 
     public AjaxCallBackReceiver(Context context, Activity activity) {
         this.context = context;
         this.activity = activity;
-        accountManager = new AccountManager(context);
     }
 
     @Override

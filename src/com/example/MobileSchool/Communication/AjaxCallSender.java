@@ -36,24 +36,24 @@ public class AjaxCallSender {
         this.context = context;
         aq = new AQuery(context);
         ajaxCallBack = new AjaxCallBackReceiver(context);
-        accountManager = new AccountManager(context);
         globalApplication = (GlobalApplication) context.getApplicationContext();
+        accountManager = globalApplication.getAccountManager();
     }
 
     public AjaxCallSender(Context context, Fragment fragment) {
         this.context = context;
         aq = new AQuery(context);
         ajaxCallBack = new AjaxCallBackReceiver(context, fragment);
-        accountManager = new AccountManager(context);
         globalApplication = (GlobalApplication) context.getApplicationContext();
+        accountManager = globalApplication.getAccountManager();
     }
 
     public AjaxCallSender(Context context, Activity activity) {
         this.context = context;
         aq = new AQuery(context);
         ajaxCallBack = new AjaxCallBackReceiver(context, activity);
-        accountManager = new AccountManager(context);
         globalApplication = (GlobalApplication) context.getApplicationContext();
+        accountManager = globalApplication.getAccountManager();
     }
 
     public void deviceStatusUpdate(boolean isScreenOn) {

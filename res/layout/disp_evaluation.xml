@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/evaluation_textView_title"
+              android:textSize="25dp"
+              android:paddingTop="20dp"
+              android:paddingLeft="20dp"
+              android:paddingBottom="10dp"
+              android:drawableLeft="@drawable/ic_launcher"
+              android:layout_gravity="bottom"
+              android:gravity="bottom"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="@string/evaluation_textView_body"
+              android:paddingBottom="10dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="20dp"
+              android:layout_gravity="center"/>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:paddingTop="20dp"
+                  android:paddingRight="20dp"
+                  android:paddingLeft="20dp">
+
+        <ToggleButton
+                android:id="@+id/toggleButton_good"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_good_bg"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <TextView android:text="Content of a class"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="15dp"
+                  android:layout_gravity="center"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <ToggleButton
+                android:id="@+id/toggleButton_bad"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_bad_bg"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:paddingTop="20dp"
+                  android:paddingRight="20dp"
+                  android:paddingLeft="20dp">
+
+        <ToggleButton
+                android:id="@+id/toggleButton_good"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_good_bg"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <TextView android:text="Level of difficulty"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="15dp"
+                  android:layout_gravity="center"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <ToggleButton
+                android:id="@+id/toggleButton_bad"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_bad_bg"/>
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:paddingTop="20dp"
+                  android:paddingRight="20dp"
+                  android:paddingBottom="20dp"
+                  android:paddingLeft="20dp">
+
+        <ToggleButton
+                android:id="@+id/toggleButton_good"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_good_bg"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <TextView android:text="Duration of class"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="15dp"
+                  android:layout_gravity="center"/>
+
+        <Space android:layout_height="fill_parent" android:layout_width="10dp"/>
+
+        <ToggleButton
+                android:id="@+id/toggleButton_bad"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                style="@style/toggleButton_good"
+                android:background="@drawable/evaluation_toggle_bad_bg"/>
+    </LinearLayout>
+
+    <Button android:text="Submit"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"/>
+</LinearLayout>

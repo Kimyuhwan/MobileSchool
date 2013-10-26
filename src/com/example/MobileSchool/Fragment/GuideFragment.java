@@ -46,7 +46,7 @@ public class GuideFragment extends Fragment implements BaseMethod {
         Log.d(TAG, "GuideFragment : onCreateView");
         View rootView;
         globalApplication = (GlobalApplication) getActivity().getApplication();
-        accountManager = new AccountManager(getActivity().getApplicationContext());
+        accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
 
@@ -151,12 +151,12 @@ public class GuideFragment extends Fragment implements BaseMethod {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                    if(globalApplication.isClassConnected()) {
+                    if(globalApplication.isSchoolActivityFront()) {
                         globalApplication.setFragment("Home", new HomeFragment());
                         globalApplication.getSchoolActivity().initFragment();
                     }
                     }
-                }, 3000);
+                }, 1000);
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

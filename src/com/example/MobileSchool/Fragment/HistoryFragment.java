@@ -43,7 +43,7 @@ public class HistoryFragment extends Fragment implements BaseMethod {
 
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
-        accountManager = new AccountManager(getActivity().getApplicationContext());
+        accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         _initFragment();

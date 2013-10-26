@@ -27,6 +27,7 @@ public class IntroActivity extends Activity {
 
     private Handler mHandler;
     private Runnable mRunnable;
+    private GlobalApplication globalApplication;
     private AccountManager accountManager;
 
     @Override
@@ -36,7 +37,9 @@ public class IntroActivity extends Activity {
         setContentView(R.layout.disp_intro);
         Log.d(TAG, "IntroActivity : onCreate");
 
-        accountManager = new AccountManager(this);
+        globalApplication = (GlobalApplication) getApplication();
+        accountManager = globalApplication.getAccountManager();
+
         MyInfo myInfo = accountManager.getMyInfo();
         Log.d(TAG, "IntroActivity myInfo : " + myInfo);
         _setHandler(myInfo);
@@ -45,17 +48,19 @@ public class IntroActivity extends Activity {
     }
 
     private void _setHandler(MyInfo myInfo) {
-        final Intent intent;
-        if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
-        else intent = new Intent(getApplicationContext(), SchoolActivity.class);
-        mRunnable = new Runnable() {
-            @Override
-            public void run() {
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                startActivity(intent);
-                finish();
-            }
-        };
+        startActivity(new Intent(this, EvaluationActivity.class));
+//
+//        final Intent intent;
+//        if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
+//        else intent = new Intent(getApplicationContext(), SchoolActivity.class);
+//        mRunnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//                startActivity(intent);
+//                finish();
+//            }
+//        };
     }
 
     @Override

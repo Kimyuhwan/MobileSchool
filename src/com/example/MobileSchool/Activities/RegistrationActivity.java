@@ -54,8 +54,10 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         Log.d(TAG, "RegistrationActivity : onCreate");
 
         globalApplication = (GlobalApplication) getApplication();
+        accountManager = globalApplication.getAccountManager();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
-        accountManager = new AccountManager(this);
+
+
         _initUI();
     }
 
