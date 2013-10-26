@@ -14,7 +14,6 @@
 
     <string-array name="Class_menu_array">
         <item>Script</item>
-        <item>Profile</item>
         <item>Evaluation</item>
     </string-array>
 
@@ -39,6 +38,7 @@
     <string name="profile_textView_call_information_teacher_msg">Automatically calling soon!</string>
     <string name="profile_textView_call_information_student_msg">He will call you soon!</string>
     <string name="profile_textView_default_msg">Connecting ...</string>
+    <string name="script_textView_daily_dialogue_title">Today Dialogue</string>
     <string name="toast_textView_notification">새로운 수업을 시작해주세요!</string>
     <string name="toast_textView_warning">현재 가능한 수업이 없습니다!</string>
 

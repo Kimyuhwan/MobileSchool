@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Window;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.GuideFragment;
+import com.example.MobileSchool.Fragment.ScriptFragment;
 import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;

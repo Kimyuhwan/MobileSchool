@@ -219,7 +219,6 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
             switch (position) {
                 case 0: _changeFragment(position, new ScriptFragment()); break;
                 case 1: _changeFragment(position, new ProfileFragment()); break;
-//                case 2: _changeFragment(position, new ProfileFragment()); break;   // Evaluation
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }

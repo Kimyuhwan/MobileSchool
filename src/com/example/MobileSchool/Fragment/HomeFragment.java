@@ -41,7 +41,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private TextView startingPointTextView;
     private Button startingPointButton;
 
-
+    private Button temporalButton;
 
     public HomeFragment() {}
 
@@ -68,6 +68,14 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private void _initUI(View rootView) {
         startingPointButton = (Button) rootView.findViewById(R.id.home_button_starting_point);
         startingPointTextView = (TextView) rootView.findViewById(R.id.home_textView_starting_point);
+        temporalButton = (Button) rootView.findViewById(R.id.home_button_temporal);
+        temporalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        });
+
         if(accountManager.isStudent()) {
             startingPointButton.setText(R.string.home_button_starting_point_student);
             startingPointTextView.setText(R.string.home_textView_starting_point_student);

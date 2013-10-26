@@ -45,6 +45,11 @@
                         android:textColor="#ffffff"/>
             </LinearLayout>
 
+        <Button android:id="@+id/home_button_temporal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="script"/>
+
     </LinearLayout>
 
 </LinearLayout>

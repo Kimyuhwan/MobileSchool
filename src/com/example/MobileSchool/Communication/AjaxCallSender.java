@@ -111,7 +111,7 @@ public class AjaxCallSender {
         else
             url = ServerMessage.URL_DIALOGUE_TEACHER;
         aq.ajax(url, JSONObject.class, ajaxCallBack);
-        Log.d(TAG, "AjaxCall start : " + url);
+        Log.d(TAG, "AjaxCall getDialogue : " + url);
     }
 
     public void start() {
