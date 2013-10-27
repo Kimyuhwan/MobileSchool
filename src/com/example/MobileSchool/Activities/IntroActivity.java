@@ -48,19 +48,18 @@ public class IntroActivity extends Activity {
     }
 
     private void _setHandler(MyInfo myInfo) {
-        startActivity(new Intent(this, EvaluationActivity.class));
-//
-//        final Intent intent;
-//        if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
-//        else intent = new Intent(getApplicationContext(), SchoolActivity.class);
-//        mRunnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-//                startActivity(intent);
-//                finish();
-//            }
-//        };
+
+        final Intent intent;
+        if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
+        else intent = new Intent(getApplicationContext(), SchoolActivity.class);
+        mRunnable = new Runnable() {
+            @Override
+            public void run() {
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                startActivity(intent);
+                finish();
+            }
+        };
     }
 
     @Override
