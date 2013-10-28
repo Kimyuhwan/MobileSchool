@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.example.MobileSchool.Activities.EntryActivity;
+import com.example.MobileSchool.Activities.EvaluationActivity;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.R;
@@ -45,7 +46,8 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         extras = intent.getExtras();
 
         Log.d(TAG, "TelephonyBroadcastReceiver receive stat : " + telephonyState);
-        _handleState(telephonyState);
+        if(globalApplication.isClassConnected())
+            _handleState(telephonyState);
     }
 
     private void _handleState(String telephonyState) {
@@ -86,8 +88,9 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         Thread thread = new Thread(){
             @Override
             public void run() {
+                globalApplication.setClassConnected(false);
                 globalApplication.getSchoolActivity().finish();
-                Intent intent = new Intent(context, EntryActivity.class);
+                Intent intent = new Intent(context, EvaluationActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 context.startActivity(intent);
             }

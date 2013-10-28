@@ -7,6 +7,7 @@ import android.util.Log;
 import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.Fragment.ScriptFragment;
 import com.example.MobileSchool.R;
+import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 
@@ -25,11 +26,11 @@ public class EntryActivity extends Activity {
         Log.d(TAG, "EntryActivity: onCreate");
 
         globalApplication = (GlobalApplication) getApplication();
-
         globalApplication.setFragment("Script",new ScriptFragment());
         globalApplication.setDrawerType(R.array.Class_menu_array);
+        finish();
 
-        Intent intent = new Intent(EntryActivity.this, IntroActivity.class);
+        Intent intent = new Intent(EntryActivity.this, SchoolActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
