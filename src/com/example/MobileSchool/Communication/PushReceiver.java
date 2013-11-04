@@ -14,13 +14,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.MobileSchool.Activities.EntryActivity;
+import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Fragment.ProfileFragment;
+import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -101,14 +107,22 @@ public class PushReceiver extends BroadcastReceiver {
             }
             else if(code.equals(Constants.PUSH_CODE_PUSH_STUDENT_ANSWER)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
-               JSONObject studentInfo = msg.getJSONObject(Constants.PUSH_KEY_STUDENT_INFO);
-               String studentId = studentInfo.getString(Constants.PUSH_VALUE_STUDENT_ID);
-               Log.d(TAG, "Student Id : " + studentId);
+               JSONArray entry_list = msg.getJSONArray(Constants.PUSH_KEY_ENTRY_LIST);
+               DialogueItem[] entryItems = new DialogueItem[entry_list.length()];
+               for(int index = 0; index < entry_list.length(); index++) {
+                   JSONObject entryObject = entry_list.getJSONObject(index);
+                   DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("body"), entryObject.getString("id"));
+                   entryItems[index] = dialogueItem;
+               }
+               Log.d(TAG, "PushReceiver EntryItems : " + entryItems);
+               globalApplication.setEntryItems(entryItems);
 
                // Class Entry Start
                Intent intent = new Intent(context, EntryActivity.class);
                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                context.startActivity(intent);
+            } else {
+                ((BaseMethod) globalApplication.getFragment()).handlePush(object);
             }
         } catch (JSONException e) { e.printStackTrace();}
     }

@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
-import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
-import com.example.MobileSchool.Fragment.GuideFragment;
-import com.example.MobileSchool.Fragment.ScriptFragment;
 import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
@@ -52,6 +49,7 @@ public class IntroActivity extends Activity {
         final Intent intent;
         if(myInfo == null) intent = new Intent(getApplicationContext(), LogInActivity.class);
         else intent = new Intent(getApplicationContext(), SchoolActivity.class);
+
         mRunnable = new Runnable() {
             @Override
             public void run() {

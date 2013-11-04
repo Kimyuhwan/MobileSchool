@@ -27,6 +27,7 @@ public class Constants {
     public static String PUSH_KEY_TEACHER_INFO = "teacher_info";
     public static String PUSH_KEY_STUDENT_INFO = "student_info";
     public static String PUSH_KEY_WAITING = "waiting";
+    public static String PUSH_KEY_ENTRY_LIST = "entry_list";
 
     public static String PUSH_VALUE_TEACHER_ID = "tid";
     public static String PUSH_VALUE_STUDENT_ID = "sid";
@@ -69,6 +70,11 @@ public class Constants {
     public static String REGISTRATION_GENDER_FEMALE = "female";
     public static String REGISTRATION_TYPE_STUDENT = "student";
     public static String REGISTRATION_TYPE_TEACHER = "teacher";
+
+    // Interactive Dialogue
+    public static int DIALOGUE_CHOICE_0 = 0;
+    public static int DIALOGUE_CHOICE_1 = 1;
+    public static int DIALOGUE_CHOICE_2 = 2;
 
     // Contents
     public static String CONTENTS = "contents";

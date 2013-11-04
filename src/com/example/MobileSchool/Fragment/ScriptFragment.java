@@ -99,4 +99,9 @@ public class ScriptFragment extends Fragment implements BaseMethod {
 
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 }

@@ -65,10 +65,6 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         if(ManagerRegistrationService.managerRegistrationService == null)
             startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
 
-        //Check today Dialog
-        if(!contentManager.existTodayDialog())
-            ajaxCallSender.getDialogue();
-
         initDrawer();
         initFragment();
     }
@@ -179,6 +175,11 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
                 contentManager.saveTodayContent(content);
             }
         } catch (JSONException e) { e.printStackTrace(); }
+    }
+
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {

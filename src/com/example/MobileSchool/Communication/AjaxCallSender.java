@@ -132,4 +132,20 @@ public class AjaxCallSender {
         Log.d(TAG, "AjaxCall answer : " + url);
     }
 
+    public void select(String type, String id) {
+        String url = "";
+        if(type.equals("question"))
+            url = ServerMessage.URL_SELECT_QUESTION + id + "/teacher/";
+        else
+            url = ServerMessage.URL_SELECT_ANSWER + id + "/teacher/";
+
+        if(accountManager.isStudent())
+            url += globalApplication.getPartnerInfo().getUnique_id() + "/student/" + accountManager.getMyInfo().getUnique_id();
+        else
+            url += accountManager.getMyInfo().getUnique_id() + "/student/" + globalApplication.getPartnerInfo().getUnique_id();
+
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall select : " + url);
+    }
+
 }

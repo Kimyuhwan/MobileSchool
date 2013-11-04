@@ -110,4 +110,9 @@ public class HomeFragment extends Fragment implements BaseMethod {
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 }

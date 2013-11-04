@@ -42,4 +42,9 @@ public class EvaluationActivity extends Activity implements BaseMethod {
     public void handleAjaxCallBack(JSONObject object) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

@@ -10,4 +10,5 @@ import org.json.JSONObject;
 public interface BaseMethod {
 
     public void handleAjaxCallBack(JSONObject object);
+    public void handlePush(JSONObject object);
 }

@@ -104,4 +104,9 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 }

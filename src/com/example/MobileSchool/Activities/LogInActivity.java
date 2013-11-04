@@ -89,6 +89,11 @@ public class LogInActivity extends Activity implements BaseMethod{
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     private void _handleSuccess(JSONObject object) {
         try {
             JSONObject user;

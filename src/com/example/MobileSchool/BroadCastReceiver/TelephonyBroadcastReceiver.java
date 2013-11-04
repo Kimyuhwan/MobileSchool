@@ -41,7 +41,6 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         ajaxCallSender = new AjaxCallSender(context);
 
         // If the classReady is on .. (not always!)
-
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
         extras = intent.getExtras();
 

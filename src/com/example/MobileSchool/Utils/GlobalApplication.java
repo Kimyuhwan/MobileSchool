@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import com.example.MobileSchool.Fragment.HomeFragment;
+import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
@@ -32,6 +33,7 @@ public class GlobalApplication extends Application {
 
     // Temporal storage
     private int waitingTime;
+    private DialogueItem[] entryItems;
 
     @Override
     public void onCreate() {
@@ -142,6 +144,14 @@ public class GlobalApplication extends Application {
 
     public void setWaitingTime(int waitingTime) {
         this.waitingTime = waitingTime;
+    }
+
+    public DialogueItem[] getEntryItems() {
+        return entryItems;
+    }
+
+    public void setEntryItems(DialogueItem[] entryItems) {
+        this.entryItems = entryItems;
     }
 
 

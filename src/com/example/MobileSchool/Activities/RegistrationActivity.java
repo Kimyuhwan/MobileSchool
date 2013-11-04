@@ -127,6 +127,11 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     private void _makeToast(String message) {
         LayoutInflater inflater = (LayoutInflater) getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View layout = inflater.inflate(R.layout.toast_layout, null);

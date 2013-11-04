@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import com.example.MobileSchool.Fragment.HomeFragment;
-import com.example.MobileSchool.Fragment.ScriptFragment;
+import com.example.MobileSchool.Fragment.TemporalStudentFragment;
+import com.example.MobileSchool.Fragment.TemporalTeacherFragment;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.Constants;
@@ -26,7 +26,10 @@ public class EntryActivity extends Activity {
         Log.d(TAG, "EntryActivity: onCreate");
 
         globalApplication = (GlobalApplication) getApplication();
-        globalApplication.setFragment("Script",new ScriptFragment());
+        if(globalApplication.getAccountManager().isStudent())
+            globalApplication.setFragment("Script",new TemporalStudentFragment());
+        else
+            globalApplication.setFragment("Script", new TemporalTeacherFragment());
         globalApplication.setDrawerType(R.array.Class_menu_array);
         finish();
 

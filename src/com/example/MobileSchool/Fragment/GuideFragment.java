@@ -161,6 +161,11 @@ public class GuideFragment extends Fragment implements BaseMethod {
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
+    @Override
+    public void handlePush(JSONObject object) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
 
     private void _makeToast() {
         LayoutInflater inflater = (LayoutInflater) globalApplication.getSchoolActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

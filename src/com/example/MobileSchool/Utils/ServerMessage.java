@@ -18,6 +18,8 @@ public class ServerMessage {
     public static String URL_ANSWER = SERVER_ADDRESS + "answer/";
     public static String URL_DIALOGUE_TEACHER = SERVER_ADDRESS + "get/dialogue/for/teacher/";
     public static String URL_DIALOGUE_STUDENT = SERVER_ADDRESS + "get/dialogue/for/student/";
+    public static String URL_SELECT_QUESTION = SERVER_ADDRESS + "select/question/id/";
+    public static String URL_SELECT_ANSWER = SERVER_ADDRESS + "select/answer/id/";
 
     // Old Message
     public static String URL_LOGIN = SERVER_ADDRESS + "account/login/";
