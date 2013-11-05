@@ -36,6 +36,7 @@ public class Constants {
     public static String PUSH_CODE_STUDENT_START = "SS";
     public static String PUSH_CODE_PUSH_TEACHER_INFO = "PTI";
     public static String PUSH_CODE_PUSH_STUDENT_ANSWER = "PSA";
+    public static String PUSH_CODE_PUSH_ROOT_QUESTION = "PRQ";
     public static String PUSH_CODE_PUSH_TEACHER = "PT";
     public static String PUSH_CODE_TEACHER_FINISH = "TF";
     public static String PUSH_CODE_STUDENT_FINISH = "SF";

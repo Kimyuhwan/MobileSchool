@@ -25,7 +25,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 31
  * Time: 오후 2:29
  */
-public class TemporalTeacherFragment extends Fragment implements BaseMethod, RadioGroup.OnCheckedChangeListener {
+public class ScriptTeacherFragment extends Fragment implements BaseMethod, RadioGroup.OnCheckedChangeListener {
 
     private String TAG = Constants.TAG;
     private String title = "Temporal";
@@ -45,11 +45,13 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
     private DialogueItem[] currentItems;
     private DialogueItem chosenItem;
 
+    private boolean isConfirmClicked = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d(TAG, "TemporalTeacherFragment : onCreateView");
-        rootView = inflater.inflate(R.layout.disp_temporal, container, false);
+        Log.d(TAG, "ScriptTeacherFragment : onCreateView");
+        rootView = inflater.inflate(R.layout.disp_script_teacher, container, false);
         getActivity().setTitle(title);
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
@@ -71,9 +73,12 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "TemporalTeacherFragment Confirm : " + itemIndex);
-                chosenItem = currentItems[itemIndex];
-                ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
+                Log.d(TAG, "ScriptTeacherFragment Confirm : " + itemIndex);
+                if(!isConfirmClicked) {
+                    chosenItem = currentItems[itemIndex];
+                    ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
+                    isConfirmClicked = true;
+                }
             }
         });
     }
@@ -87,17 +92,18 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
         rootLinearLayout.removeAllViewsInLayout();
         currentChoiceView = _getTemporalItem(rootLinearLayout);
         rootLinearLayout.addView(currentChoiceView);
+        isConfirmClicked = false;
     }
 
 
     private View _getTemporalItem(LinearLayout rootLinearLayout) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.item_temporal, rootLinearLayout, false);
-        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.temporal_radioGroup_choices);
+        View view = layoutInflater.inflate(R.layout.item_temporal_teacher, rootLinearLayout, false);
+        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.temporal_teacher_radioGroup_choices);
         radioGroup.setOnCheckedChangeListener(this);
 
-        RadioButton radioButton1 = (RadioButton) view.findViewById(R.id.temporal_radioGroup_first_choice);
-        RadioButton radioButton2 = (RadioButton) view.findViewById(R.id.temporal_radioGroup_second_choice);
+        RadioButton radioButton1 = (RadioButton) view.findViewById(R.id.temporal_teacher_radioGroup_first_choice);
+        RadioButton radioButton2 = (RadioButton) view.findViewById(R.id.temporal_teacher_radioGroup_second_choice);
         radioButton1.setText(currentItems[0].getBody());
         radioButton2.setText(currentItems[1].getBody());
 
@@ -125,9 +131,9 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if(checkedId == R.id.temporal_radioGroup_first_choice)
+        if(checkedId == R.id.temporal_teacher_radioGroup_first_choice)
             itemIndex = Constants.DIALOGUE_CHOICE_0;
-        else if(checkedId == R.id.temporal_radioGroup_second_choice)
+        else if(checkedId == R.id.temporal_teacher_radioGroup_second_choice)
             itemIndex = Constants.DIALOGUE_CHOICE_1;
         else
             itemIndex = Constants.DIALOGUE_CHOICE_2;
@@ -135,7 +141,7 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
 
     @Override
     public void handleAjaxCallBack(JSONObject object) {
-        Log.d(TAG, "TemporalTeacherFragment : handleAjaxCallBack Object => " + object);
+        Log.d(TAG, "ScriptTeacherFragment : handleAjaxCallBack Object => " + object);
         try {
             if(object.getString("type").equals("answer")) {
                 JSONArray answer_list = object.getJSONArray("answer_list");
@@ -162,7 +168,7 @@ public class TemporalTeacherFragment extends Fragment implements BaseMethod, Rad
 
     @Override
     public void handlePush(JSONObject object) {
-        Log.d(TAG, "TemporalTeacherFragment handlePush : " + object);
+        Log.d(TAG, "ScriptTeacherFragment handlePush : " + object);
         try {
             String code = object.getString("code");
             if(code.equals("PQA")) {

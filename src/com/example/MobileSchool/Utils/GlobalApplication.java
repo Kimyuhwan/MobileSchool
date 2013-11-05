@@ -8,6 +8,12 @@ import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: yuhwan
@@ -38,6 +44,8 @@ public class GlobalApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
+
         if(accountManager == null)
             accountManager = new AccountManager(this);
         if(contentManager == null)

@@ -77,20 +77,20 @@ public class GuideFragment extends Fragment implements BaseMethod {
         anim.setRepeatCount(Animation.INFINITE);
         connectingTextView.startAnimation(anim);
 
-        // 60초 후에 안오면 돌아가기.
-        mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(globalApplication.isSchoolActivityFront()) {
-                    _makeToast();
-                    globalApplication.setFragment("Home", new HomeFragment());
-                    globalApplication.setDrawerType(R.array.Home_menu_array);
-                    globalApplication.getSchoolActivity().initDrawer();
-                    globalApplication.getSchoolActivity().initFragment();
-                }
-            }
-        }, globalApplication.getWaitingTime());
+//        // 60초 후에 안오면 돌아가기.
+//        mHandler = new Handler();
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if(globalApplication.isSchoolActivityFront()) {
+//                    _makeToast();
+//                    globalApplication.setFragment("Home", new HomeFragment());
+//                    globalApplication.setDrawerType(R.array.Home_menu_array);
+//                    globalApplication.getSchoolActivity().initDrawer();
+//                    globalApplication.getSchoolActivity().initFragment();
+//                }
+//            }
+//        }, globalApplication.getWaitingTime());
     }
 
     private void _initUIForStudentConnected(View rootView) {

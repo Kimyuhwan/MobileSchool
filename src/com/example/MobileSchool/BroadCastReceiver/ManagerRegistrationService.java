@@ -53,7 +53,6 @@ public class ManagerRegistrationService extends Service {
         accountManager = globalApplication.getAccountManager();
 
         // Set Push Notification Framework (Parse)
-        Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
         PushService.setDefaultPushCallback(this, SchoolActivity.class);
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         List<String> channels = new LinkedList<String>();

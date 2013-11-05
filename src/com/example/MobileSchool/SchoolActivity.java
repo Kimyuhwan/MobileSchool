@@ -169,10 +169,12 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     public void handleAjaxCallBack(JSONObject object) {
         Log.d(TAG, "SchoolActivity : handleAjaxCallBack Object => " + object);
         try {
-            String code = object.getString("code");
-            if(code.equals(Constants.PUSH_CODE_DAILY_DIALOGUE)) {
-                Content content = new Content(object.getString("expression"), object.getString("script"), object.getString("tip"));
-                contentManager.saveTodayContent(content);
+            if(!object.isNull("code")) {
+                String code = object.getString("code");
+                if(code.equals(Constants.PUSH_CODE_DAILY_DIALOGUE)) {
+                    Content content = new Content(object.getString("expression"), object.getString("script"), object.getString("tip"));
+                    contentManager.saveTodayContent(content);
+                }
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

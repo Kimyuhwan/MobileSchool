@@ -105,7 +105,7 @@ public class PushReceiver extends BroadcastReceiver {
                 globalApplication.setFragment("Profile",new ProfileFragment());
                 globalApplication.getSchoolActivity().initFragment();
             }
-            else if(code.equals(Constants.PUSH_CODE_PUSH_STUDENT_ANSWER)) {
+            else if(code.equals(Constants.PUSH_CODE_PUSH_ROOT_QUESTION)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
                JSONArray entry_list = msg.getJSONArray(Constants.PUSH_KEY_ENTRY_LIST);
                DialogueItem[] entryItems = new DialogueItem[entry_list.length()];
@@ -121,6 +121,7 @@ public class PushReceiver extends BroadcastReceiver {
                Intent intent = new Intent(context, EntryActivity.class);
                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                context.startActivity(intent);
+
             } else {
                 ((BaseMethod) globalApplication.getFragment()).handlePush(object);
             }
