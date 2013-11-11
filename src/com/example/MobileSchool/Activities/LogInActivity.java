@@ -1,13 +1,19 @@
 package com.example.MobileSchool.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
@@ -32,6 +38,7 @@ public class LogInActivity extends Activity implements BaseMethod{
     private AjaxCallSender ajaxCallSender;
     private AccountManager accountManager;
 
+    private LinearLayout rootLinearLayout;
     private EditText idEditText;
     private EditText passwordEditText;
     private Button loginButton;
@@ -48,18 +55,33 @@ public class LogInActivity extends Activity implements BaseMethod{
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
         accountManager = globalApplication.getAccountManager();
         _initUI();
+        _initFont();
+    }
+
+    private void _initFont() {
+        ViewGroup container = (LinearLayout) findViewById(R.id.login_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUI() {
+        rootLinearLayout = (LinearLayout) findViewById(R.id.login_layout_root);
         idEditText = (EditText) findViewById(R.id.login_editText_id);
         passwordEditText = (EditText) findViewById(R.id.login_editText_password);
         loginButton = (Button) findViewById(R.id.login_button_login);
         registrationButton = (Button) findViewById(R.id.login_button_registration);
 
+        rootLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideSoftKeyboard(getCurrentFocus());
+            }
+        });
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 ajaxCallSender.login(idEditText.getText().toString(), passwordEditText.getText().toString());
+                if(_isValid())
+                    ajaxCallSender.login(idEditText.getText().toString(), passwordEditText.getText().toString());
             }
         });
 
@@ -67,9 +89,29 @@ public class LogInActivity extends Activity implements BaseMethod{
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
-                finish();
             }
         });
+    }
+
+    private boolean _isValid() {
+        boolean result = true;
+        String id = idEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        if(id.equals("")) {
+            Toast toast = Toast.makeText(this, "아이디를 입력해 주세요",Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        } else if(password.equals("")) {
+            Toast toast = Toast.makeText(this, "비밀번호를 입력해 주세요",Toast.LENGTH_SHORT);
+            toast.show();
+            return false;
+        }
+        return  result;
+    }
+
+    protected void hideSoftKeyboard(View view) {
+        InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -91,7 +133,6 @@ public class LogInActivity extends Activity implements BaseMethod{
 
     @Override
     public void handlePush(JSONObject object) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     private void _handleSuccess(JSONObject object) {
@@ -106,11 +147,19 @@ public class LogInActivity extends Activity implements BaseMethod{
                 type = "teacher";
             }
             MyInfo myInfo = new MyInfo(object.getString("account_id"), user.getString("uid"),user.getString("name"),user.getString("phone"), user.getInt("age"), user.getString("gender"), type);
-            accountManager.saveMyInfo(myInfo);
-            Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            startActivity(intent);
-            finish();
+            //Check phoneNumber
+            TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            String phoneNumber = mgr.getLine1Number();
+            if(user.getString("phone").equals(phoneNumber)) {
+                accountManager.saveMyInfo(myInfo);
+                Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast toast = Toast.makeText(this, "이 핸드폰 번호와 맞지 않는 아이디입니다.",Toast.LENGTH_SHORT);
+                toast.show();
+            }
         } catch (JSONException e) { e.printStackTrace(); }
     }
 }

@@ -32,4 +32,6 @@
                   android:layout_gravity="center"
                   android:gravity="center"
                   android:textColor="#84c4d2"/>
+
+        <Button android:id="@+id/myinfo_button_logout" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/myinfo_button_logout" android:textColor="#ffffff"/>
 </LinearLayout>

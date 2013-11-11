@@ -14,12 +14,15 @@ import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
 import com.example.MobileSchool.Model.Content;
+import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.ContentManager;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import org.json.JSONObject;
+
+import java.util.List;
 
 /**
  * User: yuhwan
@@ -36,11 +39,9 @@ public class ScriptFragment extends Fragment implements BaseMethod {
     private PushSender pushSender;
     private AjaxCallSender ajaxCallSender;
 
-    private Content todayContent;
-
     private LinearLayout rootLinearLayout;
-    private TextView expressionTextView;
-    private TextView tipTextView;
+
+    private List<DialogueItem> dialogueList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,8 +55,7 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         contentManager = globalApplication.getContentManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
-
-        todayContent = contentManager.getTodayContent();
+        dialogueList = globalApplication.getDialogueList();
 
         _initUI(rootView);
 
@@ -64,25 +64,19 @@ public class ScriptFragment extends Fragment implements BaseMethod {
 
     private void _initUI(View rootView) {
         rootLinearLayout = (LinearLayout) rootView.findViewById(R.id.script_layout_root);
-        expressionTextView = (TextView) rootView.findViewById(R.id.script_textView_expression);
-        expressionTextView.setText(todayContent.getExpression());
-
-        int index = 0;
-        String[] scriptArray = todayContent.getScript().split("\n");
-        for(String script : scriptArray) {
-            rootLinearLayout.addView(_getScriptItem(rootLinearLayout, index++, script));
+        for(DialogueItem dialogueItem : dialogueList) {
+            rootLinearLayout.addView(_getScriptItem(rootLinearLayout, dialogueItem.getType(), dialogueItem.getBody()));
         }
-
     }
 
-    private View _getScriptItem(LinearLayout rootLinearLayout, int count, String script) {
+    private View _getScriptItem(LinearLayout rootLinearLayout, String type, String script) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.item_script, rootLinearLayout, false);
         TextView textView = (TextView) view.findViewById(R.id.script_item_textView);
         ImageView imageView = (ImageView) view.findViewById(R.id.script_item_imageView);
 
         textView.setText(script);
-        if(count % 2 == 0) {
+        if(type.equals("A")) {
             imageView.setImageResource(R.drawable.profile_icon_blue);
             textView.setBackgroundResource(R.drawable.ninepatch_blue);
         }

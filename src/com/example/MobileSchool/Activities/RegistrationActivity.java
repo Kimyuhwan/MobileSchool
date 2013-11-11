@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
@@ -39,9 +40,11 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
     private RadioGroup genderRadioGroup;
     private RadioGroup typeRadioGroup;
 
+    private LinearLayout rootLinearLayout;
     private EditText idEditText;
     private EditText passwordEditText;
     private EditText nameEditText;
+    private TextView msgTextView;
 
     private String gender = Constants.REGISTRATION_GENDER_MALE;
     private String type = Constants.REGISTRATION_TYPE_STUDENT;
@@ -62,19 +65,31 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
     }
 
     private void _initUI() {
+       rootLinearLayout = (LinearLayout) findViewById(R.id.registration_layout_root);
        confirmButton = (Button) findViewById(R.id.registration_button_confirm);
        phoneEditText = (EditText) findViewById(R.id.registration_editText_phone);
        genderRadioGroup = (RadioGroup) findViewById(R.id.registration_radioGroup_gender);
        typeRadioGroup = (RadioGroup) findViewById(R.id.registration_radioGroup_type);
+       idEditText = (EditText) findViewById(R.id.registration_editText_id);
+       passwordEditText = (EditText) findViewById(R.id.registration_editText_password);
+       nameEditText = (EditText) findViewById(R.id.registration_editText_name);
+       msgTextView = (TextView) findViewById(R.id.registration_textView_msg);
 
        genderRadioGroup.setOnCheckedChangeListener(this);
        typeRadioGroup.setOnCheckedChangeListener(this);
+
+       rootLinearLayout.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+                hideSoftKeyboard(getCurrentFocus());
+           }
+       });
 
        confirmButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
               MyInfo myInfo = _getMyInfo();
-              if(myInfo != null)
+               if(_checkValid())
                  ajaxCallSender.register(myInfo);
            }
        });
@@ -88,14 +103,30 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
     }
 
     private MyInfo _getMyInfo() {
-        MyInfo myInfo = null;
-        // Check Valid!
-        idEditText = (EditText) findViewById(R.id.registration_editText_id);
-        passwordEditText = (EditText) findViewById(R.id.registration_editText_password);
-        nameEditText = (EditText) findViewById(R.id.registration_editText_name);
-
-        myInfo = new MyInfo(idEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), gender, type, phoneEditText.getText().toString());
+        MyInfo myInfo  = new MyInfo(idEditText.getText().toString(), passwordEditText.getText().toString(), nameEditText.getText().toString(), gender, type, phoneEditText.getText().toString());
         return myInfo;
+    }
+
+    private boolean _checkValid() {
+        String id = idEditText.getText().toString();
+        String password = passwordEditText.getText().toString();
+        String name = nameEditText.getText().toString();
+        if(id.equals("") || password.equals("") || name.equals("")) {
+            if(name.equals(""))
+                nameEditText.requestFocus();
+            if(password.equals(""))
+                passwordEditText.requestFocus();
+            if(id.equals(""))
+                idEditText.requestFocus();
+            msgTextView.setText("채워지지 않은 항목이 있습니다.");
+            return false;
+        } else
+            return true;
+    }
+
+    protected void hideSoftKeyboard(View view) {
+        InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     @Override
@@ -121,7 +152,10 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
                 startActivity(new Intent(this, LogInActivity.class));
                 finish();
             } else {
-                if(globalApplication.isSchoolActivityFront()) _makeToast("The ID already exists");
+                Log.d(TAG, "Sign up fail : " + status);
+                msgTextView.setText("존재하는 ID 입니다.");
+                idEditText.setText("");
+                idEditText.requestFocus();
             }
 
         } catch (JSONException e) { e.printStackTrace(); }

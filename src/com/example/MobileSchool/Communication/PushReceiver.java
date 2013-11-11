@@ -5,7 +5,6 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,14 +18,12 @@ import com.example.MobileSchool.Fragment.ProfileFragment;
 import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
+import com.example.MobileSchool.Utils.CallRecorder;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -40,12 +37,14 @@ public class PushReceiver extends BroadcastReceiver {
     private String TAG = Constants.TAG;
 
     private GlobalApplication globalApplication;
+    private CallRecorder callRecorder;
 
     private TextView connectingTextView;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         globalApplication = (GlobalApplication) context.getApplicationContext();
+        callRecorder = globalApplication.getCallRecorder();
         try {
             JSONObject object = new JSONObject(intent.getExtras().getString("com.parse.Data"));
             if(object.getString("type").equals(Constants.PUSH_TYPE_NOTIFICATION)) {
@@ -91,31 +90,20 @@ public class PushReceiver extends BroadcastReceiver {
 
         try {
             String code = object.getString(Constants.PUSH_KEY_CODE);
-            if(code.equals(Constants.PUSH_CODE_PUSH_TEACHER_INFO)) {
-                connectingTextView = (TextView) globalApplication.getSchoolActivity().findViewById(R.id.guide_textView_connecting);
-                connectingTextView.setText(R.string.guide_textView_connected);
-                connectingTextView.clearAnimation();
-
-                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
-                JSONObject teacherJson = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
-                PartnerInfo partnerInfo = new PartnerInfo(teacherJson.getString("tid"), teacherJson.getString("name"), teacherJson.getString("phoneNumber"), teacherJson.getInt("age"),teacherJson.getInt("gender"), teacherJson.getString("type"));
-                globalApplication.setPartnerInfo(partnerInfo);
-                globalApplication.setClassConnected(true);
-
-                globalApplication.setFragment("Profile",new ProfileFragment());
-                globalApplication.getSchoolActivity().initFragment();
-            }
-            else if(code.equals(Constants.PUSH_CODE_PUSH_ROOT_QUESTION)) {
+            if(code.equals(Constants.CODE_PUSH_ROOT_QUESTION)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
                JSONArray entry_list = msg.getJSONArray(Constants.PUSH_KEY_ENTRY_LIST);
                DialogueItem[] entryItems = new DialogueItem[entry_list.length()];
                for(int index = 0; index < entry_list.length(); index++) {
                    JSONObject entryObject = entry_list.getJSONObject(index);
-                   DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("body"), entryObject.getString("id"));
+                   DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"));
                    entryItems[index] = dialogueItem;
                }
                Log.d(TAG, "PushReceiver EntryItems : " + entryItems);
                globalApplication.setEntryItems(entryItems);
+
+               // Start recorder
+               callRecorder.startRecording();
 
                // Class Entry Start
                Intent intent = new Intent(context, EntryActivity.class);

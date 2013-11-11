@@ -12,8 +12,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
@@ -67,6 +69,12 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
 
         initDrawer();
         initFragment();
+        _initFont();
+    }
+
+    private void _initFont() {
+        ViewGroup container = (DrawerLayout) findViewById(R.id.drawer_layout);
+        globalApplication.setAppFont(container);
     }
 
     public void initDrawer() {
@@ -171,7 +179,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         try {
             if(!object.isNull("code")) {
                 String code = object.getString("code");
-                if(code.equals(Constants.PUSH_CODE_DAILY_DIALOGUE)) {
+                if(code.equals(Constants.CODE_DAILY_DIALOGUE)) {
                     Content content = new Content(object.getString("expression"), object.getString("script"), object.getString("tip"));
                     contentManager.saveTodayContent(content);
                 }
@@ -181,7 +189,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
 
     @Override
     public void handlePush(JSONObject object) {
-        //To change body of implemented methods use File | Settings | File Templates.
+
     }
 
     private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {
@@ -190,7 +198,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
             switch (position) {
                 case 0: _changeFragment(position, new HomeFragment()); break;
                 case 1: _changeFragment(position, new MyInfoFragment()); break;
-                case 2: _changeFragment(position, new HistoryFragment()); break;
+                case 2: _changeFragment(position, new ContactFragment()); break;
                 default: Log.d(TAG, "DrawerItemClickListener : other click"); break;
             }
         }

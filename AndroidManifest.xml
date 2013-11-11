@@ -12,21 +12,23 @@
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Utils.GlobalApplication">
-        <activity android:name=".Activities.IntroActivity"
-                  android:theme="@style/Theme.Openschool" >
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Utils.GlobalApplication" android:theme="@style/Theme.Openschool">
+        <activity android:name=".Activities.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".SchoolActivity" android:theme="@style/Theme.Openschool"/>
-        <activity android:name=".Activities.LogInActivity" android:theme="@style/Theme.Openschool"/>
-        <activity android:name=".Activities.RegistrationActivity" android:theme="@style/Theme.Openschool"/>
+        <activity android:name=".SchoolActivity" />
+        <activity android:name=".Activities.LogInActivity" />
+        <activity android:name=".Activities.RegistrationActivity"/>
         <activity android:name=".Activities.EntryActivity" android:taskAffinity="com.android.phone"/>
-        <activity android:name=".Activities.EvaluationActivity" android:theme="@style/Theme.Openschool"/>
+        <activity android:name=".Activities.EvaluationActivity"/>
 
         <service android:name=".BroadCastReceiver.ManagerRegistrationService"/>
         <service android:name="com.parse.PushService" />

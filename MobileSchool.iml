@@ -3,6 +3,7 @@
   <component name="FacetManager">
     <facet type="android" name="Android">
       <configuration>
+        <option name="APK_PATH" value="/MobileSchool.apk" />
         <option name="UPDATE_PROPERTY_FILES" value="true" />
       </configuration>
     </facet>
@@ -18,6 +19,7 @@
     <orderEntry type="library" name="android-query-full.0.26.2-beta" level="project" />
     <orderEntry type="library" name="gson-2.2.4-javadoc" level="project" />
     <orderEntry type="library" name="joda-time-2.3" level="project" />
+    <orderEntry type="library" name="bugsense-3.5" level="project" />
   </component>
 </module>
 

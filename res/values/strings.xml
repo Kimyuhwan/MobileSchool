@@ -4,7 +4,7 @@
     <string-array name="Home_menu_array">
         <item>Home</item>
         <item>My Information</item>
-        <item>History</item>
+        <item>Contact</item>
     </string-array>
 
     <string-array name="Waiting_menu_array">
@@ -25,6 +25,7 @@
     <string name="login_editText_hint_password">Password</string>
     <string name="login_button_login">Log In</string>
     <string name="login_button_registration">Registration</string>
+    <string name="myinfo_button_logout">Log Out</string>
     <string name="home_textView_introduction_title">Open School</string>
     <string name="home_textView_introduction_body"> Open School is an mobile service which provides alternative education. It is an educational service with a special curriculum based on slack time which are nontraditional education. This school allows students to study English with more flexible time by facilitating talent donation from general people. </string>
     <string name="guide_textView_guide_title">Guideline</string>
@@ -42,6 +43,7 @@
     <string name="evaluation_textView_body">Evaluation is a systematic determination of a subject\'s merit, worth and significance, using criteria governed by a set of standards. </string>
     <string name="toast_textView_notification">새로운 수업을 시작해주세요!</string>
     <string name="toast_textView_warning">현재 가능한 수업이 없습니다!</string>
+    <string name="dialogue_textView_title">Dialogue</string>
 
     <!-- app -->
     <string name="toast_login_wrong_id">존재하지 않는 ID 입니다.</string>

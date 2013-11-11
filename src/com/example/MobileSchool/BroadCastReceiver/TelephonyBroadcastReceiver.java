@@ -12,6 +12,7 @@ import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.AccountManager;
+import com.example.MobileSchool.Utils.CallRecorder;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 
@@ -28,6 +29,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     private Bundle extras;
     private AccountManager accountManager;
     private AjaxCallSender ajaxCallSender;
+    private CallRecorder callRecorder;
 
     private GlobalApplication globalApplication;
 
@@ -38,7 +40,9 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         this.context = context;
         globalApplication = (GlobalApplication) context.getApplicationContext();
         accountManager = globalApplication.getAccountManager();
+        callRecorder = globalApplication.getCallRecorder();
         ajaxCallSender = new AjaxCallSender(context);
+
 
         // If the classReady is on .. (not always!)
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
@@ -66,6 +70,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
                 public void run() {
                     // Answer
                     ajaxCallSender.answer();
+
                     // Start Activity
                     globalApplication.getSchoolActivity().finish();
                     Intent intent = new Intent(context, EntryActivity.class);
@@ -87,6 +92,8 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         Thread thread = new Thread(){
             @Override
             public void run() {
+                if(!accountManager.isStudent())
+                    callRecorder.stopRecording();
                 globalApplication.setClassConnected(false);
                 globalApplication.getSchoolActivity().finish();
                 Intent intent = new Intent(context, EvaluationActivity.class);

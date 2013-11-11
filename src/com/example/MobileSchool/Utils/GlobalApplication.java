@@ -1,8 +1,12 @@
 package com.example.MobileSchool.Utils;
 
 import android.app.Application;
+import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
@@ -12,6 +16,7 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +33,7 @@ public class GlobalApplication extends Application {
     private SchoolActivity schoolActivity;
     private AccountManager accountManager;
     private ContentManager contentManager;
+    private CallRecorder callRecorder;
     private PartnerInfo partnerInfo;
 
     // Status Check Variable
@@ -36,10 +42,15 @@ public class GlobalApplication extends Application {
     private Fragment fragment = null;
     private boolean classConnected = false;
     private int drawerType = -1;
+    private int recallNumber = 0;
+    private boolean isRecording = false;
 
     // Temporal storage
     private int waitingTime;
     private DialogueItem[] entryItems;
+
+    // Dialogue
+    private List<DialogueItem> dialogueList;
 
     @Override
     public void onCreate() {
@@ -50,8 +61,40 @@ public class GlobalApplication extends Application {
             accountManager = new AccountManager(this);
         if(contentManager == null)
             contentManager = new ContentManager(this);
+        if(callRecorder == null)
+            callRecorder = new CallRecorder();
+        if(dialogueList == null)
+            dialogueList = new ArrayList<DialogueItem>();
     }
 
+    // Recording
+    public boolean isRecording() {
+        return isRecording;
+    }
+
+    public void setRecording(boolean recording) {
+        isRecording = recording;
+    }
+
+
+
+    // Recall Number
+    public int getRecallNumber() {
+        return recallNumber;
+    }
+
+    public void setRecallNumber(int recallNumber) {
+        this.recallNumber = recallNumber;
+    }
+
+    // Dialogue List
+    public void addDialogue(DialogueItem item) {
+        dialogueList.add(item);
+    }
+
+    public List<DialogueItem> getDialogueList() {
+        return dialogueList;
+    }
 
     // Data Object Functions
     public void setSchoolActivity(SchoolActivity schoolActivity) {
@@ -162,5 +205,38 @@ public class GlobalApplication extends Application {
         this.entryItems = entryItems;
     }
 
+    // Recorder
+    public CallRecorder getCallRecorder() {
+        return callRecorder;
+    }
+
+    public void setCallRecorder(CallRecorder callRecorder) {
+        this.callRecorder = callRecorder;
+    }
+
+    // Font
+    public void setAppFont(ViewGroup mContainer)
+    {
+        Typeface font = Typeface.createFromAsset(getAssets(), "Applemint.ttf");
+        if (mContainer != null) {
+            int mCount = mContainer.getChildCount();
+
+            // Loop through all of the children.
+            for (int i = 0; i < mCount; ++i)
+            {
+                View mChild = mContainer.getChildAt(i);
+                if (mChild instanceof TextView)
+                {
+                    // Set the font if it is a TextView.
+                    ((TextView) mChild).setTypeface(font);
+                }
+                else if (mChild instanceof ViewGroup)
+                {
+                    // Recursively attempt another ViewGroup.
+                    setAppFont((ViewGroup) mChild);
+                }
+            }
+        }
+    }
 
 }

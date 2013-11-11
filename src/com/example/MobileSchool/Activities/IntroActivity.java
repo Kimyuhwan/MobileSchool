@@ -1,17 +1,21 @@
 package com.example.MobileSchool.Activities;
 
+import com.bugsense.trace.BugSenseHandler;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
+import com.example.MobileSchool.Fragment.DialogueStudentFragment;
+import com.example.MobileSchool.Fragment.DialogueTeacherFragment;
 import com.example.MobileSchool.Model.MyInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
+import com.example.MobileSchool.Utils.AutoUpdateApk;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,12 +31,21 @@ public class IntroActivity extends Activity {
     private GlobalApplication globalApplication;
     private AccountManager accountManager;
 
+    private AutoUpdateApk aua;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.disp_intro);
         Log.d(TAG, "IntroActivity : onCreate");
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(IntroActivity.this, "66fd741b");
+
+        // Auto Update
+        aua = new AutoUpdateApk(getApplicationContext());
+//        aua.checkUpdatesManually();
 
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();

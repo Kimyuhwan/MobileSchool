@@ -104,16 +104,6 @@ public class AjaxCallSender {
         Log.d(TAG, "AppOnUpdate URL : " + url + " ( " + myInfo.getAccount_id() + ", " + myInfo.getPassword() + ", " + myInfo.getName() + ", " + myInfo.getGender() + ", " + myInfo.getAge() + ", " + myInfo.getPhoneNumber() + ", " + myInfo.getType() + ")" );
     }
 
-    public void getDialogue() {
-        String url = "";
-        if(accountManager.isStudent())
-            url = ServerMessage.URL_DIALOGUE_STUDENT;
-        else
-            url = ServerMessage.URL_DIALOGUE_TEACHER;
-        aq.ajax(url, JSONObject.class, ajaxCallBack);
-        Log.d(TAG, "AjaxCall getDialogue : " + url);
-    }
-
     public void start() {
         String url = ServerMessage.URL_START + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
@@ -134,9 +124,11 @@ public class AjaxCallSender {
 
     public void select(String type, String id) {
         String url = "";
-        if(type.equals("question"))
+        Log.d(TAG, "Select type : " + type +  "\t" + id);
+
+        if(type.equals("Q") || type.equals("R"))
             url = ServerMessage.URL_SELECT_QUESTION + id + "/teacher/";
-        else
+        else if(type.equals("A"))
             url = ServerMessage.URL_SELECT_ANSWER + id + "/teacher/";
 
         if(accountManager.isStudent())
@@ -148,4 +140,7 @@ public class AjaxCallSender {
         Log.d(TAG, "AjaxCall select : " + url);
     }
 
+    public void recall(String url) {
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+    }
 }

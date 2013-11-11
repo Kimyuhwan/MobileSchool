@@ -32,16 +32,19 @@ public class Constants {
     public static String PUSH_VALUE_TEACHER_ID = "tid";
     public static String PUSH_VALUE_STUDENT_ID = "sid";
 
-    public static String PUSH_CODE_TEACHER_CONFIRM = "TC";
-    public static String PUSH_CODE_STUDENT_START = "SS";
-    public static String PUSH_CODE_PUSH_TEACHER_INFO = "PTI";
-    public static String PUSH_CODE_PUSH_STUDENT_ANSWER = "PSA";
-    public static String PUSH_CODE_PUSH_ROOT_QUESTION = "PRQ";
-    public static String PUSH_CODE_PUSH_TEACHER = "PT";
-    public static String PUSH_CODE_TEACHER_FINISH = "TF";
-    public static String PUSH_CODE_STUDENT_FINISH = "SF";
-    public static String PUSH_CODE_NO_STUDENT = "NS";
-    public static String PUSH_CODE_DAILY_DIALOGUE = "DD";
+    public static String CODE_TEACHER_CONFIRM = "TC";
+    public static String CODE_STUDENT_START = "SS";
+    public static String CODE_PUSH_TEACHER_INFO = "PTI";
+    public static String CODE_PUSH_STUDENT_ANSWER = "PSA";
+    public static String CODE_PUSH_ROOT_QUESTION = "PRQ";
+    public static String CODE_PUSH_TEACHER = "PT";
+    public static String CODE_TEACHER_FINISH = "TF";
+    public static String CODE_STUDENT_FINISH = "SF";
+    public static String CODE_NO_STUDENT = "NS";
+    public static String CODE_DAILY_DIALOGUE = "DD";
+    public static String CODE_ANSWER_LIST = "AL";
+    public static String CODE_QUESTION_LIST = "QL";
+    public static String CODE_PUSH_QUESTION_ANSWER = "PQA";
 
 
     // SharedPreferences
@@ -80,6 +83,9 @@ public class Constants {
     // Contents
     public static String CONTENTS = "contents";
 
+    // Recorder
+    public static String SD_CARD_PATH = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static String RECODER_PATH = SD_CARD_PATH + "/talentDonation/";
 
 
 }

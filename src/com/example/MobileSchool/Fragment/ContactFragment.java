@@ -22,17 +22,17 @@ import org.json.JSONObject;
  * Time: 오후 7:19
  */
 
-public class HistoryFragment extends Fragment implements BaseMethod {
+public class ContactFragment extends Fragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
-    private String title = "History";
+    private String title = "Contact";
 
     private GlobalApplication globalApplication;
     private AccountManager accountManager;
     private PushSender pushSender;
     private AjaxCallSender ajaxCallSender;
 
-    public HistoryFragment() {
+    public ContactFragment() {
     }
 
     @Override
@@ -40,7 +40,6 @@ public class HistoryFragment extends Fragment implements BaseMethod {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.history_fragment, container, false);
         getActivity().setTitle(title);
-
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
         accountManager = globalApplication.getAccountManager();

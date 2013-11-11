@@ -1,34 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id = "@+id/login_layout_root"
               android:orientation="vertical"
               android:gravity="center"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:clickable="true">
 
-
-        <ImageView android:id="@+id/login_imageView_main_icon"
-               android:layout_width="150dp"
-               android:layout_height="150dp"
-               android:layout_gravity="center"
-               android:contentDescription="@string/imageView_main_icon_description"
-               android:src="@drawable/main_icon"/>
-
-        <EditText  android:id="@+id/login_editText_id"
+            <ImageView android:id="@+id/login_imageView_main_icon"
                    android:layout_width="150dp"
-                   android:layout_height="40dp"
+                   android:layout_height="150dp"
                    android:layout_gravity="center"
-                   android:inputType="textShortMessage"
-                   android:hint="@string/login_editText_hint_id"/>
+                   android:contentDescription="@string/imageView_main_icon_description"
+                   android:src="@drawable/main_icon"/>
 
-        <EditText  android:id="@+id/login_editText_password"
-                   android:layout_width="150dp"
-                   android:layout_height="40dp"
-                   android:layout_gravity="center"
-                   android:inputType="textPassword"
-                   android:hint="@string/login_editText_hint_password" />
+            <EditText  android:id="@+id/login_editText_id"
+                       android:layout_width="150dp"
+                       android:layout_height="40dp"
+                       android:layout_gravity="center"
+                       android:inputType="textShortMessage"
+                       android:hint="@string/login_editText_hint_id"/>
 
-        <Button android:id="@+id/login_button_login" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/login_button_login" android:textColor="#ffffff"/>
-        <Button android:id="@+id/login_button_registration" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/login_button_registration" android:textColor="#ffffff"/>
+            <EditText  android:id="@+id/login_editText_password"
+                       android:layout_width="150dp"
+                       android:layout_height="40dp"
+                       android:layout_gravity="center"
+                       android:inputType="textPassword"
+                       android:hint="@string/login_editText_hint_password" />
 
+            <Button android:id="@+id/login_button_login" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/login_button_login" android:textColor="#ffffff"/>
+            <Button android:id="@+id/login_button_registration" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/login_button_registration" android:textColor="#ffffff"/>
 </LinearLayout>
+

@@ -31,18 +31,17 @@ public class AccountManager {
         editor.commit();
     }
 
+    public void removeMyInfo() {
+        editor.remove("myInfo");
+        editor.commit();
+    }
+
     public MyInfo getMyInfo() {
         String json = sharedPreferences.getString("myInfo", Constants.SHAREDPREFERENCES_EMPTY);
         if(json.equals(Constants.SHAREDPREFERENCES_EMPTY))
             return null;
         else
             return gson.fromJson(json, MyInfo.class);
-    }
-
-    public void saveAccount(String id, String SId) {
-        editor.putString(Constants.SHAREDPREFERENCES_USER_ID, id);
-        editor.putString(Constants.SHAREDPREFERENCES_USER_SID, SId);
-        editor.commit();
     }
 
     public String getUniqueId() {

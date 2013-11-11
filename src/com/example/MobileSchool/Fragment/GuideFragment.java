@@ -121,7 +121,7 @@ public class GuideFragment extends Fragment implements BaseMethod {
             String result = object.getString(Constants.PUSH_KEY_RESULT);
             String code = object.getString(Constants.PUSH_KEY_CODE);
             // Teacher
-            if(result.equals("success") && code.equals(Constants.PUSH_CODE_TEACHER_CONFIRM)) {
+            if(result.equals("success") && code.equals(Constants.CODE_TEACHER_CONFIRM)) {
                 connectingTextView.setText(R.string.guide_textView_connected);
                 connectingTextView.clearAnimation();
 
@@ -132,38 +132,41 @@ public class GuideFragment extends Fragment implements BaseMethod {
 
                 // Connection 완료 저장
                 globalApplication.setClassConnected(true);
-
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    if(globalApplication.isSchoolActivityFront()) {
-                        globalApplication.setFragment("Profile", new ProfileFragment());
-                        globalApplication.getSchoolActivity().initFragment();
-                    }
-                    }
-                }, 2000);
-            } else if(result.equals("success") && code.equals(Constants.PUSH_CODE_NO_STUDENT)) {
+                if(globalApplication.isSchoolActivityFront()) {
+                    globalApplication.setFragment("Profile", new ProfileFragment());
+                    globalApplication.getSchoolActivity().initFragment();
+                }
+            } else if(result.equals("success") && code.equals(Constants.CODE_NO_STUDENT)) {
                 connectingTextView.clearAnimation();
                 connectingTextView.setText(R.string.guide_textView_no_class);
 
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                    if(globalApplication.isSchoolActivityFront()) {
-                        globalApplication.setFragment("Home", new HomeFragment());
-                        globalApplication.getSchoolActivity().initFragment();
-                    }
-                    }
-                }, 1000);
+                if(globalApplication.isSchoolActivityFront()) {
+                    globalApplication.setFragment("Home", new HomeFragment());
+                    globalApplication.getSchoolActivity().initFragment();
+                }
+
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }
 
     @Override
     public void handlePush(JSONObject object) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        try{
+            String code = object.getString(Constants.PUSH_KEY_CODE);
+            if(code.equals(Constants.CODE_PUSH_TEACHER_INFO)) {
+                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
+                JSONObject teacherJson = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
+                PartnerInfo partnerInfo = new PartnerInfo(teacherJson.getString("tid"), teacherJson.getString("name"), teacherJson.getString("phoneNumber"), teacherJson.getInt("age"),teacherJson.getInt("gender"), teacherJson.getString("type"));
+                globalApplication.setPartnerInfo(partnerInfo);
+                globalApplication.setClassConnected(true);
+
+                connectingTextView.setText(R.string.guide_textView_connected);
+                connectingTextView.clearAnimation();
+
+                globalApplication.setFragment("Profile",new ProfileFragment());
+                globalApplication.getSchoolActivity().initFragment();
+            }
+        } catch (JSONException e) { e.printStackTrace();}
     }
 
 

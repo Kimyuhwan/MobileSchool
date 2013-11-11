@@ -41,12 +41,41 @@ public class AjaxCallBackReceiver extends AjaxCallback<JSONObject> {
 
     @Override
     public void callback(String url, JSONObject object, AjaxStatus status) {
-        if(activity != null)
-            ((BaseMethod) activity).handleAjaxCallBack(object);
-        else if(fragment != null)
-            ((BaseMethod) fragment).handleAjaxCallBack(object);
-        else
-            _handleResult(object);
+        // Error Handling
+        Boolean error = false;   // check error
+        if(error) {
+            if(activity != null) {
+                AjaxCallSender ajaxCallSender = new AjaxCallSender(this.context, this.activity);
+                GlobalApplication globalApplication = (GlobalApplication) this.activity.getApplication();
+                int recallNumber = globalApplication.getRecallNumber();
+                if(recallNumber < 3) {
+                    ajaxCallSender.recall(url);
+                    globalApplication.setRecallNumber((recallNumber + 1));
+                }
+            }
+            else if(fragment != null) {
+                AjaxCallSender ajaxCallSender = new AjaxCallSender(this.context, this.fragment);
+                GlobalApplication globalApplication = (GlobalApplication) this.fragment.getActivity().getApplication();
+                int recallNumber = globalApplication.getRecallNumber();
+                if(recallNumber < 3) {
+                    ajaxCallSender.recall(url);
+                    globalApplication.setRecallNumber((recallNumber + 1));
+                }
+            }
+        } else {
+            if(activity != null) {
+                GlobalApplication globalApplication = (GlobalApplication) this.activity.getApplication();
+                globalApplication.setRecallNumber(0);
+                ((BaseMethod) activity).handleAjaxCallBack(object);
+            }
+            else if(fragment != null) {
+                GlobalApplication globalApplication = (GlobalApplication) this.fragment.getActivity().getApplication();
+                globalApplication.setRecallNumber(0);
+                ((BaseMethod) fragment).handleAjaxCallBack(object);
+            }
+            else
+                _handleResult(object);
+        }
     }
 
     private void _handleResult(JSONObject object) {
