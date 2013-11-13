@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.MobileSchool.BaseMethod;
@@ -57,6 +58,7 @@ public class GuideFragment extends Fragment implements BaseMethod {
                 _initUIForStudentConnected(rootView);
             else
                 _initUIForStudentUnconnected(rootView);
+            _initFontForStudent(rootView);
         }
         else {
             rootView = inflater.inflate(R.layout.disp_guide_teacher, container, false);
@@ -64,8 +66,20 @@ public class GuideFragment extends Fragment implements BaseMethod {
                 _initUIForTeacherConnected(rootView);
             else
                 _initUIForTeacherUnconnected(rootView);
+            _initFontForTeacher(rootView);
         }
+
         return rootView;
+    }
+
+    private void _initFontForStudent(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.guide_student_layout_root);
+        globalApplication.setAppFont(container);
+    }
+
+    private void _initFontForTeacher(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.guide_teacher_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUIForStudentUnconnected(View rootView) {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/thankyou_layout_root"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center">
+
+    <ImageView android:id="@+id/intro_imageView_main_icon"
+               android:layout_width="100dp"
+               android:layout_height="100dp"
+               android:layout_gravity="center"
+               android:src="@drawable/main_icon"
+               android:contentDescription="@string/imageView_main_icon_description" />
+
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="수업에 참여해주셔서 감사합니다."
+              android:textColor="#84c2cf"
+              android:textSize="20dp"
+              android:paddingBottom="10dp"
+              android:paddingLeft="20dp"
+              android:paddingRight="20dp"
+              android:textStyle="bold|italic"/>
+
+</LinearLayout>

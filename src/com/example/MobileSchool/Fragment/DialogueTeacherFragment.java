@@ -2,6 +2,7 @@ package com.example.MobileSchool.Fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -49,6 +50,7 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
     private DialogueItem chosenItem;
 
     private boolean isConfirmClicked = false;
+    private Typeface font;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,10 +63,17 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+        font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
         currentItems = globalApplication.getEntryItems();
         _initUI();
+        _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFont(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.dialogue_teacher_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUI() {
@@ -118,7 +127,9 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         } else {
             questionNumberTextView.setText("Q");
         }
+        questionNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
         return view;
     }
 
@@ -156,7 +167,9 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
             }
         });
         answerNumberTextView.setText("A" + (index + 1));
+        answerNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
         return view;
     }
 

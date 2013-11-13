@@ -29,6 +29,7 @@
         <activity android:name=".Activities.RegistrationActivity"/>
         <activity android:name=".Activities.EntryActivity" android:taskAffinity="com.android.phone"/>
         <activity android:name=".Activities.EvaluationActivity"/>
+        <activity android:name=".Activities.ThankyouActivity"/>
 
         <service android:name=".BroadCastReceiver.ManagerRegistrationService"/>
         <service android:name="com.parse.PushService" />

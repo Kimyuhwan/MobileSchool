@@ -2,6 +2,7 @@ package com.example.MobileSchool.Fragment;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -43,6 +44,7 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
     private TextView msgTextView;
 
     private DialogueItem[] answerItems;
+    private Typeface font;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,9 +57,16 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+        font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
         _initUI();
+        _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFont(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.dialogue_student_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUI() {
@@ -74,9 +83,12 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_question_textView_body);
 
         questionNumberTextView.setText("Q");
+        questionNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
         dialogue_student_question_root_layout.removeAllViews();
         dialogue_student_question_root_layout.addView(view);
+        globalApplication.addDialogue(new DialogueItem(dialogueItem.getType(),dialogueItem.getBody(),dialogueItem.getId()));
     }
 
     private void _addAnswer() {
@@ -96,7 +108,9 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_answer_textView_body);
 
         answerNumberTextView.setText("A" + (index + 1));
+        answerNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
         return view;
     }
 
@@ -133,8 +147,12 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     _addAnswer();
                     msgTextView.setText("");
                 }
-            } else if(code.equals("PA")) {
 
+
+            } else if(code.equals("PA")) {
+                JSONObject msg = object.getJSONObject("msg");
+                JSONObject answer = msg.getJSONObject("answer");
+                globalApplication.addDialogue(new DialogueItem(answer.getString("type"),answer.getString("context"), answer.getString("id")));
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

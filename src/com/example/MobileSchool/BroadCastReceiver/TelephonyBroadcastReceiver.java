@@ -7,10 +7,8 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import com.example.MobileSchool.Activities.EntryActivity;
-import com.example.MobileSchool.Activities.EvaluationActivity;
+import com.example.MobileSchool.Activities.ThankyouActivity;
 import com.example.MobileSchool.Communication.AjaxCallSender;
-import com.example.MobileSchool.Fragment.HomeFragment;
-import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.CallRecorder;
 import com.example.MobileSchool.Utils.Constants;
@@ -92,11 +90,11 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                if(!accountManager.isStudent())
-                    callRecorder.stopRecording();
+//                if(!accountManager.isStudent())
+//                    callRecorder.stopRecording();
                 globalApplication.setClassConnected(false);
                 globalApplication.getSchoolActivity().finish();
-                Intent intent = new Intent(context, EvaluationActivity.class);
+                Intent intent = new Intent(context, ThankyouActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 context.startActivity(intent);
             }

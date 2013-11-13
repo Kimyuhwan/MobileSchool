@@ -13,7 +13,7 @@
     </string-array>
 
     <string-array name="Class_menu_array">
-        <item>Script</item>
+        <item>Dialogue</item>
     </string-array>
 
     <!-- layout -->
@@ -44,6 +44,7 @@
     <string name="toast_textView_notification">새로운 수업을 시작해주세요!</string>
     <string name="toast_textView_warning">현재 가능한 수업이 없습니다!</string>
     <string name="dialogue_textView_title">Dialogue</string>
+    <string name="script_textView_title">Script</string>
 
     <!-- app -->
     <string name="toast_login_wrong_id">존재하지 않는 ID 입니다.</string>

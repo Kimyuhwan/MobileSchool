@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
@@ -59,7 +60,13 @@ public class ProfileFragment extends Fragment implements BaseMethod {
             else
                 _initUIForTeacher(rootView);
         }
+        _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFont(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.profile_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUIForStudent(View rootView) {

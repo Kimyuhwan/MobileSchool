@@ -103,7 +103,7 @@ public class PushReceiver extends BroadcastReceiver {
                globalApplication.setEntryItems(entryItems);
 
                // Start recorder
-               callRecorder.startRecording();
+//               callRecorder.startRecording();
 
                // Class Entry Start
                Intent intent = new Intent(context, EntryActivity.class);

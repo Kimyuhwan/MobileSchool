@@ -44,7 +44,7 @@ public class IntroActivity extends Activity {
         BugSenseHandler.initAndStartSession(IntroActivity.this, "66fd741b");
 
         // Auto Update
-        aua = new AutoUpdateApk(getApplicationContext());
+//        aua = new AutoUpdateApk(getApplicationContext());
 //        aua.checkUpdatesManually();
 
         globalApplication = (GlobalApplication) getApplication();

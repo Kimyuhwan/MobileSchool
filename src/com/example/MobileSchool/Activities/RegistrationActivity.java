@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.Window;
+import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import com.example.MobileSchool.BaseMethod;
@@ -49,6 +46,8 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
     private String gender = Constants.REGISTRATION_GENDER_MALE;
     private String type = Constants.REGISTRATION_TYPE_STUDENT;
 
+    private boolean isClicked = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,8 +59,13 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         accountManager = globalApplication.getAccountManager();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
 
-
         _initUI();
+        _initFont();
+    }
+
+    private void _initFont() {
+        ViewGroup container = (LinearLayout) findViewById(R.id.registration_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initUI() {
@@ -89,8 +93,10 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
            @Override
            public void onClick(View v) {
               MyInfo myInfo = _getMyInfo();
-               if(_checkValid())
+               if(_checkValid() && !isClicked) {
                  ajaxCallSender.register(myInfo);
+                 isClicked = true;
+               }
            }
        });
 
@@ -149,6 +155,7 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
             String status = object.getString("status");
             if(status.equals(Constants.RESPONSE_REGISTRATION_STUDENT_SUCCESS) || status.equals(Constants.RESPONSE_REGISTRATION_TEACHER_SUCCESS)) {
                 if(globalApplication.isSchoolActivityFront()) _makeToast("Registration Success");
+                isClicked = false;
                 startActivity(new Intent(this, LogInActivity.class));
                 finish();
             } else {

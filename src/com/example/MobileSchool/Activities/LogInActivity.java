@@ -3,7 +3,6 @@ package com.example.MobileSchool.Activities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -150,6 +149,9 @@ public class LogInActivity extends Activity implements BaseMethod{
             //Check phoneNumber
             TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String phoneNumber = mgr.getLine1Number();
+            if(phoneNumber.contains("+"))
+                phoneNumber = "0" + phoneNumber.substring(3, phoneNumber.length());
+
             if(user.getString("phone").equals(phoneNumber)) {
                 accountManager.saveMyInfo(myInfo);
                 Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);

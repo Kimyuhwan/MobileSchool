@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.MobileSchool.Activities.EntryActivity;
 import com.example.MobileSchool.Activities.IntroActivity;
@@ -57,8 +58,13 @@ public class MyInfoFragment extends Fragment implements BaseMethod {
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         _initFragment();
         _initUI(rootView);
-
+        _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFont(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.myinfo_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initFragment() {

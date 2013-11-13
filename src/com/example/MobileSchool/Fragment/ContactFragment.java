@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
@@ -38,16 +39,23 @@ public class ContactFragment extends Fragment implements BaseMethod {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.history_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.disp_contact, container, false);
         getActivity().setTitle(title);
 
         globalApplication = (GlobalApplication) getActivity().getApplication();
         accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+
         _initFragment();
+        _initFont(rootView);
 
         return rootView;
+    }
+
+    private void _initFont(View rootView) {
+        ViewGroup container = (LinearLayout) rootView.findViewById(R.id.contact_layout_root);
+        globalApplication.setAppFont(container);
     }
 
     private void _initFragment() {

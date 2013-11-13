@@ -1,6 +1,7 @@
 package com.example.MobileSchool.Fragment;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
@@ -42,6 +44,7 @@ public class ScriptFragment extends Fragment implements BaseMethod {
     private LinearLayout rootLinearLayout;
 
     private List<DialogueItem> dialogueList;
+    private Typeface font;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,14 +59,20 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         dialogueList = globalApplication.getDialogueList();
+        font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
         _initUI(rootView);
-
+        _initFont(rootView);
         return rootView;
     }
 
+    private void _initFont(View rootView) {
+        ViewGroup container = (ScrollView) rootView.findViewById(R.id.script_layout_root);
+        globalApplication.setAppFont(container);
+    }
+
     private void _initUI(View rootView) {
-        rootLinearLayout = (LinearLayout) rootView.findViewById(R.id.script_layout_root);
+        rootLinearLayout = (LinearLayout) rootView.findViewById(R.id.script_layout_dialogue_container);
         for(DialogueItem dialogueItem : dialogueList) {
             rootLinearLayout.addView(_getScriptItem(rootLinearLayout, dialogueItem.getType(), dialogueItem.getBody()));
         }
@@ -79,10 +88,12 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         if(type.equals("A")) {
             imageView.setImageResource(R.drawable.profile_icon_blue);
             textView.setBackgroundResource(R.drawable.ninepatch_blue);
+            textView.setTypeface(font);
         }
         else {
             imageView.setImageResource(R.drawable.profile_icon_pink);
             textView.setBackgroundResource(R.drawable.ninepatch_pink);
+            textView.setTypeface(font);
         }
 
         return view;
