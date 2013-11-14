@@ -205,8 +205,8 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     t_sentence = new DialogueItem(teacher_sentence.getString("type"), teacher_sentence.getString("context"), teacher_sentence.getString("id"),teacher_sentence.getString("successor"));
                     _changeDialogues();
 
-                    globalApplication.addDialogue(t_sentence);
                     globalApplication.addDialogue(new DialogueItem(selected.getString("type"),selected.getString("context"),selected.getString("id"),selected.getString("successor")));
+                    globalApplication.addDialogue(t_sentence);
                 }
             }
         } catch (JSONException e) { e.printStackTrace(); }

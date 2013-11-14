@@ -51,6 +51,7 @@ public class GlobalApplication extends Application {
 
     // Dialogue
     private List<DialogueItem> dialogueList;
+    private DialogueItem[] rootItems;
 
     @Override
     public void onCreate() {
@@ -242,5 +243,15 @@ public class GlobalApplication extends Application {
             }
         }
     }
+
+    // Root Items
+    public DialogueItem[] getRootItems() {
+        return rootItems;
+    }
+
+    public void setRootItems(DialogueItem[] rootItems) {
+        this.rootItems = rootItems;
+    }
+
 
 }
