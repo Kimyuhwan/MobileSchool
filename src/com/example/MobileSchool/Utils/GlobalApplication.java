@@ -96,6 +96,10 @@ public class GlobalApplication extends Application {
         return dialogueList;
     }
 
+    public void initDialogueList() {
+        dialogueList = new ArrayList<DialogueItem>();
+    }
+
     // Data Object Functions
     public void setSchoolActivity(SchoolActivity schoolActivity) {
         this.schoolActivity = schoolActivity;

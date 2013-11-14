@@ -5,6 +5,7 @@
             android:layout_height="wrap_content">
 
     <LinearLayout android:id="@+id/script_layout_dialogue_container"
+                  android:animateLayoutChanges="true"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical">

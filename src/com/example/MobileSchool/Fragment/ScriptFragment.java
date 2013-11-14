@@ -74,7 +74,8 @@ public class ScriptFragment extends Fragment implements BaseMethod {
     private void _initUI(View rootView) {
         rootLinearLayout = (LinearLayout) rootView.findViewById(R.id.script_layout_dialogue_container);
         for(DialogueItem dialogueItem : dialogueList) {
-            rootLinearLayout.addView(_getScriptItem(rootLinearLayout, dialogueItem.getType(), dialogueItem.getBody()));
+            if(!dialogueItem.getType().equals("R"))
+                rootLinearLayout.addView(_getScriptItem(rootLinearLayout, dialogueItem.getType(), dialogueItem.getBody()));
         }
     }
 
@@ -84,13 +85,14 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         TextView textView = (TextView) view.findViewById(R.id.script_item_textView);
         ImageView imageView = (ImageView) view.findViewById(R.id.script_item_imageView);
 
-        textView.setText(script);
-        if(type.equals("A")) {
+        if(type.equals("S")) {
+            textView.setText(script);
             imageView.setImageResource(R.drawable.profile_icon_blue);
             textView.setBackgroundResource(R.drawable.ninepatch_blue);
             textView.setTypeface(font);
         }
-        else {
+        else if(type.equals("T")){
+            textView.setText(script);
             imageView.setImageResource(R.drawable.profile_icon_pink);
             textView.setBackgroundResource(R.drawable.ninepatch_pink);
             textView.setTypeface(font);

@@ -92,14 +92,13 @@ public class PushReceiver extends BroadcastReceiver {
             String code = object.getString(Constants.PUSH_KEY_CODE);
             if(code.equals(Constants.CODE_PUSH_ROOT_QUESTION)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
-               JSONArray entry_list = msg.getJSONArray(Constants.PUSH_KEY_ENTRY_LIST);
-               DialogueItem[] entryItems = new DialogueItem[entry_list.length()];
-               for(int index = 0; index < entry_list.length(); index++) {
-                   JSONObject entryObject = entry_list.getJSONObject(index);
-                   DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"));
+               JSONArray topics = msg.getJSONArray(Constants.PUSH_TYPE_TOPICS);
+               DialogueItem[] entryItems = new DialogueItem[topics.length()];
+               for(int index = 0; index < topics.length(); index++) {
+                   JSONObject topic = topics.getJSONObject(index);
+                   DialogueItem dialogueItem = new DialogueItem(topic.getString("type"), topic.getString("context"), topic.getString("id"), topic.getString("successor"));
                    entryItems[index] = dialogueItem;
                }
-               Log.d(TAG, "PushReceiver EntryItems : " + entryItems);
                globalApplication.setEntryItems(entryItems);
 
                // Start recorder

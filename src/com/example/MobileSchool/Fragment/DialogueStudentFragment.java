@@ -43,13 +43,16 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
 
     private TextView msgTextView;
 
-    private DialogueItem[] answerItems;
+    private DialogueItem[] rootItems;
+    private DialogueItem t_sentence;
+    private DialogueItem[] s_sentences;
+
     private Typeface font;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Log.d(TAG, "DialogueTeacherFragment : onCreateView");
+        Log.d(TAG, "DialogueStudentFragment : onCreateView");
         rootView = inflater.inflate(R.layout.disp_dialogue_student, container, false);
         getActivity().setTitle(title);
 
@@ -61,6 +64,9 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
 
         _initUI();
         _initFont(rootView);
+
+        // Answer
+        ajaxCallSender.answer();
         return rootView;
     }
 
@@ -71,52 +77,104 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
 
     private void _initUI() {
         msgTextView = (TextView) rootView.findViewById(R.id.dialogue_student_textView_msg);
-        msgTextView.setText("새로운 질문을 선택중입니다.");
+        dialogue_student_question_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_student_question_root_layout);
+        dialogue_student_answer_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_student_answer_root_layout);
     }
 
-    private void _addQuestion(DialogueItem dialogueItem) {
-        dialogue_student_question_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_student_question_root_layout);
+    private void _addRoot() {
+        int index = 0;
+        for(DialogueItem dialogueItem : rootItems) {
+            View currentChoiceView = _getRoot(dialogue_student_question_root_layout, dialogueItem, index);
+            dialogue_student_question_root_layout.addView(currentChoiceView, index);
+            index++;
+        }
+        _setMsgText("오늘 수업 주제를 선택해보세요.");
+        globalApplication.initDialogueList();
+    }
 
+    private View _getRoot(LinearLayout linearLayout, DialogueItem dialogueItem, int index) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.item_question, dialogue_student_question_root_layout, false);
+        View view = layoutInflater.inflate(R.layout.item_question, linearLayout, false);
         TextView questionNumberTextView = (TextView) view.findViewById(R.id.item_question_textView_question_number);
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_question_textView_body);
 
-        questionNumberTextView.setText("Q");
+        questionNumberTextView.setText(dialogueItem.getType() + (index + 1));
         questionNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
         bodyTextView.setTypeface(font);
-        dialogue_student_question_root_layout.removeAllViews();
-        dialogue_student_question_root_layout.addView(view);
-        globalApplication.addDialogue(new DialogueItem(dialogueItem.getType(),dialogueItem.getBody(),dialogueItem.getId()));
+        return view;
     }
 
-    private void _addAnswer() {
-        dialogue_student_answer_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_student_answer_root_layout);
+    private void _changeDialogues() {
+        // Change Teacher sentence
+        _changeTeacherSentence();
+        // Change Student sentence
+        _changeStudentSentence();
+        // Set Text Message
+        _setMsgText("질문을 보고 파란색 항목중 원하는 것을 골라 선생님께 말해보세요.");
+    }
+
+    private void _changeTeacherSentence() {
+        dialogue_student_question_root_layout.removeAllViews();
+        dialogue_student_question_root_layout.addView(_getTeacherSentence(dialogue_student_question_root_layout, t_sentence));
+    }
+
+    private View _getTeacherSentence(LinearLayout linearLayout, DialogueItem dialogueItem) {
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.item_question, linearLayout, false);
+        TextView questionNumberTextView = (TextView) view.findViewById(R.id.item_question_textView_question_number);
+        TextView bodyTextView = (TextView) view.findViewById(R.id.item_question_textView_body);
+
+        questionNumberTextView.setText(dialogueItem.getType());
+        questionNumberTextView.setTypeface(font);
+        bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
+        return view;
+    }
+
+    private void _changeStudentSentence() {
         dialogue_student_answer_root_layout.removeAllViews();
         int index = 0;
-        for(DialogueItem dialogueItem : answerItems) {
-            dialogue_student_answer_root_layout.addView(_getAnswer(dialogueItem, index));
+        for(DialogueItem dialogueItem : s_sentences) {
+            dialogue_student_answer_root_layout.addView(_getAnswer(dialogue_student_answer_root_layout, dialogueItem, index));
             index++;
         }
     }
 
-    private View _getAnswer(DialogueItem dialogueItem, int index) {
+    private View _getAnswer(LinearLayout linearLayout, DialogueItem dialogueItem, int index) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.item_answer, dialogue_student_answer_root_layout, false);
+        View view = layoutInflater.inflate(R.layout.item_answer, linearLayout, false);
         TextView answerNumberTextView = (TextView) view.findViewById(R.id.item_answer_textView_answer_number);
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_answer_textView_body);
 
-        answerNumberTextView.setText("A" + (index + 1));
+        answerNumberTextView.setText(dialogueItem.getType() + (index + 1));
         answerNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
         bodyTextView.setTypeface(font);
         return view;
     }
 
+    private void _setMsgText(String msg) {
+        msgTextView.setText(msg);
+    }
+
     @Override
     public void handleAjaxCallBack(JSONObject object) {
-        Log.d(TAG, "DialogueTeacherFragment : handleAjaxCallBack Object => " + object);
+        Log.d(TAG, "DialogueStudentFragment : handleAjaxCallBack Object => " + object);
+        try {
+            String code = object.getString("code");
+            if(code.equals(Constants.CODE_STUDENT_ANSWER)) {
+                JSONArray topics = object.getJSONArray(Constants.PUSH_TYPE_TOPICS);
+                rootItems = new DialogueItem[topics.length()];
+                for(int index = 0; index < topics.length(); index++) {
+                    JSONObject topic = topics.getJSONObject(index);
+                    DialogueItem dialogueItem = new DialogueItem(topic.getString("type"), topic.getString("context"), topic.getString("id"), topic.getString("successor"));
+                    rootItems[index] = dialogueItem;
+                }
+                _addRoot();
+            }
+        } catch (JSONException e) { e.printStackTrace(); }
+
     }
 
     @Override
@@ -125,34 +183,31 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
             String code = object.getString("code");
             if(code.equals(Constants.CODE_PUSH_QUESTION_ANSWER)) {
                 JSONObject msg = object.getJSONObject("msg");
-                JSONArray answer_list = msg.getJSONArray("answer_list");
-                if(answer_list.length() == 0) {
-                    JSONObject question = msg.getJSONObject("question");
-                    globalApplication.addDialogue(new DialogueItem(question.getString("type"),question.getString("context"),question.getString("id")));
+                JSONArray student_sentence_list = msg.getJSONArray("s_sentence_list");
+                JSONObject teacher_sentence = msg.getJSONObject("t_sentence");
+                JSONObject selected = msg.getJSONObject("selected");
+                if(student_sentence_list.length() == 0) {
+                    globalApplication.addDialogue(new DialogueItem(selected.getString("type"),selected.getString("context"),selected.getString("id"),selected.getString("successor")));
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
                     globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
-                    JSONObject question = msg.getJSONObject("question");
-                    DialogueItem questionItem = new DialogueItem(question.getString("type"), question.getString("context"), question.getString("id"));
-                    _addQuestion(questionItem);
-
-                    answerItems = new DialogueItem[answer_list.length()];
-                    for(int index = 0; index < answer_list.length(); index++) {
-                        JSONObject entryObject = answer_list.getJSONObject(index);
-                        DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"));
-                        answerItems[index] = dialogueItem;
+                    // Student sentences
+                    s_sentences = new DialogueItem[student_sentence_list.length()];
+                    for(int index = 0; index < student_sentence_list.length(); index++) {
+                        JSONObject s_sentence = student_sentence_list.getJSONObject(index);
+                        DialogueItem dialogueItem = new DialogueItem(s_sentence.getString("type"), s_sentence.getString("context"), s_sentence.getString("id"),s_sentence.getString("successor"));
+                        s_sentences[index] = dialogueItem;
                     }
-                    _addAnswer();
-                    msgTextView.setText("");
+
+                    // Teacher sentences
+                    t_sentence = new DialogueItem(teacher_sentence.getString("type"), teacher_sentence.getString("context"), teacher_sentence.getString("id"),teacher_sentence.getString("successor"));
+                    _changeDialogues();
+
+                    globalApplication.addDialogue(t_sentence);
+                    globalApplication.addDialogue(new DialogueItem(selected.getString("type"),selected.getString("context"),selected.getString("id"),selected.getString("successor")));
                 }
-
-
-            } else if(code.equals("PA")) {
-                JSONObject msg = object.getJSONObject("msg");
-                JSONObject answer = msg.getJSONObject("answer");
-                globalApplication.addDialogue(new DialogueItem(answer.getString("type"),answer.getString("context"), answer.getString("id")));
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

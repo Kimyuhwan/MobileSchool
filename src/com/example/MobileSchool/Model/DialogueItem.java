@@ -9,11 +9,13 @@ public class DialogueItem {
     private String type;
     private String id;
     private String body;
+    private String successor;
 
-    public DialogueItem(String type, String body, String id) {
+    public DialogueItem(String type, String body, String id, String successor) {
         this.type = type;
         this.body = body;
         this.id = id;
+        this.successor = successor;
     }
 
     public String getBody() {
@@ -26,6 +28,10 @@ public class DialogueItem {
 
     public String getId() {
         return id;
+    }
+
+    public String getSuccessor() {
+        return successor;
     }
 
 }

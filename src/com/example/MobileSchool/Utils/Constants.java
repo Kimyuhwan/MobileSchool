@@ -21,6 +21,7 @@ public class Constants {
 
     public static String PUSH_TYPE_NOTIFICATION = "noti";
     public static String PUSH_TYPE_MESSAGE = "msg";
+    public static String PUSH_TYPE_TOPICS = "topics";
 
     public static String PUSH_KEY_RESULT = "result";
     public static String PUSH_KEY_CODE = "code";
@@ -45,6 +46,8 @@ public class Constants {
     public static String CODE_ANSWER_LIST = "AL";
     public static String CODE_QUESTION_LIST = "QL";
     public static String CODE_PUSH_QUESTION_ANSWER = "PQA";
+    public static String CODE_STUDENT_ANSWER = "SA";
+    public static String CODE_CHILD_SENTENCE = "CS";
 
 
     // SharedPreferences

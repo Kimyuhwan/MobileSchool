@@ -16,10 +16,9 @@
               android:layout_gravity="bottom"
               android:gravity="bottom"/>
 
-    <TextView android:id="@+id/dialogue_teacher_textView_guide"
+    <TextView android:id="@+id/dialogue_teacher_textView_msg"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:text="학생과 대화를 통해서 Dialogue를 만들어주세요!"
               android:textSize="20dp"
               android:paddingLeft="20dp"
               android:paddingBottom="5dp"/>
@@ -27,6 +26,7 @@
     <Space android:layout_width="fill_parent" android:layout_height="15dp"/>
 
     <LinearLayout android:id="@+id/dialogue_teacher_question_root_layout"
+                  android:animateLayoutChanges="true"
                   android:orientation="vertical"
                   android:layout_height="wrap_content"
                   android:layout_width="fill_parent"
@@ -34,9 +34,10 @@
                   android:paddingLeft="20dp"
                   android:paddingRight="10dp"/>
 
-    <Space android:layout_width="fill_parent" android:layout_height="15dp"/>
+    <Space android:layout_width="fill_parent" android:layout_height="25dp"/>
 
     <LinearLayout android:id="@+id/dialogue_teacher_answer_root_layout"
+                  android:animateLayoutChanges="true"
                   android:orientation="vertical"
                   android:layout_height="wrap_content"
                   android:layout_width="fill_parent"
@@ -52,12 +53,6 @@
                   android:gravity="right"
                   android:paddingLeft="20dp"
                   android:paddingRight="20dp">
-
-        <TextView android:id="@+id/dialogue_teacher_textView_msg"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="#84c2cf"
-                  android:textSize="15sp"/>
 
         <Button android:id="@+id/dialogue_teacher_button_confirm"
                 android:layout_width="150dp"

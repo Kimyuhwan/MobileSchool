@@ -1,7 +1,6 @@
 package com.example.MobileSchool.Fragment;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,14 +39,16 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
     private View rootView;
     private LinearLayout dialogue_teacher_question_root_layout;
     private LinearLayout dialogue_teacher_answer_root_layout;
-    private LinearLayout topLinearLayout;
-    private Button confirmButton;
     private TextView msgTextView;
 
-    private int itemIndex = -1;
+
     private View currentChoiceView = null;
-    private DialogueItem[] currentItems = null;
-    private DialogueItem chosenItem;
+
+    private DialogueItem t_sentence;
+    private DialogueItem[] s_sentences;
+    private int r_sentecne_index = -1;
+    private DialogueItem[] r_sentences;
+    private int s_sentence_index = -1;
 
     private boolean isConfirmClicked = false;
     private Typeface font;
@@ -65,7 +66,7 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
-        currentItems = globalApplication.getEntryItems();
+        r_sentences = globalApplication.getEntryItems();
         _initUI();
         _initFont(rootView);
         return rootView;
@@ -78,26 +79,34 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
 
     private void _initUI() {
         dialogue_teacher_question_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_teacher_question_root_layout);
+        dialogue_teacher_answer_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_teacher_answer_root_layout);
         msgTextView = (TextView) rootView.findViewById(R.id.dialogue_teacher_textView_msg);
-        confirmButton = (Button) rootView.findViewById(R.id.dialogue_teacher_button_confirm);
+        Button confirmButton = (Button) rootView.findViewById(R.id.dialogue_teacher_button_confirm);
+        globalApplication.initDialogueList();
 
         int index = 0;
-        for(DialogueItem dialogueItem :  currentItems) {
-            currentChoiceView = _getQuestion(dialogue_teacher_question_root_layout, dialogueItem, index);
+        for(DialogueItem dialogueItem :  r_sentences) {
+            currentChoiceView = _getRoot(dialogue_teacher_question_root_layout, dialogueItem, index);
             dialogue_teacher_question_root_layout.addView(currentChoiceView, index);
             index++;
         }
-        _setMsgText();
+        _setMsgText("학생이 원하는 수업 주제를 아래에서 클릭하세요.");
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    if(itemIndex == -1) {
+                    if(r_sentecne_index == -1 && s_sentence_index == -1) {
                         msgTextView.setText("아무것도 선택되지 않았습니다.");
                     } else {
-                        Log.d(TAG, "DialogueTeacherFragment Confirm : " + itemIndex);
-                        if(!isConfirmClicked) {  // check
-                            chosenItem = currentItems[itemIndex];
+                        Log.d(TAG, "DialogueTeacherFragment Confirm : " + s_sentence_index);
+                        if(isConfirmClicked)
+                            Log.d(TAG, "DialogueTeacherFragment Confirm : 여러번 클릭하였습니다. 처리가 될때까지 기다려주세요.");
+                        else {  // check
+                            DialogueItem chosenItem = null;
+                            if(s_sentences == null)
+                                chosenItem = r_sentences[r_sentecne_index];
+                            else
+                                chosenItem = s_sentences[s_sentence_index];
                             ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
                             globalApplication.addDialogue(chosenItem);
                             isConfirmClicked = true;
@@ -108,48 +117,66 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         });
     }
 
-    private View _getQuestion(LinearLayout linearLayout, DialogueItem dialogueItem, int index) {
+    private View _getRoot(LinearLayout linearLayout, DialogueItem dialogueItem, int index) {
         LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.item_question, linearLayout, false);
         TextView questionNumberTextView = (TextView) view.findViewById(R.id.item_question_textView_question_number);
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_question_textView_body);
-        if(index != -1) {
-            view.setId(index);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.d(TAG, "DialogueTeacherFragment Item click : " + v.getId());
-                    itemIndex = v.getId();
-                    _setMsgText();
-                }
-            });
-            questionNumberTextView.setText("Q" + (index + 1));
-        } else {
-            questionNumberTextView.setText("Q");
-        }
+
+        view.setId(index);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "DialogueTeacherFragment Item click : " + v.getId());
+                r_sentecne_index = v.getId();
+                _setMsgText((v.getId() + 1) + "번째 문항이 선택되었습니다.");
+            }
+        });
+
+        questionNumberTextView.setText(dialogueItem.getType() + (index+1));
         questionNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
         bodyTextView.setTypeface(font);
         return view;
     }
 
-    private void _confirmQuestion() {
-        dialogue_teacher_question_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_teacher_question_root_layout);
+    private void _changeDialogues() {
+        // Change questions
+        _changeQuestions();
+        // Change answers
+        _changeAnswers();
+        // Set text messages
+        _setMsgText("학생에게 질문을 하고 파란색 문항중 원하는 것을 선택하도록 해보세요.");
+        isConfirmClicked = false;
+    }
+
+    private void _changeQuestions() {
         dialogue_teacher_question_root_layout.removeAllViews();
-        currentChoiceView = _getQuestion(dialogue_teacher_question_root_layout, chosenItem, -1);
+        currentChoiceView = _getQuestion(dialogue_teacher_question_root_layout, t_sentence);
         dialogue_teacher_question_root_layout.addView(currentChoiceView, 0);
     }
 
-    private void _addAnswerList() {
-        dialogue_teacher_answer_root_layout = (LinearLayout) rootView.findViewById(R.id.dialogue_teacher_answer_root_layout);
+    private View _getQuestion(LinearLayout linearLayout, DialogueItem dialogueItem) {
+        LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.item_question, linearLayout, false);
+        TextView questionNumberTextView = (TextView) view.findViewById(R.id.item_question_textView_question_number);
+        TextView bodyTextView = (TextView) view.findViewById(R.id.item_question_textView_body);
+
+        questionNumberTextView.setText(dialogueItem.getType());
+        questionNumberTextView.setTypeface(font);
+        bodyTextView.setText(dialogueItem.getBody());
+        bodyTextView.setTypeface(font);
+        return view;
+    }
+
+    private void _changeAnswers() {
         dialogue_teacher_answer_root_layout.removeAllViews();
         int index = 0;
-        for(DialogueItem dialogueItem : currentItems) {
+        for(DialogueItem dialogueItem : s_sentences) {
             currentChoiceView = _getAnswer(dialogue_teacher_answer_root_layout, dialogueItem, index);
             dialogue_teacher_answer_root_layout.addView(currentChoiceView, index);
             index++;
         }
-        _setMsgText();
     }
 
     private View _getAnswer(LinearLayout linearLayout, DialogueItem dialogueItem, int index) {
@@ -157,74 +184,57 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         View view = layoutInflater.inflate(R.layout.item_answer, linearLayout, false);
         TextView answerNumberTextView = (TextView) view.findViewById(R.id.item_answer_textView_answer_number);
         TextView bodyTextView = (TextView) view.findViewById(R.id.item_answer_textView_body);
+
         view.setId(index);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "DialogueTeacherFragment Item click : " + v.getId());
-                itemIndex = v.getId();
-                _setMsgText();
+                s_sentence_index = v.getId();
+                _setMsgText((v.getId() + 1) + "번째 문항이 선택되었습니다.");
             }
         });
-        answerNumberTextView.setText("A" + (index + 1));
+
+        answerNumberTextView.setText(dialogueItem.getType() + (index + 1));
         answerNumberTextView.setTypeface(font);
         bodyTextView.setText(dialogueItem.getBody());
         bodyTextView.setTypeface(font);
         return view;
     }
 
-    private void _setMsgText() {
-       if(itemIndex == -1)
-           msgTextView.setText("원하는 문장을 클릭해 주세요.");
-       else
-           msgTextView.setText((itemIndex+1) + "번째 문항이 선택되었습니다.");
+    private void _setMsgText(String msg) {
+       msgTextView.setText(msg);
     }
 
     @Override
     public void handleAjaxCallBack(JSONObject object) {
         Log.d(TAG, "DialogueTeacherFragment : handleAjaxCallBack Object => " + object);
         try {
-            if(object.getString("code").equals(Constants.CODE_ANSWER_LIST)) {
-                JSONArray answer_list = object.getJSONArray("answer_list");
-                if(answer_list.length() == 0) {
+            if(object.getString("code").equals(Constants.CODE_CHILD_SENTENCE)) {
+                JSONArray student_sentence_list = object.getJSONArray("s_sentence_list");
+                if(student_sentence_list.length() == 0) {
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
                     globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
-                    DialogueItem[] answerItems = new DialogueItem[answer_list.length()];
-                    for(int index = 0; index < answer_list.length(); index++) {
-                        JSONObject entryObject = answer_list.getJSONObject(index);
-                        DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"));
-                        answerItems[index] = dialogueItem;
+                    //Student sentences
+                    s_sentences = new DialogueItem[student_sentence_list.length()];
+                    for(int index = 0; index < student_sentence_list.length(); index++) {
+                        JSONObject entryObject = student_sentence_list.getJSONObject(index);
+                        DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"), entryObject.getString("successor"));
+                        s_sentences[index] = dialogueItem;
                     }
-                    currentItems = answerItems;
-                    itemIndex = -1;
-                    _setMsgText();
-                    _confirmQuestion();
-                    _addAnswerList();
-                }
-            } else {
-                //Temporal Functionality
-                JSONArray question_list = object.getJSONArray("question_list");
-                if(question_list.length() == 0) {
-                    globalApplication.setFragment("Script", new ScriptFragment());
-                    globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                    globalApplication.getSchoolActivity().initDrawer();
-                    globalApplication.getSchoolActivity().initFragment();
-                } else {
-                    //Only One question
-                    for(int index = 0; index < question_list.length(); index++) {
-                        JSONObject entryObject = question_list.getJSONObject(index);
-                        DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"));
-                        chosenItem = dialogueItem;
-                    }
-                    ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
-                    globalApplication.addDialogue(chosenItem);
+
+                    //Teacher sentences
+                    JSONObject teacher_sentence = object.getJSONObject("t_sentence");
+                    t_sentence = new DialogueItem(teacher_sentence.getString("type"), teacher_sentence.getString("context"), teacher_sentence.getString("id"), teacher_sentence.getString("successor"));
+                    _changeDialogues();
+                    globalApplication.addDialogue(t_sentence);
+                    s_sentence_index = -1;
+                    r_sentecne_index = -1;
                 }
             }
-            isConfirmClicked = false;
-            itemIndex = -1;
         } catch (JSONException e) { e.printStackTrace(); }
     }
 

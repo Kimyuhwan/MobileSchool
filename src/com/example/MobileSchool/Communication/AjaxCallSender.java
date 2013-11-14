@@ -123,13 +123,7 @@ public class AjaxCallSender {
     }
 
     public void select(String type, String id) {
-        String url = "";
-        Log.d(TAG, "Select type : " + type +  "\t" + id);
-
-        if(type.equals("Q") || type.equals("R"))
-            url = ServerMessage.URL_SELECT_QUESTION + id + "/teacher/";
-        else if(type.equals("A"))
-            url = ServerMessage.URL_SELECT_ANSWER + id + "/teacher/";
+        String url = ServerMessage.URL_SELECT_SELECT + id + "/teacher/";
 
         if(accountManager.isStudent())
             url += globalApplication.getPartnerInfo().getUnique_id() + "/student/" + accountManager.getMyInfo().getUnique_id();

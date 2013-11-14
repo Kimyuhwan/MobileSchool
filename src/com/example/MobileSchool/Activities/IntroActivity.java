@@ -16,6 +16,7 @@ import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.AutoUpdateApk;
+import org.joda.time.Hours;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,8 +45,8 @@ public class IntroActivity extends Activity {
         BugSenseHandler.initAndStartSession(IntroActivity.this, "66fd741b");
 
         // Auto Update
-//        aua = new AutoUpdateApk(getApplicationContext());
-//        aua.checkUpdatesManually();
+        aua = new AutoUpdateApk(getApplicationContext());
+        aua.setUpdateInterval(1 * AutoUpdateApk.HOURS);
 
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
