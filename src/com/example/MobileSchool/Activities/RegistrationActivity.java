@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Model.MyInfo;
@@ -17,8 +18,12 @@ import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
+import com.parse.ParseInstallation;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * User: yuhwan
@@ -58,6 +63,10 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
+
 
         _initUI();
         _initFont();
@@ -156,6 +165,11 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
             if(status.equals(Constants.RESPONSE_REGISTRATION_STUDENT_SUCCESS) || status.equals(Constants.RESPONSE_REGISTRATION_TEACHER_SUCCESS)) {
                 if(globalApplication.isSchoolActivityFront()) _makeToast("Registration Success");
                 isClicked = false;
+//                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+//                List<String> channels = new LinkedList<String>();
+//                channels.add(accountManager.getUniqueId());  // Will be updated to user Id
+//                installation.put("channels", channels);
+//                installation.saveInBackground();
                 startActivity(new Intent(this, LogInActivity.class));
                 finish();
             } else {
@@ -163,6 +177,7 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
                 msgTextView.setText("존재하는 ID 입니다.");
                 idEditText.setText("");
                 idEditText.requestFocus();
+                isClicked = false;
             }
 
         } catch (JSONException e) { e.printStackTrace(); }

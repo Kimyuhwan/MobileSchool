@@ -13,4 +13,11 @@
                android:src="@drawable/main_icon"
                android:contentDescription="@string/imageView_main_icon_description" />
 
+    <TextView android:id="@+id/intro_textView_version"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:textColor="#84c2cf"
+              android:textSize="17dp"
+              android:textStyle="bold"/>
+
 </LinearLayout>

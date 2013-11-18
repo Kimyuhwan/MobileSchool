@@ -17,11 +17,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Model.Content;
 import com.example.MobileSchool.Utils.*;
+import com.parse.ParseInstallation;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -49,7 +51,6 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     private AccountManager accountManager;
     private ContentManager contentManager;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,9 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
 
         ajaxCallSender.appOnUpdate();
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
 
         //Check Service
         if(ManagerRegistrationService.managerRegistrationService == null)

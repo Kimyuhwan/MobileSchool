@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.TextView;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.AccountManager;
@@ -31,6 +32,10 @@ public class EvaluationActivity extends Activity implements BaseMethod {
 
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
+
 
         _initUI();
     }

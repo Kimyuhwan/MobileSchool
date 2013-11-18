@@ -20,6 +20,7 @@ import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
+import com.parse.PushService;
 import org.json.JSONObject;
 
 /**
@@ -84,8 +85,8 @@ public class MyInfoFragment extends Fragment implements BaseMethod {
            @Override
            public void onClick(View v) {
                Log.d(TAG, "MyInfoFragment : log out");
+               globalApplication.removeSubscribe();
                accountManager.removeMyInfo();
-
                Intent intent = new Intent(getActivity(), IntroActivity.class);
                startActivity(intent);
                getActivity().finish();

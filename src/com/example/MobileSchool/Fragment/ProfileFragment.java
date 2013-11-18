@@ -79,6 +79,7 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         nameTextView.setText(globalApplication.getPartnerInfo().getName());
         phoneNumberView.setText(globalApplication.getPartnerInfo().getPhoneNumber());
         callInformationTextView.setText(R.string.profile_textView_call_information_student_msg);
+        ajaxCallSender.ready();
     }
 
     private void _initUIForTeacher(View rootView) {
@@ -92,17 +93,6 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         phoneNumberView.setText(globalApplication.getPartnerInfo().getPhoneNumber());
         callInformationTextView.setText(R.string.profile_textView_call_information_teacher_msg);
 
-        mHandler = new Handler();
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(globalApplication.isSchoolActivityFront()) {
-                    Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:" + globalApplication.getPartnerInfo().getPhoneNumber()));
-                    startActivity(callIntent);
-                }
-            }
-        }, 3000);
     }
 
     @Override
@@ -112,6 +102,7 @@ public class ProfileFragment extends Fragment implements BaseMethod {
 
     @Override
     public void handlePush(JSONObject object) {
+        Log.d(TAG, "ProfileFragment : " + object);
         //To change body of implemented methods use File | Settings | File Templates.
     }
 

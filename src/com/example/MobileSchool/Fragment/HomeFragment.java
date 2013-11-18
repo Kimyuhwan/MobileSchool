@@ -1,6 +1,7 @@
 package com.example.MobileSchool.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -10,15 +11,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.example.MobileSchool.Activities.LogInActivity;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Communication.PushSender;
+import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.GlobalApplication;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.Utils.Constants;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,10 +61,31 @@ public class HomeFragment extends Fragment implements BaseMethod {
         accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+
+        if(!globalApplication.isValidVersion())  {
+            globalApplication.removeSubscribe();
+            Intent intent = new Intent(getActivity().getApplicationContext(), LogInActivity.class);
+            getActivity().finish();
+            startActivity(intent);
+        }
+
+        if(!_isLogged()) {
+            Intent intent = new Intent(getActivity().getApplicationContext(), LogInActivity.class);
+            getActivity().finish();
+            startActivity(intent);
+        }
+
         _initFragment();
         _initUI(rootView);
         _initFont(rootView);
         return rootView;
+    }
+
+    private boolean _isLogged() {
+        if(accountManager.getMyInfo() != null)
+            return true;
+        else
+            return false;
     }
 
     private void _initFragment() {

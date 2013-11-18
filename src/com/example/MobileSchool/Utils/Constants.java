@@ -48,6 +48,7 @@ public class Constants {
     public static String CODE_PUSH_QUESTION_ANSWER = "PQA";
     public static String CODE_STUDENT_ANSWER = "SA";
     public static String CODE_CHILD_SENTENCE = "CS";
+    public static String CODE_PUSH_STUDENT_READY = "PSR";
 
 
     // SharedPreferences

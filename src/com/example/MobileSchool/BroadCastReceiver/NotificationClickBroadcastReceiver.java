@@ -35,7 +35,8 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
                 globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
             } else {
-                globalApplication.getSchoolActivity().finish();
+                if(globalApplication.getSchoolActivity() != null)
+                    globalApplication.getSchoolActivity().finish();
                 Intent guideIntent = new Intent(context, SchoolActivity.class);
                 guideIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 context.startActivity(guideIntent);

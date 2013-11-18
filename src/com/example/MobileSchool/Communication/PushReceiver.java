@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,6 +46,7 @@ public class PushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         globalApplication = (GlobalApplication) context.getApplicationContext();
         callRecorder = globalApplication.getCallRecorder();
+
         try {
             JSONObject object = new JSONObject(intent.getExtras().getString("com.parse.Data"));
             if(object.getString("type").equals(Constants.PUSH_TYPE_NOTIFICATION)) {
@@ -109,7 +111,16 @@ public class PushReceiver extends BroadcastReceiver {
                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
                context.startActivity(intent);
 
-            } else {
+            } else if(code.equals(Constants.CODE_PUSH_STUDENT_READY)) {
+               Log.d(TAG, "PSR");
+                if(globalApplication.isSchoolActivityFront()) {
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:" + globalApplication.getPartnerInfo().getPhoneNumber()));
+                    callIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                    context.startActivity(callIntent);
+                }
+            }
+            else {
                 ((BaseMethod) globalApplication.getFragment()).handlePush(object);
             }
         } catch (JSONException e) { e.printStackTrace();}

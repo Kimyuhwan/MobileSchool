@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.Fragment.DialogueStudentFragment;
 import com.example.MobileSchool.Fragment.DialogueTeacherFragment;
 import com.example.MobileSchool.R;
@@ -24,6 +25,9 @@ public class EntryActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "EntryActivity: onCreate");
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
 
         globalApplication = (GlobalApplication) getApplication();
         if(globalApplication.getAccountManager().isStudent())

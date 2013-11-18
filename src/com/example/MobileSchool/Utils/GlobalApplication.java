@@ -1,12 +1,16 @@
 package com.example.MobileSchool.Utils;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.Fragment.HomeFragment;
 import com.example.MobileSchool.Model.DialogueItem;
 import com.example.MobileSchool.Model.PartnerInfo;
@@ -19,6 +23,7 @@ import com.parse.PushService;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * User: yuhwan
@@ -53,10 +58,13 @@ public class GlobalApplication extends Application {
     private List<DialogueItem> dialogueList;
     private DialogueItem[] rootItems;
 
+    private AutoUpdateApk aua;
+
     @Override
     public void onCreate() {
         super.onCreate();
         Parse.initialize(this, Constants.PARSE_APPLICATION_ID, Constants.PARSE_CLIENT_KEY);
+        PushService.setDefaultPushCallback(this, SchoolActivity.class);
 
         if(accountManager == null)
             accountManager = new AccountManager(this);
@@ -66,6 +74,15 @@ public class GlobalApplication extends Application {
             callRecorder = new CallRecorder();
         if(dialogueList == null)
             dialogueList = new ArrayList<DialogueItem>();
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
+
+        // Auto Update
+        aua = new AutoUpdateApk(getApplicationContext());
+        AutoUpdateApk.enableMobileUpdates();
+        aua.setUpdateInterval(15 * AutoUpdateApk.MINUTES);
+
     }
 
     // Recording
@@ -76,7 +93,6 @@ public class GlobalApplication extends Application {
     public void setRecording(boolean recording) {
         isRecording = recording;
     }
-
 
 
     // Recall Number
@@ -253,5 +269,40 @@ public class GlobalApplication extends Application {
         this.rootItems = rootItems;
     }
 
+    // Parse
+   public void addSubscribe() {
+       PushService.subscribe(this, accountManager.getUniqueId(), SchoolActivity.class);
+   }
+
+   public void removeSubscribe() {
+       PushService.unsubscribe(this, accountManager.getMyInfo().getUnique_id());
+   }
+
+    //Version check
+   public boolean isValidVersion() {
+       SharedPreferences sharedPreferences = getSharedPreferences(Constants.TAG, 0);
+       try {
+           PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+           String currentVersion = pInfo.versionName;
+           String localVersion = sharedPreferences.getString("version", Constants.SHAREDPREFERENCES_EMPTY);
+           Log.d(TAG, "Version check : " + localVersion + "\t" + currentVersion);
+           if(currentVersion.equals(localVersion))
+               return true;
+           else
+               return false;
+       } catch (PackageManager.NameNotFoundException e) { e.printStackTrace(); }
+       return false;
+   }
+
+   public void setVersion() {
+       try {
+           PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+           String currentVersion = pInfo.versionName;
+           SharedPreferences sharedPreferences = getSharedPreferences(Constants.TAG, 0);
+           SharedPreferences.Editor editor = sharedPreferences.edit();
+           editor.putString("version", currentVersion);
+           editor.commit();
+       } catch (PackageManager.NameNotFoundException e) { e.printStackTrace(); }
+   }
 
 }

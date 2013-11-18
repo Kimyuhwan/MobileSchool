@@ -1,5 +1,8 @@
 package com.example.MobileSchool.Activities;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.widget.TextView;
 import com.bugsense.trace.BugSenseHandler;
 import android.app.Activity;
 import android.content.Intent;
@@ -32,7 +35,7 @@ public class IntroActivity extends Activity {
     private GlobalApplication globalApplication;
     private AccountManager accountManager;
 
-    private AutoUpdateApk aua;
+    private TextView versionTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,13 +43,6 @@ public class IntroActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.disp_intro);
         Log.d(TAG, "IntroActivity : onCreate");
-
-        // Bug Sense
-        BugSenseHandler.initAndStartSession(IntroActivity.this, "66fd741b");
-
-        // Auto Update
-        aua = new AutoUpdateApk(getApplicationContext());
-        aua.setUpdateInterval(1 * AutoUpdateApk.HOURS);
 
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
@@ -56,6 +52,21 @@ public class IntroActivity extends Activity {
         _setHandler(myInfo);
         mHandler = new Handler();
         mHandler.postDelayed(mRunnable, 3000);
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
+
+        _initUI();
+    }
+
+    private void _initUI() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String currentVersion = pInfo.versionName;
+            versionTextView = (TextView) findViewById(R.id.intro_textView_version);
+            versionTextView.setText("Ver." + currentVersion);
+        } catch (PackageManager.NameNotFoundException e) { e.printStackTrace(); }
+
     }
 
     private void _setHandler(MyInfo myInfo) {

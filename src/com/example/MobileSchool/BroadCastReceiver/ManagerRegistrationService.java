@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.telephony.TelephonyManager;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.Communication.PushReceiver;
 import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
@@ -40,6 +41,8 @@ public class ManagerRegistrationService extends Service {
     @Override
     public void onCreate() {
        managerRegistrationService = this;
+       // Bug Sense
+       BugSenseHandler.initAndStartSession(this, "66fd741b");
     }
 
     @Override
@@ -51,14 +54,6 @@ public class ManagerRegistrationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
-
-        // Set Push Notification Framework (Parse)
-        PushService.setDefaultPushCallback(this, SchoolActivity.class);
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        List<String> channels = new LinkedList<String>();
-        channels.add(accountManager.getUniqueId());  // Will be updated to user Id
-        installation.put("channels", channels);
-        installation.saveInBackground();
 
         // Set broadcastReceiver
         screenStatusBroadcastReceiver = new DeviceStatusBroadcastReceiver();

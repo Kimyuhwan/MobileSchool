@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchool.BaseMethod;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Model.MyInfo;
@@ -22,8 +23,13 @@ import com.example.MobileSchool.SchoolActivity;
 import com.example.MobileSchool.Utils.AccountManager;
 import com.example.MobileSchool.Utils.Constants;
 import com.example.MobileSchool.Utils.GlobalApplication;
+import com.parse.Parse;
+import com.parse.ParseInstallation;
+import com.parse.PushService;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.*;
 
 /**
  * User: yuhwan
@@ -53,6 +59,11 @@ public class LogInActivity extends Activity implements BaseMethod{
         globalApplication = (GlobalApplication) getApplication();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
         accountManager = globalApplication.getAccountManager();
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, "66fd741b");
+
+
         _initUI();
         _initFont();
     }
@@ -154,6 +165,9 @@ public class LogInActivity extends Activity implements BaseMethod{
 
             if(user.getString("phone").equals(phoneNumber)) {
                 accountManager.saveMyInfo(myInfo);
+                // Set Push Notification Framework (Parse)
+                globalApplication.addSubscribe();
+                globalApplication.setVersion();
                 Intent intent = new Intent(getApplicationContext(), SchoolActivity.class);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 startActivity(intent);

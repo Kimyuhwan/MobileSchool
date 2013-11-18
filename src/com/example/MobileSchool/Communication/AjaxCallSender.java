@@ -137,4 +137,10 @@ public class AjaxCallSender {
     public void recall(String url) {
         aq.ajax(url, JSONObject.class, ajaxCallBack);
     }
+
+    public void ready() {
+       String url = ServerMessage.URL_READY +  globalApplication.getPartnerInfo().getUnique_id();
+       aq.ajax(url, JSONObject.class, ajaxCallBack);
+       Log.d(TAG, "AjaxCall ready : " + url);
+    }
 }

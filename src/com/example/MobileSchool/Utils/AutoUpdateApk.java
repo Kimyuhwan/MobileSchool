@@ -104,7 +104,7 @@ public class AutoUpdateApk extends Observable {
     // be considered annoying behaviour and result in service suspension
     //
     public void setUpdateInterval(long interval) {
-        if( interval > 60 * MINUTES ) {
+        if( interval > 10 * MINUTES ) {
             UPDATE_INTERVAL = interval;
         } else {
             Log_e(TAG, "update interval is too short (less than 1 hour)");

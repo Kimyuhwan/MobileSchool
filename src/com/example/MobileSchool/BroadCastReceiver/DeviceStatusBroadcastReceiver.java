@@ -19,6 +19,7 @@ public class DeviceStatusBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         if(intent.getAction().equals(Intent.ACTION_USER_PRESENT)) {
             ajaxCallSender = new AjaxCallSender(context);
             ajaxCallSender.deviceStatusUpdate(true);
