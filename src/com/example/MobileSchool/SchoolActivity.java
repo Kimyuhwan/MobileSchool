@@ -23,6 +23,7 @@ import com.example.MobileSchool.Fragment.*;
 import com.example.MobileSchool.Communication.AjaxCallSender;
 import com.example.MobileSchool.Model.Content;
 import com.example.MobileSchool.Utils.*;
+import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,6 +64,9 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
 
         ajaxCallSender.appOnUpdate();
+
+        // Parse Analytics
+        ParseAnalytics.trackAppOpened(getIntent());
 
         // Bug Sense
         BugSenseHandler.initAndStartSession(this, "66fd741b");

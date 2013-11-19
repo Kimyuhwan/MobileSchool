@@ -17,6 +17,7 @@ import com.example.MobileSchool.Model.PartnerInfo;
 import com.example.MobileSchool.R;
 import com.example.MobileSchool.SchoolActivity;
 import com.parse.Parse;
+import com.parse.ParseAnalytics;
 import com.parse.ParseInstallation;
 import com.parse.PushService;
 
@@ -82,7 +83,6 @@ public class GlobalApplication extends Application {
         aua = new AutoUpdateApk(getApplicationContext());
         AutoUpdateApk.enableMobileUpdates();
         aua.setUpdateInterval(15 * AutoUpdateApk.MINUTES);
-
     }
 
     // Recording

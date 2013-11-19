@@ -35,7 +35,6 @@
         <service android:name=".BroadCastReceiver.ManagerRegistrationService"/>
         <service android:name="com.parse.PushService" />
 
-
         <receiver android:name=".BroadCastReceiver.BootCompleteBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
