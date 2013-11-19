@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OpenSchool</string>
+    <string name="app_name">OpenSchool (Dev)</string>
     <string-array name="Home_menu_array">
         <item>Home</item>
         <item>My Information</item>
