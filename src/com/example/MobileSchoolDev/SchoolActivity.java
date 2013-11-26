@@ -67,7 +67,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         ParseAnalytics.trackAppOpened(getIntent());
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         //Check Service
         if(ManagerRegistrationService.managerRegistrationService == null)
@@ -177,6 +177,11 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         drawerList.setItemChecked(position, true);
         setTitle(menuTitles[position]);
         drawerLayout.closeDrawer(drawerList);
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

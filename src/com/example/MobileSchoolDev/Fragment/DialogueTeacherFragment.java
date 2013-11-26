@@ -12,6 +12,7 @@ import android.widget.*;
 import com.example.MobileSchoolDev.BaseMethod;
 import com.example.MobileSchoolDev.Communication.AjaxCallSender;
 import com.example.MobileSchoolDev.Communication.PushSender;
+import com.example.MobileSchoolDev.Communication.SocketCommunication;
 import com.example.MobileSchoolDev.Model.DialogueItem;
 import com.example.MobileSchoolDev.R;
 import com.example.MobileSchoolDev.Utils.AccountManager;
@@ -52,6 +53,8 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
 
     private boolean isConfirmClicked = false;
     private Typeface font;
+
+    private SocketCommunication socketCommunication;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -101,6 +104,8 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
                         Log.d(TAG, "DialogueTeacherFragment Confirm : " + s_sentence_index);
                         if(isConfirmClicked)
                             Log.d(TAG, "DialogueTeacherFragment Confirm : 여러번 클릭하였습니다. 처리가 될때까지 기다려주세요.");
+                        else if(!socketCommunication._checkReady())
+                            Log.d(TAG, "Socket is not ready");
                         else {  // check
                             DialogueItem chosenItem = null;
                             if(s_sentences == null)
@@ -109,6 +114,7 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
                                 chosenItem = s_sentences[s_sentence_index];
                             ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
                             globalApplication.addDialogue(chosenItem);
+                            socketCommunication.sendMsg(chosenItem.getId());
                             isConfirmClicked = true;
                         }
                     }
@@ -207,12 +213,32 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
     }
 
     @Override
+    public void onStart() {
+        // Socket
+        socketCommunication = new SocketCommunication(getActivity(), this);
+        socketCommunication.socketInit();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        socketCommunication.socketFinish();
+        super.onStop();
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        Log.d(TAG, "DialogueTeacherFragment message : " + message);
+    }
+
+    @Override
     public void handleAjaxCallBack(JSONObject object) {
         Log.d(TAG, "DialogueTeacherFragment : handleAjaxCallBack Object => " + object);
         try {
             if(object.getString("code").equals(Constants.CODE_CHILD_SENTENCE)) {
                 JSONArray student_sentence_list = object.getJSONArray("s_sentence_list");
                 if(student_sentence_list.length() == 0) {
+                    socketCommunication.socketFinish();
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
                     globalApplication.getSchoolActivity().initDrawer();

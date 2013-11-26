@@ -73,7 +73,7 @@ public class GlobalApplication extends Application {
             dialogueList = new ArrayList<DialogueItem>();
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         // Auto Update
         aua = new AutoUpdateApk(getApplicationContext());

@@ -10,8 +10,11 @@ public class Constants {
     public static String TAG = "OpenSchool";
 
     // Parse
-    public static String PARSE_APPLICATION_ID = "SfY8SbpgXz11WGUa32OyxJp7P2vqwGbtB1zz73sn";
-    public static String PARSE_CLIENT_KEY = "9dJXjReap5vMCnyShPlUb7WU6bNKkg1KnOkpYHPG";
+    public static String PARSE_APPLICATION_ID = "zPwPw1H8coWuANpzEVRJ8ScH9mNAh8aTUl3Tma2l";
+    public static String PARSE_CLIENT_KEY = "kWkh5nEqZIHCv9UEEKagUiihhR3HBkLx58ei4RcE";
+
+    // BugSense
+    public static String BUGSENSE_KEY = "8b53df7a";
 
     // Push
     public static Integer PUSH_NOTIFICATION_UNIQUE_ID = 5474;
@@ -90,6 +93,4 @@ public class Constants {
     // Recorder
     public static String SD_CARD_PATH = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
     public static String RECODER_PATH = SD_CARD_PATH + "/talentDonation/";
-
-
 }

@@ -26,6 +26,7 @@
     <string name="login_button_login">Log In</string>
     <string name="login_button_registration">Registration</string>
     <string name="myinfo_button_logout">Log Out</string>
+    <string name="contact_textView_title">developer</string>
     <string name="home_textView_introduction_title">Open School</string>
     <string name="home_textView_introduction_body"> Open School is an mobile service which provides alternative education. It is an educational service with a special curriculum based on slack time which are nontraditional education. This school allows students to study English with more flexible time by facilitating talent donation from general people. </string>
     <string name="guide_textView_guide_title">Guideline</string>

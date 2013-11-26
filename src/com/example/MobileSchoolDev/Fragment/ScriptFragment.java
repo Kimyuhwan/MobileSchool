@@ -101,6 +101,10 @@ public class ScriptFragment extends Fragment implements BaseMethod {
     }
 
     @Override
+    public void handleSocketMessage(String message) {
+    }
+
+    @Override
     public void handleAjaxCallBack(JSONObject object) {
 
     }

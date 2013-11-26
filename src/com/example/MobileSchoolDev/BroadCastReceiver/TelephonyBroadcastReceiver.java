@@ -66,8 +66,6 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
-                    // Answer
-                    ajaxCallSender.answer();
                     // Start Activity
                     globalApplication.getSchoolActivity().finish();
                     Intent intent = new Intent(context, EntryActivity.class);
@@ -89,8 +87,6 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         Thread thread = new Thread(){
             @Override
             public void run() {
-//                if(!accountManager.isStudent())
-//                    callRecorder.stopRecording();
                 globalApplication.setClassConnected(false);
                 globalApplication.getSchoolActivity().finish();
                 Intent intent = new Intent(context, ThankyouActivity.class);

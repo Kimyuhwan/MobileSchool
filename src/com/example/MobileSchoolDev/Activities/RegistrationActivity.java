@@ -60,7 +60,7 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
 
         _initUI();
@@ -150,6 +150,11 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
             type = Constants.REGISTRATION_TYPE_STUDENT;
         else
             type = Constants.REGISTRATION_TYPE_TEACHER;
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

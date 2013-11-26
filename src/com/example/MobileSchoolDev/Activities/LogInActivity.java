@@ -56,7 +56,7 @@ public class LogInActivity extends Activity implements BaseMethod{
         accountManager = globalApplication.getAccountManager();
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
 
         _initUI();
@@ -117,6 +117,11 @@ public class LogInActivity extends Activity implements BaseMethod{
     protected void hideSoftKeyboard(View view) {
         InputMethodManager mgr = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

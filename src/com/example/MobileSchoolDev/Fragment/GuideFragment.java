@@ -114,6 +114,11 @@ public class GuideFragment extends Fragment implements BaseMethod {
     }
 
     @Override
+    public void handleSocketMessage(String message) {
+        Log.d(TAG, "message : " + message);
+    }
+
+    @Override
     public void handleAjaxCallBack(JSONObject object) {
         try {
             Log.d(TAG, "GuideFragment : handleAjaxCallBack Object => " + object);

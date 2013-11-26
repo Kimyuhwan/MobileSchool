@@ -8,7 +8,9 @@ package com.example.MobileSchoolDev.Utils;
  */
 public class ServerMessage {
 
-    public static String SERVER_ADDRESS = "http://143.248.91.216/dev/";
+    public static String SERVER_IP = "143.248.91.216";
+    public static String SERVER_ADDRESS = "http://" + SERVER_IP + "/alpha/";
+    public static Integer SOCKET_PORT = 8001;
     public static String URL_SCREEN_MONITORING = SERVER_ADDRESS + "monitoring/screen/"; // It will be changed to monitoring/device/
     public static String URL_APP_MONITORING = SERVER_ADDRESS + "monitoring/app/";
 

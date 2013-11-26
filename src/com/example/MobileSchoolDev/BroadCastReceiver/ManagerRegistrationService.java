@@ -35,7 +35,7 @@ public class ManagerRegistrationService extends Service {
     public void onCreate() {
        managerRegistrationService = this;
        // Bug Sense
-       BugSenseHandler.initAndStartSession(this, "66fd741b");
+       BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
     }
 
     @Override

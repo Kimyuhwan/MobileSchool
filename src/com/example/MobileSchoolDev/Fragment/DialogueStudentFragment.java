@@ -12,6 +12,7 @@ import android.widget.*;
 import com.example.MobileSchoolDev.BaseMethod;
 import com.example.MobileSchoolDev.Communication.AjaxCallSender;
 import com.example.MobileSchoolDev.Communication.PushSender;
+import com.example.MobileSchoolDev.Communication.SocketCommunication;
 import com.example.MobileSchoolDev.Model.DialogueItem;
 import com.example.MobileSchoolDev.R;
 import com.example.MobileSchoolDev.Utils.AccountManager;
@@ -48,6 +49,8 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
 
     private Typeface font;
 
+    private SocketCommunication socketCommunication;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -68,6 +71,7 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         ajaxCallSender.answer();
         return rootView;
     }
+
 
     private void _initFont(View rootView) {
         ViewGroup container = (LinearLayout) rootView.findViewById(R.id.dialogue_student_layout_root);
@@ -158,6 +162,60 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
     }
 
     @Override
+    public void onStart() {
+        // Socket
+        socketCommunication = new SocketCommunication(getActivity(), this);
+        socketCommunication.socketInit();
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        socketCommunication.socketFinish();
+        super.onStop();
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+       Log.d(TAG, "DialogueStudentFragment message : " + message);
+       if(_NumberChk(message)) {
+           DialogueItem chosenItem = _getChosenItem(message);
+           ajaxCallSender.select(chosenItem.getType(), chosenItem.getId());
+           globalApplication.addDialogue(chosenItem);
+       }
+    }
+
+    private boolean _NumberChk(String str){
+        char c;
+
+        if(str.equals("")) return false;
+
+        for(int i = 0 ; i < str.length() ; i++){
+            c = str.charAt(i);
+            if(c < 48 || c > 59){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private DialogueItem _getChosenItem(String id) {
+        if(s_sentences != null) {
+            for(DialogueItem sentence : s_sentences) {
+                if(sentence.getId().equals(id))
+                    return sentence;
+            }
+        } else if(rootItems != null) {
+            for(DialogueItem root : rootItems) {
+                if(root.getId().equals(id))
+                    return root;
+            }
+        }
+        Log.d(TAG, "Error DialougeStudentFragment : Both s_sentences and rootItems are null");
+        return null;
+    }
+
+    @Override
     public void handleAjaxCallBack(JSONObject object) {
         Log.d(TAG, "DialogueStudentFragment : handleAjaxCallBack Object => " + object);
         try {
@@ -171,9 +229,31 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     rootItems[index] = dialogueItem;
                 }
                 _addRoot();
+            } else if(code.equals(Constants.CODE_CHILD_SENTENCE)) {
+                JSONArray student_sentence_list = object.getJSONArray("s_sentence_list");
+                if(student_sentence_list.length() == 0) {
+                    socketCommunication.socketFinish();
+                    globalApplication.setFragment("Script", new ScriptFragment());
+                    globalApplication.setDrawerType(R.array.Waiting_menu_array);
+                    globalApplication.getSchoolActivity().initDrawer();
+                    globalApplication.getSchoolActivity().initFragment();
+                } else {
+                    //Student sentences
+                    s_sentences = new DialogueItem[student_sentence_list.length()];
+                    for(int index = 0; index < student_sentence_list.length(); index++) {
+                        JSONObject entryObject = student_sentence_list.getJSONObject(index);
+                        DialogueItem dialogueItem = new DialogueItem(entryObject.getString("type"), entryObject.getString("context"), entryObject.getString("id"), entryObject.getString("successor"));
+                        s_sentences[index] = dialogueItem;
+                    }
+
+                    //Teacher sentences
+                    JSONObject teacher_sentence = object.getJSONObject("t_sentence");
+                    t_sentence = new DialogueItem(teacher_sentence.getString("type"), teacher_sentence.getString("context"), teacher_sentence.getString("id"), teacher_sentence.getString("successor"));
+                    _changeDialogues();
+                    globalApplication.addDialogue(t_sentence);
+                }
             }
         } catch (JSONException e) { e.printStackTrace(); }
-
     }
 
     @Override

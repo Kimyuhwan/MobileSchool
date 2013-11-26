@@ -9,6 +9,7 @@ import org.json.JSONObject;
  */
 public interface BaseMethod {
 
+    public void handleSocketMessage(String message);
     public void handleAjaxCallBack(JSONObject object);
     public void handlePush(JSONObject object);
 }

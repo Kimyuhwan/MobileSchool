@@ -15,6 +15,7 @@ import com.example.MobileSchoolDev.Activities.LogInActivity;
 import com.example.MobileSchoolDev.BaseMethod;
 import com.example.MobileSchoolDev.Communication.AjaxCallSender;
 import com.example.MobileSchoolDev.Communication.PushSender;
+import com.example.MobileSchoolDev.Communication.SocketCommunication;
 import com.example.MobileSchoolDev.Utils.GlobalApplication;
 import com.example.MobileSchoolDev.Utils.AccountManager;
 import com.example.MobileSchoolDev.R;
@@ -60,19 +61,20 @@ public class HomeFragment extends Fragment implements BaseMethod {
         if(!globalApplication.isValidVersion())  {
             globalApplication.removeSubscribe();
             Intent intent = new Intent(getActivity().getApplicationContext(), LogInActivity.class);
-            getActivity().finish();
             startActivity(intent);
+            getActivity().finish();
         }
 
         if(!_isLogged()) {
             Intent intent = new Intent(getActivity().getApplicationContext(), LogInActivity.class);
-            getActivity().finish();
             startActivity(intent);
+            getActivity().finish();
         }
 
         _initFragment();
         _initUI(rootView);
         _initFont(rootView);
+
         return rootView;
     }
 
@@ -117,6 +119,11 @@ public class HomeFragment extends Fragment implements BaseMethod {
                 }
             });
         }
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        Log.d(TAG, "HomeFragment message : " + message);
     }
 
     @Override

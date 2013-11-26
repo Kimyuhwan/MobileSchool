@@ -94,6 +94,10 @@ public class ProfileFragment extends Fragment implements BaseMethod {
     }
 
     @Override
+    public void handleSocketMessage(String message) {
+    }
+
+    @Override
     public void handleAjaxCallBack(JSONObject object) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

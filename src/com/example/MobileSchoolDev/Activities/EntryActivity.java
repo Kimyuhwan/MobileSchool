@@ -27,7 +27,7 @@ public class EntryActivity extends Activity {
         Log.d(TAG, "EntryActivity: onCreate");
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         globalApplication = (GlobalApplication) getApplication();
         if(globalApplication.getAccountManager().isStudent())

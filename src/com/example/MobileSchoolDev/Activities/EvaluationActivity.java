@@ -32,13 +32,18 @@ public class EvaluationActivity extends Activity implements BaseMethod {
         accountManager = globalApplication.getAccountManager();
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
 
         _initUI();
     }
 
     private void _initUI() {
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

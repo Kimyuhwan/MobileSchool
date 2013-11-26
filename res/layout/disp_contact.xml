@@ -3,11 +3,98 @@
               android:id="@+id/contact_layout_root"
               android:orientation="vertical"
               android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Contact"
-        />
+              android:layout_height="fill_parent" android:baselineAligned="false">
 
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_height="fill_parent"
+                  android:layout_width="fill_parent"
+                  android:baselineAligned="false"
+                  android:layout_weight="3">
+
+        <LinearLayout android:orientation="vertical"
+                      android:layout_weight="5"
+                      android:layout_height="fill_parent"
+                      android:gravity="center"
+                      android:layout_width="0dp">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:paddingBottom="10dp"
+                      android:text="@string/contact_textView_title"/>
+
+            <ImageView android:layout_width="100dp"
+                       android:layout_height="100dp"
+                       android:layout_gravity="center"
+                       android:contentDescription="@string/imageView_profile_icon_description"
+                       android:src="@drawable/profile_icon_blue"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:paddingTop="10dp"
+                      android:text="김유환"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:textColor="#84c4d2"
+                      android:text="01099131824"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="vertical"
+                      android:layout_weight="5"
+                      android:layout_height="fill_parent"
+                      android:gravity="center"
+                      android:layout_width="0dp">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:paddingBottom="10dp"
+                      android:text="@string/contact_textView_title"/>
+
+            <ImageView android:layout_width="100dp"
+                       android:layout_height="100dp"
+                       android:layout_gravity="center"
+                       android:contentDescription="@string/imageView_profile_icon_description"
+                       android:src="@drawable/profile_icon_blue"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:paddingTop="10dp"
+                      android:text="박필순"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="20dp"
+                      android:layout_gravity="center"
+                      android:gravity="center"
+                      android:textColor="#84c4d2"
+                      android:text="01090145180"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_height="fill_parent"
+                  android:layout_width="fill_parent"
+                  android:baselineAligned="false"
+                  android:gravity="center"
+                  android:layout_weight="7">
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="20dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"
+                  android:paddingTop="10dp"
+                  android:text="어플리케이션에 대한 문의사항 및 오류 발견시 위 번호로 전화주세요!"/>
+
+    </LinearLayout>
 </LinearLayout>

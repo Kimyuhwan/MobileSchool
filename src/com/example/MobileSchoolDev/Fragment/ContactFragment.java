@@ -3,6 +3,7 @@ package com.example.MobileSchoolDev.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,10 @@ public class ContactFragment extends Fragment implements BaseMethod {
 
     private void _initFragment() {
         globalApplication.setFragment("Home", new HomeFragment());
+    }
+
+    @Override
+    public void handleSocketMessage(String message) {
     }
 
     @Override

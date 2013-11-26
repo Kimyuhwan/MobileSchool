@@ -50,7 +50,7 @@ public class IntroActivity extends Activity {
         mHandler.postDelayed(mRunnable, 3000);
 
         // Bug Sense
-        BugSenseHandler.initAndStartSession(this, "66fd741b");
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         _initUI();
     }

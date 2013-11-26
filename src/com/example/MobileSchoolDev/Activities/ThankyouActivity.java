@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolDev.R;
 import com.example.MobileSchoolDev.Utils.AccountManager;
 import com.example.MobileSchoolDev.Utils.Constants;
@@ -33,6 +34,9 @@ public class ThankyouActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.disp_thankyou);
         Log.d(TAG, "IntroActivity : onCreate");
+
+        // Bug Sense
+        BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
