@@ -131,6 +131,19 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     }
 
     @Override
+    public void onBackPressed() {
+        String fragmentName = globalApplication.getFragmentName();
+        if(fragmentName.equals("Guide") || fragmentName.equals("Profile")) {
+            globalApplication.setDrawerType(R.array.Home_menu_array);
+            globalApplication.setFragment("Home",new HomeFragment());
+            globalApplication.getSchoolActivity().initDrawer();
+            globalApplication.getSchoolActivity().initFragment();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
@@ -156,17 +169,23 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     }
 
     @Override
+    public void onStop() {
+        globalApplication.freeFragment();
+        super.onStop();
+    }
+
+    @Override
     public void onResume() {
-        super.onResume();
         globalApplication.setSchoolActivityFront(true);
+        super.onResume();
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         globalApplication.setSchoolActivityFront(false);
         globalApplication.setFragment("Home", new HomeFragment());
         globalApplication.setDrawerType(R.array.Home_menu_array);
+        super.onPause();
     }
 
     private void _changeFragment(int position, Fragment fragment) {

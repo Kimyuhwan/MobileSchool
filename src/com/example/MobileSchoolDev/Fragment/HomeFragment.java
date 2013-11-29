@@ -15,7 +15,6 @@ import com.example.MobileSchoolDev.Activities.LogInActivity;
 import com.example.MobileSchoolDev.BaseMethod;
 import com.example.MobileSchoolDev.Communication.AjaxCallSender;
 import com.example.MobileSchoolDev.Communication.PushSender;
-import com.example.MobileSchoolDev.Communication.SocketCommunication;
 import com.example.MobileSchoolDev.Utils.GlobalApplication;
 import com.example.MobileSchoolDev.Utils.AccountManager;
 import com.example.MobileSchoolDev.R;
@@ -42,7 +41,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private TextView startingPointTextView;
     private Button startingPointButton;
 
-    private Button temporalButton;
+    private Boolean isStartClicked = false;
 
     public HomeFragment() {}
 
@@ -57,6 +56,10 @@ public class HomeFragment extends Fragment implements BaseMethod {
         accountManager = globalApplication.getAccountManager();
         pushSender = new PushSender(getActivity().getApplicationContext());
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
+
+        //Initialize
+        globalApplication.setSession_connected(false);
+        globalApplication.setPartnerInfo(null);
 
         if(!globalApplication.isValidVersion())  {
             globalApplication.removeSubscribe();
@@ -86,7 +89,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
     }
 
     private void _initFragment() {
-        globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.setFragment("Home", this);
     }
 
     private void _initFont(View rootView) {
@@ -104,8 +107,13 @@ public class HomeFragment extends Fragment implements BaseMethod {
             startingPointButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "HomeFragment starting point button : click (student)");
-                    ajaxCallSender.start();
+                    if(!isStartClicked) {
+                        Log.d(TAG, "HomeFragment starting point button : click (student)");
+                        ajaxCallSender.sStart();
+                        isStartClicked = true;
+                    } else {
+                        Log.d(TAG, "Start Button is already clicked");
+                    }
                 }
             });
         } else {
@@ -114,8 +122,13 @@ public class HomeFragment extends Fragment implements BaseMethod {
             startingPointButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "HomeFragment starting point button : click (teacher)");
-                    // Available
+                    if(!isStartClicked) {
+                        Log.d(TAG, "HomeFragment starting point button : click (teacher)");
+                        ajaxCallSender.tStart();
+                        isStartClicked = true;
+                    } else {
+                        Log.d(TAG, "Start Button is already clicked");
+                    }
                 }
             });
         }
@@ -133,13 +146,14 @@ public class HomeFragment extends Fragment implements BaseMethod {
             // For Start New Class
             String result = object.getString(Constants.PUSH_KEY_RESULT);
             String code = object.getString(Constants.PUSH_KEY_CODE);
-            if(result.equals("success") && code.equals(Constants.CODE_STUDENT_START)) {
+            if(result.equals("success") && (code.equals(Constants.CODE_STUDENT_START) || code.equals(Constants.CODE_TEACHER_START))) {
+                globalApplication.setSession_type(Constants.CODE_SESSION_ACTIVE);
                 globalApplication.setWaitingTime(object.getInt(Constants.PUSH_KEY_WAITING) * 1000);
                 globalApplication.setFragment("Guide", new GuideFragment());
                 globalApplication.setDrawerType(R.array.Waiting_menu_array);
                 globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
-                Log.d(TAG, "Student homefragment initDrawer()");
+                Log.d(TAG, "Homefragment initDrawer() code by : " + code);
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }

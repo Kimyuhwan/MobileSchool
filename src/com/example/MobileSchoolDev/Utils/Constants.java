@@ -37,11 +37,15 @@ public class Constants {
     public static String PUSH_VALUE_STUDENT_ID = "sid";
 
     public static String CODE_TEACHER_CONFIRM = "TC";
+    public static String CODE_STUDENT_CONFIRM = "SC";
     public static String CODE_STUDENT_START = "SS";
+    public static String CODE_TEACHER_START = "TS";
     public static String CODE_PUSH_TEACHER_INFO = "PTI";
+    public static String CODE_PUSH_STUDENT_INFO = "PSI";
     public static String CODE_PUSH_STUDENT_ANSWER = "PSA";
     public static String CODE_PUSH_ROOT_QUESTION = "PRQ";
     public static String CODE_PUSH_TEACHER = "PT";
+    public static String CODE_PUSH_STUDENT = "PS";
     public static String CODE_TEACHER_FINISH = "TF";
     public static String CODE_STUDENT_FINISH = "SF";
     public static String CODE_NO_STUDENT = "NS";
@@ -53,6 +57,9 @@ public class Constants {
     public static String CODE_CHILD_SENTENCE = "CS";
     public static String CODE_PUSH_STUDENT_READY = "PSR";
 
+    // Session Type
+    public static String CODE_SESSION_ACTIVE = "ACTIVE";
+    public static String CODE_SESSION_PASSIVE = "PASSIVE";
 
     // SharedPreferences
     public static String SHAREDPREFERENCES_MY_INFO = TAG + "_MY_INFO";

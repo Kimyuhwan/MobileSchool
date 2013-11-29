@@ -23,22 +23,34 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT)) {
-            Log.d(TAG, "NotificationClickBroadcastReceiver : confirm");
+            if(!_isStudying()) {
+                Log.d(TAG, "NotificationClickBroadcastReceiver : confirm");
+                globalApplication = (GlobalApplication) context.getApplicationContext();
+                globalApplication.setFragment("Guide", new GuideFragment());
+                globalApplication.setDrawerType(R.array.Waiting_menu_array);
+                globalApplication.setSession_type(Constants.CODE_SESSION_PASSIVE);
 
-            globalApplication = (GlobalApplication) context.getApplicationContext();
-            globalApplication.setFragment("Guide", new GuideFragment());
-            globalApplication.setDrawerType(R.array.Waiting_menu_array);
-
-            if(globalApplication.isSchoolActivityFront()) {
-                globalApplication.getSchoolActivity().initDrawer();
-                globalApplication.getSchoolActivity().initFragment();
-            } else {
-                if(globalApplication.getSchoolActivity() != null)
-                    globalApplication.getSchoolActivity().finish();
-                Intent guideIntent = new Intent(context, SchoolActivity.class);
-                guideIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                context.startActivity(guideIntent);
+                if(globalApplication.isSchoolActivityFront()) {
+                    globalApplication.getSchoolActivity().initDrawer();
+                    globalApplication.getSchoolActivity().initFragment();
+                } else {
+                    if(globalApplication.getSchoolActivity() != null)
+                        globalApplication.getSchoolActivity().finish();
+                    Intent guideIntent = new Intent(context, SchoolActivity.class);
+                    guideIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(guideIntent);
+                }
             }
         }
+    }
+
+    private boolean _isStudying() {
+        String currentFragmentName = globalApplication.getFragmentName();
+        String[] studyingFragments = new String[]{"DialogueStudent","DialogueTeacher","Guide","Profile","Script"};
+        for(String fragmentName : studyingFragments) {
+            if(fragmentName.equals(currentFragmentName))
+                return true;
+        }
+        return false;
     }
 }

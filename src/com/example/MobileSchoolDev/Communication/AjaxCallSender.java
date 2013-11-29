@@ -104,16 +104,28 @@ public class AjaxCallSender {
         Log.d(TAG, "AppOnUpdate URL : " + url + " ( " + myInfo.getAccount_id() + ", " + myInfo.getPassword() + ", " + myInfo.getName() + ", " + myInfo.getGender() + ", " + myInfo.getAge() + ", " + myInfo.getPhoneNumber() + ", " + myInfo.getType() + ")" );
     }
 
-    public void start() {
-        String url = ServerMessage.URL_START + accountManager.getUniqueId();
+    public void sStart() {
+        String url = ServerMessage.URL_SSTART + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
-        Log.d(TAG, "AjaxCall start : " + url);
+        Log.d(TAG, "AjaxCall sStart : " + url);
     }
 
-    public void confirm() {
-        String url = ServerMessage.URL_CONFIRM + accountManager.getUniqueId();
+    public void tStart() {
+        String url = ServerMessage.URL_TSTART + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);
-        Log.d(TAG, "AjaxCall confirm : " + url);
+        Log.d(TAG, "AjaxCall sStart : " + url);
+    }
+
+    public void tConfirm() {
+        String url = ServerMessage.URL_TCONFIRM + accountManager.getUniqueId();
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall tConfirm : " + url);
+    }
+
+    public void sConfirm() {
+        String url = ServerMessage.URL_SCONFIRM + "sid/" + accountManager.getUniqueId() + "/tid/" + globalApplication.getSender_id();
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall tConfirm : " + url);
     }
 
     public void answer() {
@@ -142,5 +154,11 @@ public class AjaxCallSender {
        String url = ServerMessage.URL_READY +  globalApplication.getPartnerInfo().getUnique_id();
        aq.ajax(url, JSONObject.class, ajaxCallBack);
        Log.d(TAG, "AjaxCall ready : " + url);
+    }
+
+    public void finish() {
+        String url = ServerMessage.URL_FINISH + globalApplication.getSession_id();
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall finish : " + url);
     }
 }

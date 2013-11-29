@@ -31,9 +31,9 @@ public class EntryActivity extends Activity {
 
         globalApplication = (GlobalApplication) getApplication();
         if(globalApplication.getAccountManager().isStudent())
-            globalApplication.setFragment("Script",new DialogueStudentFragment());
+            globalApplication.setFragment("DialogueStudent",new DialogueStudentFragment());
         else
-            globalApplication.setFragment("Script", new DialogueTeacherFragment());
+            globalApplication.setFragment("DialogueTeacher", new DialogueTeacherFragment());
         globalApplication.setDrawerType(R.array.Class_menu_array);
         finish();
 

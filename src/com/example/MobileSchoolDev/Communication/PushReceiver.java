@@ -49,12 +49,32 @@ public class PushReceiver extends BroadcastReceiver {
             JSONObject object = new JSONObject(intent.getExtras().getString("com.parse.Data"));
             if(object.getString("type").equals(Constants.PUSH_TYPE_NOTIFICATION)) {
                 Log.d(TAG, "PushNotification notification : " + object);
-                _makeNotification(context);
-                _makeToast(context);
+                if(!_isStudying()) {
+                    // 수업 시작이 되지 않았을 때만.
+                    String code = object.getString("code");
+                    JSONObject msg = object.getJSONObject("msg");
+                    if(code.equals(Constants.CODE_PUSH_TEACHER))
+                         globalApplication.setSender_id(msg.getString("sender"));
+                    else if(code.equals(Constants.CODE_PUSH_STUDENT))
+                         globalApplication.setSender_id(msg.getString("sender"));
+
+                    _makeNotification(context);
+                    _makeToast(context);
+                }
             }
             else if(object.getString("type").equals(Constants.PUSH_TYPE_MESSAGE))
                 _handleMessage(object, context);
         } catch (JSONException e) {e.printStackTrace();}
+    }
+
+    private boolean _isStudying() {
+        String currentFragmentName = globalApplication.getFragmentName();
+        String[] studyingFragments = new String[]{"DialogueStudent","DialogueTeacher","Guide","Profile","Script"};
+        for(String fragmentName : studyingFragments) {
+            if(fragmentName.equals(currentFragmentName))
+                return true;
+        }
+        return false;
     }
 
     private void _makeNotification(Context context) {
@@ -93,6 +113,7 @@ public class PushReceiver extends BroadcastReceiver {
             if(code.equals(Constants.CODE_PUSH_ROOT_QUESTION)) {
                JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
                JSONArray topics = msg.getJSONArray(Constants.PUSH_TYPE_TOPICS);
+               String session_id = msg.getString("session_id");
                DialogueItem[] entryItems = new DialogueItem[topics.length()];
                for(int index = 0; index < topics.length(); index++) {
                    JSONObject topic = topics.getJSONObject(index);
@@ -100,6 +121,7 @@ public class PushReceiver extends BroadcastReceiver {
                    entryItems[index] = dialogueItem;
                }
                globalApplication.setEntryItems(entryItems);
+               globalApplication.setSession_id(session_id);
 
                // Start recorder
 //               callRecorder.startRecording();

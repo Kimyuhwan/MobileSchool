@@ -52,9 +52,11 @@ public class GuideFragment extends Fragment implements BaseMethod {
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
 
         getActivity().setTitle(title);
+
+        _initFragment();
         if(accountManager.isStudent()) {
             rootView = inflater.inflate(R.layout.disp_guide_student, container, false);
-            if(globalApplication.isClassConnected())
+            if(globalApplication.isSession_connected())
                 _initUIForStudentConnected(rootView);
             else
                 _initUIForStudentUnconnected(rootView);
@@ -62,14 +64,17 @@ public class GuideFragment extends Fragment implements BaseMethod {
         }
         else {
             rootView = inflater.inflate(R.layout.disp_guide_teacher, container, false);
-            if(globalApplication.isClassConnected())
+            if(globalApplication.isSession_connected())
                 _initUIForTeacherConnected(rootView);
             else
                 _initUIForTeacherUnconnected(rootView);
             _initFontForTeacher(rootView);
         }
-
         return rootView;
+    }
+
+    private void _initFragment() {
+        globalApplication.setFragment("Guide", this);
     }
 
     private void _initFontForStudent(View rootView) {
@@ -90,6 +95,8 @@ public class GuideFragment extends Fragment implements BaseMethod {
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
         connectingTextView.startAnimation(anim);
+        if(globalApplication.getSession_type().equals(Constants.CODE_SESSION_PASSIVE))
+            ajaxCallSender.sConfirm();
     }
 
     private void _initUIForStudentConnected(View rootView) {
@@ -105,12 +112,18 @@ public class GuideFragment extends Fragment implements BaseMethod {
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
         connectingTextView.startAnimation(anim);
-        ajaxCallSender.confirm();
+        if(globalApplication.getSession_type().equals(Constants.CODE_SESSION_PASSIVE))
+            ajaxCallSender.tConfirm();
     }
 
     private void _initUIForTeacherConnected(View rootView) {
         connectingTextView = (TextView) rootView.findViewById(R.id.guide_textView_connecting);
         connectingTextView.setText(R.string.guide_textView_connected);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 
     @Override
@@ -124,18 +137,21 @@ public class GuideFragment extends Fragment implements BaseMethod {
             Log.d(TAG, "GuideFragment : handleAjaxCallBack Object => " + object);
             String result = object.getString(Constants.PUSH_KEY_RESULT);
             String code = object.getString(Constants.PUSH_KEY_CODE);
-            // Teacher
-            if(result.equals("success") && code.equals(Constants.CODE_TEACHER_CONFIRM)) {
+            if(result.equals("success") && (code.equals(Constants.CODE_TEACHER_CONFIRM) || code.equals(Constants.CODE_STUDENT_CONFIRM))) {
                 connectingTextView.setText(R.string.guide_textView_connected);
                 connectingTextView.clearAnimation();
-
                 // 학생 정보 저장
-                JSONObject studentInfo = object.getJSONObject(Constants.PUSH_KEY_STUDENT_INFO);
-                PartnerInfo partnerInfo = new PartnerInfo(studentInfo.getString("sid"), studentInfo.getString("name"), studentInfo.getString("phoneNumber"), studentInfo.getInt("age"),studentInfo.getInt("gender"), studentInfo.getString("type"));
-                globalApplication.setPartnerInfo(partnerInfo);
+                PartnerInfo partnerInfo;
+                if(!accountManager.isStudent()) {
+                    JSONObject studentInfo = object.getJSONObject(Constants.PUSH_KEY_STUDENT_INFO);
+                    partnerInfo = new PartnerInfo(studentInfo.getString("sid"), studentInfo.getString("name"), studentInfo.getString("phoneNumber"), studentInfo.getInt("age"),studentInfo.getInt("gender"), studentInfo.getString("type"));
+                } else {
+                    JSONObject teacherInfo = object.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
+                    partnerInfo = new PartnerInfo(teacherInfo.getString("tid"), teacherInfo.getString("name"), teacherInfo.getString("phoneNumber"), teacherInfo.getInt("age"),teacherInfo.getInt("gender"), teacherInfo.getString("type"));
+                }
 
-                // Connection 완료 저장
-                globalApplication.setClassConnected(true);
+                globalApplication.setPartnerInfo(partnerInfo);
+                globalApplication.setSession_connected(true);
                 if(globalApplication.isSchoolActivityFront()) {
                     globalApplication.setFragment("Profile", new ProfileFragment());
                     globalApplication.getSchoolActivity().initFragment();
@@ -148,7 +164,6 @@ public class GuideFragment extends Fragment implements BaseMethod {
                     globalApplication.setFragment("Home", new HomeFragment());
                     globalApplication.getSchoolActivity().initFragment();
                 }
-
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }
@@ -156,23 +171,29 @@ public class GuideFragment extends Fragment implements BaseMethod {
     @Override
     public void handlePush(JSONObject object) {
         try{
+            Log.d(TAG, "GuideFragment : handlePush Object => " + object);
             String code = object.getString(Constants.PUSH_KEY_CODE);
-            if(code.equals(Constants.CODE_PUSH_TEACHER_INFO)) {
+            if(code.equals(Constants.CODE_PUSH_TEACHER_INFO) || code.equals(Constants.CODE_PUSH_STUDENT_INFO)) {
                 JSONObject msg = object.getJSONObject(Constants.PUSH_TYPE_MESSAGE);
-                JSONObject teacherJson = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
-                PartnerInfo partnerInfo = new PartnerInfo(teacherJson.getString("tid"), teacherJson.getString("name"), teacherJson.getString("phoneNumber"), teacherJson.getInt("age"),teacherJson.getInt("gender"), teacherJson.getString("type"));
-                globalApplication.setPartnerInfo(partnerInfo);
-                globalApplication.setClassConnected(true);
+                PartnerInfo partnerInfo;
 
+                if(accountManager.isStudent()) {
+                    JSONObject teacherJson = msg.getJSONObject(Constants.PUSH_KEY_TEACHER_INFO);
+                    partnerInfo = new PartnerInfo(teacherJson.getString("tid"), teacherJson.getString("name"), teacherJson.getString("phoneNumber"), teacherJson.getInt("age"),teacherJson.getInt("gender"), teacherJson.getString("type"));
+                } else {
+                    JSONObject studentJson = msg.getJSONObject(Constants.PUSH_KEY_STUDENT_INFO);
+                    partnerInfo = new PartnerInfo(studentJson.getString("sid"), studentJson.getString("name"), studentJson.getString("phoneNumber"), studentJson.getInt("age"),studentJson.getInt("gender"), studentJson.getString("type"));
+                }
+
+                globalApplication.setPartnerInfo(partnerInfo);
+                globalApplication.setSession_connected(true);
                 connectingTextView.setText(R.string.guide_textView_connected);
                 connectingTextView.clearAnimation();
-
                 globalApplication.setFragment("Profile",new ProfileFragment());
                 globalApplication.getSchoolActivity().initFragment();
             }
         } catch (JSONException e) { e.printStackTrace();}
     }
-
 
     private void _makeToast() {
         LayoutInflater inflater = (LayoutInflater) globalApplication.getSchoolActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

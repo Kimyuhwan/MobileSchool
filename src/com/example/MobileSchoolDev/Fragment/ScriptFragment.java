@@ -60,9 +60,14 @@ public class ScriptFragment extends Fragment implements BaseMethod {
         dialogueList = globalApplication.getDialogueList();
         font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
+        _initFragment();
         _initUI(rootView);
         _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFragment() {
+        globalApplication.setFragment("Script", this);
     }
 
     private void _initFont(View rootView) {

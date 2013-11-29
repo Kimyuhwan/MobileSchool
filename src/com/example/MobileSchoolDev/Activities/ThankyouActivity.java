@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
 import com.bugsense.trace.BugSenseHandler;
+import com.example.MobileSchoolDev.Fragment.HomeFragment;
 import com.example.MobileSchoolDev.R;
 import com.example.MobileSchoolDev.Utils.AccountManager;
 import com.example.MobileSchoolDev.Utils.Constants;
@@ -33,7 +34,7 @@ public class ThankyouActivity extends Activity {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.disp_thankyou);
-        Log.d(TAG, "IntroActivity : onCreate");
+        Log.d(TAG, "ThankyouActivity : onCreate");
 
         // Bug Sense
         BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
@@ -41,6 +42,9 @@ public class ThankyouActivity extends Activity {
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
 
+        // Initialize
+        globalApplication.freeFragment();
+        globalApplication.setDrawerType(-1);
         _initFont();
     }
     private void _initFont() {

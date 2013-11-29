@@ -60,7 +60,7 @@ public class ContactFragment extends Fragment implements BaseMethod {
     }
 
     private void _initFragment() {
-        globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.setFragment("Contact", this);
     }
 
     @Override

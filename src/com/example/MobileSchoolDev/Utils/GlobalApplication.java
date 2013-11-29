@@ -42,7 +42,6 @@ public class GlobalApplication extends Application {
     private boolean isSchoolActivityFront;
     private String fragmentName = null;
     private Fragment fragment = null;
-    private boolean classConnected = false;
     private int drawerType = -1;
     private int recallNumber = 0;
     private boolean isRecording = false;
@@ -50,6 +49,12 @@ public class GlobalApplication extends Application {
     // Temporal storage
     private int waitingTime;
     private DialogueItem[] entryItems;
+
+    // Class
+    private String sender_id;
+    private String session_id;
+    private String session_type;
+    private boolean session_connected;
 
     // Dialogue
     private List<DialogueItem> dialogueList;
@@ -153,6 +158,10 @@ public class GlobalApplication extends Application {
         this.fragment = fragment;
     }
 
+    public String getFragmentName() {
+        return this.fragmentName;
+    }
+
     public Fragment getFragment() {
         if(fragment == null)
             return new HomeFragment();
@@ -194,14 +203,6 @@ public class GlobalApplication extends Application {
             return R.array.Home_menu_array;
         else
             return drawerType;
-    }
-
-    public boolean isClassConnected() {
-        return classConnected;
-    }
-
-    public void setClassConnected(boolean classConnected) {
-        this.classConnected = classConnected;
     }
 
 
@@ -300,5 +301,41 @@ public class GlobalApplication extends Application {
            editor.commit();
        } catch (PackageManager.NameNotFoundException e) { e.printStackTrace(); }
    }
+
+
+   // Session
+
+   public String getSender_id() {
+        return sender_id;
+   }
+
+   public void setSender_id(String sender_id) {
+        this.sender_id = sender_id;
+   }
+
+   public String getSession_id() {
+       return session_id;
+   }
+
+   public void setSession_id(String session_id) {
+        this.session_id = session_id;
+   }
+
+   public String getSession_type() {
+        return session_type;
+   }
+
+   public void setSession_type(String session_type) {
+        this.session_type = session_type;
+   }
+
+   public boolean isSession_connected() {
+        return session_connected;
+   }
+
+   public void setSession_connected(boolean session_connected) {
+        this.session_connected = session_connected;
+   }
+
 
 }

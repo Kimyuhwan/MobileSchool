@@ -15,13 +15,16 @@ public class ServerMessage {
     public static String URL_APP_MONITORING = SERVER_ADDRESS + "monitoring/app/";
 
     // New Message
-    public static String URL_START = SERVER_ADDRESS + "start/";
-    public static String URL_CONFIRM = SERVER_ADDRESS + "confirm/";
+    public static String URL_SSTART = SERVER_ADDRESS + "sstart/";
+    public static String URL_TSTART = SERVER_ADDRESS + "tstart/";
+    public static String URL_TCONFIRM = SERVER_ADDRESS + "tconfirm/";
+    public static String URL_SCONFIRM = SERVER_ADDRESS + "sconfirm/";
     public static String URL_ANSWER = SERVER_ADDRESS + "answer/";
     public static String URL_DIALOGUE_TEACHER = SERVER_ADDRESS + "get/dialogue/for/teacher/";
     public static String URL_DIALOGUE_STUDENT = SERVER_ADDRESS + "get/dialogue/for/student/";
     public static String URL_SELECT_SELECT = SERVER_ADDRESS + "select/id/";
     public static String URL_READY = SERVER_ADDRESS + "ready/";
+    public static String URL_FINISH = SERVER_ADDRESS + "finish/";
 
     // Old Message
     public static String URL_LOGIN = SERVER_ADDRESS + "account/login/";

@@ -64,6 +64,7 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         ajaxCallSender = new AjaxCallSender(getActivity().getApplicationContext(), this);
         font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
+        _initFragment();
         _initUI();
         _initFont(rootView);
 
@@ -72,6 +73,9 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         return rootView;
     }
 
+    private void _initFragment() {
+        globalApplication.setFragment("DialogueStudent", this);
+    }
 
     private void _initFont(View rootView) {
         ViewGroup container = (LinearLayout) rootView.findViewById(R.id.dialogue_student_layout_root);
@@ -162,14 +166,6 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
     }
 
     @Override
-    public void onStart() {
-        // Socket
-        socketCommunication = new SocketCommunication(getActivity(), this);
-        socketCommunication.socketInit();
-        super.onStart();
-    }
-
-    @Override
     public void onStop() {
         socketCommunication.socketFinish();
         super.onStop();
@@ -215,6 +211,11 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
         return null;
     }
 
+    private void _socketConnect() {
+        socketCommunication = new SocketCommunication(getActivity(), this);
+        socketCommunication.socketInit();
+    }
+
     @Override
     public void handleAjaxCallBack(JSONObject object) {
         Log.d(TAG, "DialogueStudentFragment : handleAjaxCallBack Object => " + object);
@@ -228,6 +229,8 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     DialogueItem dialogueItem = new DialogueItem(topic.getString("type"), topic.getString("context"), topic.getString("id"), topic.getString("successor"));
                     rootItems[index] = dialogueItem;
                 }
+                globalApplication.setSession_id(object.getString("session_id"));
+                _socketConnect();
                 _addRoot();
             } else if(code.equals(Constants.CODE_CHILD_SENTENCE)) {
                 JSONArray student_sentence_list = object.getJSONArray("s_sentence_list");

@@ -1,5 +1,7 @@
 package com.example.MobileSchoolDev.Fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -52,7 +54,8 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         getActivity().setTitle(title);
         View rootView = inflater.inflate(R.layout.disp_profile, container, false);
 
-        if(globalApplication.isClassConnected() && globalApplication.getPartnerInfo() != null) {
+        _initFragment();
+        if(globalApplication.getPartnerInfo() != null) {
             if(accountManager.isStudent())
                 _initUIForStudent(rootView);
             else
@@ -60,6 +63,10 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         }
         _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFragment() {
+        globalApplication.setFragment("Profile", this);
     }
 
     private void _initFont(View rootView) {
@@ -77,7 +84,8 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         nameTextView.setText(globalApplication.getPartnerInfo().getName());
         phoneNumberView.setText(globalApplication.getPartnerInfo().getPhoneNumber());
         callInformationTextView.setText(R.string.profile_textView_call_information_student_msg);
-        ajaxCallSender.ready();
+        if(globalApplication.getSession_type().equals(Constants.CODE_SESSION_ACTIVE))
+            ajaxCallSender.ready();
     }
 
     private void _initUIForTeacher(View rootView) {
@@ -91,6 +99,11 @@ public class ProfileFragment extends Fragment implements BaseMethod {
         phoneNumberView.setText(globalApplication.getPartnerInfo().getPhoneNumber());
         callInformationTextView.setText(R.string.profile_textView_call_information_teacher_msg);
 
+        if(globalApplication.getSession_type().equals(Constants.CODE_SESSION_ACTIVE)) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + globalApplication.getPartnerInfo().getPhoneNumber()));
+            startActivity(callIntent);
+        }
     }
 
     @Override

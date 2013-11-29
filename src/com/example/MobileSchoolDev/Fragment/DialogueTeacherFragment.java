@@ -70,9 +70,14 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
         font = Typeface.createFromAsset(getActivity().getAssets(), "Applemint.ttf");
 
         r_sentences = globalApplication.getEntryItems();
+        _initFragment();
         _initUI();
         _initFont(rootView);
         return rootView;
+    }
+
+    private void _initFragment() {
+        globalApplication.setFragment("DialogueTeacher", this);
     }
 
     private void _initFont(View rootView) {

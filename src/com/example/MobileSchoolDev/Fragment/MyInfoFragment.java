@@ -66,7 +66,7 @@ public class MyInfoFragment extends Fragment implements BaseMethod {
     }
 
     private void _initFragment() {
-        globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.setFragment("MyInfo", this);
     }
 
     private void _initUI(View rootView) {

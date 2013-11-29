@@ -41,13 +41,13 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         callRecorder = globalApplication.getCallRecorder();
         ajaxCallSender = new AjaxCallSender(context);
 
-
         // If the classReady is on .. (not always!)
         String telephonyState = intent.getExtras().getString(TelephonyManager.EXTRA_STATE);
         extras = intent.getExtras();
 
         Log.d(TAG, "TelephonyBroadcastReceiver receive stat : " + telephonyState);
-        if(globalApplication.isClassConnected())
+        Log.d(TAG, "Connected Status : " + globalApplication.isSession_connected());
+        if(globalApplication.isSession_connected())
             _handleState(telephonyState);
     }
 
@@ -61,12 +61,12 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void _onCalling() {
-        Log.d(TAG, "TelephonyBroadcastReceiver start : onCalling");
-        if(accountManager.isStudent()) { // && isIncomingCall equals to oppositeNumber
+        if(accountManager.isStudent()) {
             Thread thread = new Thread(){
                 @Override
                 public void run() {
                     // Start Activity
+                    Log.d(TAG, "TelephonyBroadcastReceiver onCalling");
                     globalApplication.getSchoolActivity().finish();
                     Intent intent = new Intent(context, EntryActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
@@ -79,7 +79,7 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
 
     private void _onRinging() {
         String incomingNumber = extras.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-        Log.d(TAG, "TelephonyBroadcastReceiver start : onRinging from " + incomingNumber);
+        Log.d(TAG, "TelephonyBroadcastReceiver sStart : onRinging from " + incomingNumber);
         this.incomingNumber = incomingNumber;
     }
 
@@ -87,7 +87,10 @@ public class TelephonyBroadcastReceiver extends BroadcastReceiver {
         Thread thread = new Thread(){
             @Override
             public void run() {
-                globalApplication.setClassConnected(false);
+                Log.d(TAG, "TelephonyReceiver : onIdle");
+                if(!accountManager.isStudent())
+                    ajaxCallSender.finish();
+                globalApplication.setSession_connected(false);
                 globalApplication.getSchoolActivity().finish();
                 Intent intent = new Intent(context, ThankyouActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);

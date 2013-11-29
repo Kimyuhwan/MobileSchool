@@ -48,10 +48,8 @@ public class SocketCommunication {
         if(globalApplication.getAccountManager().getMyInfo() == null || globalApplication.getPartnerInfo() == null)
             Log.d(TAG, "Error! socketInit : Information is NULL");
         else {
-            if(globalApplication.getAccountManager().isStudent())
-                this.matchId = globalApplication.getPartnerInfo().getUnique_id() + globalApplication.getAccountManager().getMyInfo().getUnique_id();
-            else
-                this.matchId = globalApplication.getAccountManager().getMyInfo().getUnique_id() + globalApplication.getPartnerInfo().getUnique_id();
+            Log.d(TAG, "Socket Init");
+            this.matchId = globalApplication.getSession_id();
             connectThread.start();
             readThread.start();
         }
@@ -67,6 +65,7 @@ public class SocketCommunication {
     public void socketFinish(){
         if(socket != null) {
             if(!socket.isClosed()){
+                Log.d(TAG, "Socket Finish");
                 try {
                     socket.shutdownInput();
                     socket.shutdownOutput();

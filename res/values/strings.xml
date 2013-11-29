@@ -51,7 +51,7 @@
     <string name="toast_login_wrong_id">존재하지 않는 ID 입니다.</string>
     <string name="toast_login_wrong_password">비밀번호가 일치하지 않습니다.</string>
     <string name="home_button_starting_point_student">New Class</string>
-    <string name="home_button_starting_point_teacher">Right Now</string>
+    <string name="home_button_starting_point_teacher">New Class</string>
     <string name="home_textView_starting_point_student">Taking class? </string>
     <string name="home_textView_starting_point_teacher">Available now? </string>
     <string name="guide_textView_connected">Connected !</string>
