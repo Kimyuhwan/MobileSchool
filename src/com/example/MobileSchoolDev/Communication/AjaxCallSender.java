@@ -110,6 +110,13 @@ public class AjaxCallSender {
         Log.d(TAG, "AjaxCall sStart : " + url);
     }
 
+    // Experiment
+    public void sStart(String experiment_type) {
+        String url = ServerMessage.URL_SSTART + accountManager.getUniqueId() + "/" + experiment_type;
+        aq.ajax(url, JSONObject.class, ajaxCallBack);
+        Log.d(TAG, "AjaxCall sStart : " + url);
+    }
+
     public void tStart() {
         String url = ServerMessage.URL_TSTART + accountManager.getUniqueId();
         aq.ajax(url, JSONObject.class, ajaxCallBack);

@@ -336,6 +336,4 @@ public class GlobalApplication extends Application {
    public void setSession_connected(boolean session_connected) {
         this.session_connected = session_connected;
    }
-
-
 }

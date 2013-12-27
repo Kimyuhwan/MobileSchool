@@ -22,10 +22,10 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        globalApplication = (GlobalApplication) context.getApplicationContext();
         if(intent.getAction().equals(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT)) {
             if(!_isStudying()) {
                 Log.d(TAG, "NotificationClickBroadcastReceiver : confirm");
-                globalApplication = (GlobalApplication) context.getApplicationContext();
                 globalApplication.setFragment("Guide", new GuideFragment());
                 globalApplication.setDrawerType(R.array.Waiting_menu_array);
                 globalApplication.setSession_type(Constants.CODE_SESSION_PASSIVE);

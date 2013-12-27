@@ -40,6 +40,9 @@ public class HomeFragment extends Fragment implements BaseMethod {
 
     private TextView startingPointTextView;
     private Button startingPointButton;
+    // Experiment
+    private Button startingPointButton_A;
+    private Button startingPointButton_B;
 
     private Boolean isStartClicked = false;
 
@@ -116,6 +119,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
                     }
                 }
             });
+
         } else {
             startingPointButton.setText(R.string.home_button_starting_point_teacher);
             startingPointTextView.setText(R.string.home_textView_starting_point_teacher);

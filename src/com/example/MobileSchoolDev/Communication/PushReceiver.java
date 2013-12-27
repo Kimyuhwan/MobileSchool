@@ -58,6 +58,10 @@ public class PushReceiver extends BroadcastReceiver {
                     else if(code.equals(Constants.CODE_PUSH_STUDENT))
                          globalApplication.setSender_id(msg.getString("sender"));
 
+                    // Experiment
+                    String experiment_type = msg.getString("type");
+                    globalApplication.setExperimentType(experiment_type);
+
                     _makeNotification(context);
                     _makeToast(context);
                 }
@@ -69,7 +73,7 @@ public class PushReceiver extends BroadcastReceiver {
 
     private boolean _isStudying() {
         String currentFragmentName = globalApplication.getFragmentName();
-        String[] studyingFragments = new String[]{"DialogueStudent","DialogueTeacher","Guide","Profile","Script"};
+        String[] studyingFragments = new String[]{"DialogueStudent","DialogueTeacher","Guide","Profile","Script","Experiment"};
         for(String fragmentName : studyingFragments) {
             if(fragmentName.equals(currentFragmentName))
                 return true;

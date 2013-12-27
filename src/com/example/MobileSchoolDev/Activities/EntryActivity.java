@@ -30,10 +30,12 @@ public class EntryActivity extends Activity {
         BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
 
         globalApplication = (GlobalApplication) getApplication();
-        if(globalApplication.getAccountManager().isStudent())
+        if(globalApplication.getAccountManager().isStudent()) {
             globalApplication.setFragment("DialogueStudent",new DialogueStudentFragment());
-        else
+        }
+        else {
             globalApplication.setFragment("DialogueTeacher", new DialogueTeacherFragment());
+        }
         globalApplication.setDrawerType(R.array.Class_menu_array);
         finish();
 

@@ -133,9 +133,10 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     @Override
     public void onBackPressed() {
         String fragmentName = globalApplication.getFragmentName();
-        if(fragmentName.equals("Guide") || fragmentName.equals("Profile")) {
+
+        if(globalApplication != null && fragmentName != null && (fragmentName.equals("Guide") || fragmentName.equals("Profile"))) {
             globalApplication.setDrawerType(R.array.Home_menu_array);
-            globalApplication.setFragment("Home",new HomeFragment());
+            globalApplication.setFragment("Home", new HomeFragment());
             globalApplication.getSchoolActivity().initDrawer();
             globalApplication.getSchoolActivity().initFragment();
         } else {
