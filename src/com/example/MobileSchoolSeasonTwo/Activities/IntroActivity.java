@@ -3,6 +3,7 @@ package com.example.MobileSchoolSeasonTwo.Activities;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +24,7 @@ import com.example.MobileSchoolSeasonTwo.Utils.GlobalApplication;
  * Date: 13. 10. 11.
  * Time: 오후 4:43
  */
-public class IntroActivity extends Activity {
+public class IntroActivity extends SherlockActivity {
     private String TAG = Constants.TAG;
 
     private Handler mHandler;

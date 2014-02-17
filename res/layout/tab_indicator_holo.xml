@@ -15,6 +15,7 @@
 -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/abs__background_holo_light"
     android:layout_height="@dimen/tab_host_default_height"
     android:orientation="horizontal"
     style="@style/TabAppTheme"

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.Activities.IntroActivity;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 22
  * Time: 오후 7:48
  */
-public class MyInfoFragment extends Fragment implements BaseMethod {
+public class MyInfoFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
     private String title = "My Information";
@@ -59,6 +60,7 @@ public class MyInfoFragment extends Fragment implements BaseMethod {
         _initFont(rootView);
         return rootView;
     }
+
 
     private void _initFont(View rootView) {
         ViewGroup container = (LinearLayout) rootView.findViewById(R.id.myinfo_layout_root);

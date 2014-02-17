@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 16
  * Time: 오후 11:15
  */
-public class ProfileFragment extends Fragment implements BaseMethod {
+public class ProfileFragment extends SherlockFragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Profile";
 

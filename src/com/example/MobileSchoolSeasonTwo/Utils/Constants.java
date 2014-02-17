@@ -18,7 +18,8 @@ public class Constants {
     public static String PARSE_CLIENT_KEY = "9dJXjReap5vMCnyShPlUb7WU6bNKkg1KnOkpYHPG";
 
     // BugSense
-    public static String BUGSENSE_KEY = "8b53df7a";
+    //public static String BUGSENSE_KEY = "8b53df7a";
+    public static String BUGSENSE_KEY = "d5245fc7";
 
     // Push
     public static Integer PUSH_NOTIFICATION_UNIQUE_ID = 5474;

@@ -10,12 +10,15 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuInflater;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.BroadCastReceiver.ManagerRegistrationService;
 import com.example.MobileSchoolSeasonTwo.Fragment.*;
@@ -34,7 +37,7 @@ import org.json.JSONObject;
  * Time: 오후 4:36
  */
 
-public class SchoolActivity extends FragmentActivity implements BaseMethod{
+public class SchoolActivity extends SherlockFragmentActivity implements BaseMethod{
 
     private String TAG = Constants.TAG;
 
@@ -42,7 +45,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     private CharSequence title;
 
     private DrawerLayout drawerLayout;
-    private ListView drawerList;
+//    private ListView drawerList;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private AjaxCallSender ajaxCallSender;
@@ -73,16 +76,26 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         if(ManagerRegistrationService.managerRegistrationService == null)
             startService(new Intent(getApplicationContext(), ManagerRegistrationService.class));
 
-        initDrawer();
+//        initDrawer();
         initFragment();
         _initFont();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getSupportMenuInflater();
+        inflater.inflate(R.menu.menu_main,menu);
+
+        return true;
+    }
+
 
     private void _initFont() {
         ViewGroup container = (DrawerLayout) findViewById(R.id.drawer_layout);
         globalApplication.setAppFont(container);
     }
-
+/*
     public void initDrawer() {
         int drawerType = globalApplication.getDrawerType();
 
@@ -97,8 +110,8 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
             onItemClickListener = new ClassDrawerItemClickListener();
 
         _setDrawer(onItemClickListener);
-    }
-
+    }*/
+/*
     private void _setDrawer(ListView.OnItemClickListener onItemClickListener) {
         // Set Drawer
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,10 +135,10 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
 
         };
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
-
+*/
     public void initFragment() {
         _changeFragment(globalApplication.getFragmentPosition(), globalApplication.getFragment());
     }
@@ -134,10 +147,10 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     public void onBackPressed() {
         String fragmentName = globalApplication.getFragmentName();
 
-        if(globalApplication != null && fragmentName != null && (fragmentName.equals("Guide") || fragmentName.equals("Profile"))) {
+        if(globalApplication != null && fragmentName != null && (fragmentName.equals("Guide") || fragmentName.equals("Profile") || fragmentName.equals("MyInfo")|| fragmentName.equals("Contact"))) {
             globalApplication.setDrawerType(R.array.Home_menu_array);
             globalApplication.setFragment("Home", new HomeFragment());
-            globalApplication.getSchoolActivity().initDrawer();
+//            globalApplication.getSchoolActivity().initDrawer();
             globalApplication.getSchoolActivity().initFragment();
         } else {
             super.onBackPressed();
@@ -148,22 +161,40 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        actionBarDrawerToggle.syncState();
+    //    actionBarDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+  //      actionBarDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String fragmentName = globalApplication.getFragmentName();
+        switch(item.getItemId())
+        {
+            case R.id.menu_myinfo:
+                if(globalApplication != null && fragmentName != null && (fragmentName.equals("Home") || fragmentName.equals("Retry") || fragmentName.equals("MyInfo")|| fragmentName.equals("Contact"))) {
+                globalApplication.setFragment("MyInfo", new MyInfoFragment());
+                //         globalApplication.getSchoolActivity().initDrawer();
+                globalApplication.getSchoolActivity().initFragment();
+                }
+                break;
+            case R.id.menu_contact:
+                if(globalApplication != null && fragmentName != null && (fragmentName.equals("Home") || fragmentName.equals("Retry") || fragmentName.equals("MyInfo")|| fragmentName.equals("Contact"))) {
+                globalApplication.setFragment("Contact", new ContactFragment());
+                //         globalApplication.getSchoolActivity().initDrawer();
+                globalApplication.getSchoolActivity().initFragment();
+                }
+                break;
+        }
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app main_icon touch event
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+    //    if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+    //        return true;
+    //    }
         // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
@@ -178,6 +209,8 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     @Override
     public void onResume() {
         globalApplication.setSchoolActivityFront(true);
+        globalApplication.setFragment("Home", new HomeFragment());
+        globalApplication.getSchoolActivity().initFragment();
         super.onResume();
     }
 
@@ -185,7 +218,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     public void onPause() {
         globalApplication.setSchoolActivityFront(false);
         globalApplication.setFragment("Home", new HomeFragment());
-        globalApplication.setDrawerType(R.array.Home_menu_array);
+    //    globalApplication.setDrawerType(R.array.Home_menu_array);
         super.onPause();
     }
 
@@ -194,9 +227,9 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
         // update selected item and title, then close the drawer
-        drawerList.setItemChecked(position, true);
-        setTitle(menuTitles[position]);
-        drawerLayout.closeDrawer(drawerList);
+  //      drawerList.setItemChecked(position, true);
+  //      setTitle(menuTitles[position]);
+    //    drawerLayout.closeDrawer(drawerList);
     }
 
     @Override
@@ -222,7 +255,7 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
     public void handlePush(JSONObject object) {
 
     }
-
+/*
     private class HomeDrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -255,5 +288,5 @@ public class SchoolActivity extends FragmentActivity implements BaseMethod{
             }
         }
     }
-
+*/
 }

@@ -11,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.example.MobileSchoolSeasonTwo.Activities.LogInActivity;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
@@ -29,7 +33,7 @@ import org.json.JSONObject;
  * Time: 오후 7:19
  */
 
-public class HomeFragment extends Fragment implements BaseMethod {
+public class HomeFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
 
@@ -42,6 +46,8 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private TextView sub_title;
     private TextView main_string;
     private Button startingPointButton;
+    private Button myinfoButton;
+    private Button contactButton;
     // Experiment
     private Button startingPointButton_A;
     private Button startingPointButton_B;
@@ -49,6 +55,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
     private Boolean isStartClicked = false;
 
     public HomeFragment() {}
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,13 +110,15 @@ public class HomeFragment extends Fragment implements BaseMethod {
     }
 
     private void _initUI(View rootView) {
+        //myinfoButton = (Button) rootView.findViewById(R.id.home_button_myinfo);
+        //contactButton = (Button) rootView.findViewById(R.id.home_button_contact);
 
         if(accountManager.isStudent()) {
             startingPointButton = (Button) rootView.findViewById(R.id.home_button_starting_point);
             startingPointTextView = (TextView) rootView.findViewById(R.id.home_textView_starting_point);
             startingPointButton.setText(" ");
             startingPointTextView.setText("-");
-            startingPointButton.setAlpha(0.0f);
+            startingPointButton.setVisibility(View.INVISIBLE);
         }
         if(!accountManager.isStudent()){
             startingPointButton = (Button) rootView.findViewById(R.id.home_button_starting_point);
@@ -126,9 +135,9 @@ public class HomeFragment extends Fragment implements BaseMethod {
                     if(!isStartClicked) {
                         Log.d(TAG, "HomeFragment starting point button : click (teacher)");
 
-                        sub_title.setText("Searching....");
-                        main_string.setText(" ");
-                        startingPointButton.setAlpha(0.0f);
+//                        sub_title.setText("Searching....");
+//                        main_string.setText(" ");
+//                        startingPointButton.setVisibility(View.INVISIBLE);
                         ajaxCallSender.tStart();
                         isStartClicked = true;
 
@@ -138,6 +147,26 @@ public class HomeFragment extends Fragment implements BaseMethod {
                 }
             });
         }
+        /*
+            myinfoButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    globalApplication.setFragment("MyInfo", new MyInfoFragment());
+                //         globalApplication.getSchoolActivity().initDrawer();
+                    globalApplication.getSchoolActivity().initFragment();
+                    Log.d(TAG, "HomeFragment : myinfo pressed");
+                }
+            });
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                globalApplication.setFragment("Contact",new ContactFragment());
+                globalApplication.getSchoolActivity().initFragment();
+                Log.d(TAG,"HomeFragment : contact pressed");
+            }
+        })*/;
+
+
     }
 
     @Override
@@ -157,7 +186,7 @@ public class HomeFragment extends Fragment implements BaseMethod {
                 globalApplication.setWaitingTime(object.getInt(Constants.PUSH_KEY_WAITING) * 1000);
                 globalApplication.setFragment("Guide", new GuideFragment());
                 globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                globalApplication.getSchoolActivity().initDrawer();
+       //         globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
                 Log.d(TAG, "HomeFragment initDrawer() code by : " + code);
             }

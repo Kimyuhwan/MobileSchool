@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.MobileSchoolSeasonTwo.Activities.EntryActivity;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
+import com.example.MobileSchoolSeasonTwo.Fragment.RetryFragment;
 import com.example.MobileSchoolSeasonTwo.Model.DialogueItem;
 import com.example.MobileSchoolSeasonTwo.R;
 import com.example.MobileSchoolSeasonTwo.Utils.CallRecorder;
@@ -77,6 +80,8 @@ public class PushReceiver extends BroadcastReceiver {
         return false;
     }
 
+    private NotificationManager notificationManager;
+
     private void _makeNotification(Context context) {
         Intent confirmIntent = new Intent(Constants.PUSH_CUSTOM_NOTIFICATION_CONFIRM_EVENT);
         PendingIntent confirmPendingIntent = PendingIntent.getBroadcast(context, 0, confirmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -89,11 +94,29 @@ public class PushReceiver extends BroadcastReceiver {
                 .setAutoCancel(true)
                 .setVibrate(new long[]{0, 500, 250, 500});
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+//      NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.PUSH_NOTIFICATION_UNIQUE_ID, mBuilder.build());
+        mHandler.sendEmptyMessage(0);
 
-        notificationManager.cancel(Constants.PUSH_NOTIFICATION_UNIQUE_ID);
+
     }
+    private int wait_count = 0;
+    private Handler mHandler = new Handler()
+    {
+        public void handleMessage(Message msg)
+        {
+            wait_count++;
+            //      main_string.setText(String.valueOf(wait_count));
+            if(wait_count>=20)
+            {
+                wait_count=0;
+                notificationManager.cancel(Constants.PUSH_NOTIFICATION_UNIQUE_ID);
+            }
+            else mHandler.sendEmptyMessageDelayed(0,1000);
+        };
+    };
+
 
     private void _makeToast(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );

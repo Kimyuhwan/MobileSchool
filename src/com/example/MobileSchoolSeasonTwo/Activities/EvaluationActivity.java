@@ -3,6 +3,7 @@ package com.example.MobileSchoolSeasonTwo.Activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.R;
@@ -16,7 +17,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 26
  * Time: 오후 9:44
  */
-public class EvaluationActivity extends Activity implements BaseMethod {
+public class EvaluationActivity extends SherlockActivity implements BaseMethod {
     private String TAG = Constants.TAG;
 
     private GlobalApplication globalApplication;

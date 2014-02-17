@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 31
  * Time: 오후 2:29
  */
-public class DialogueStudentFragment extends Fragment implements BaseMethod {
+public class DialogueStudentFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
     private String title = "Dialogue";
@@ -238,7 +239,7 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     socketCommunication.socketFinish();
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                    globalApplication.getSchoolActivity().initDrawer();
+            //        globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
                     //Student sentences
@@ -272,7 +273,7 @@ public class DialogueStudentFragment extends Fragment implements BaseMethod {
                     globalApplication.addDialogue(new DialogueItem(selected.getString("type"),selected.getString("context"),selected.getString("id"),selected.getString("successor")));
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                    globalApplication.getSchoolActivity().initDrawer();
+            //        globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
                     // Student sentences

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.MobileSchoolDev"
+          package="com.example.MobileSchoolSeasonTwo"
           android:versionCode="1"
-          android:versionName="0.51">
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16"/>
+          android:versionName="0.001">
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="14"/>
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Utils.GlobalApplication" android:theme="@style/Theme.Openschool">
+    <application android:label="@string/app_name" android:icon="@drawable/ic_launcher" android:name=".Utils.GlobalApplication" android:theme="@style/Theme.Openschool2">
         <activity android:name=".Activities.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

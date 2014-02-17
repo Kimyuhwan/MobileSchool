@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.Activities.LogInActivity;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
  * Created by 정필 on 14. 1. 14.
  */
 
-public class RetryFragment extends Fragment implements BaseMethod {
+public class RetryFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
 
@@ -143,7 +144,7 @@ public class RetryFragment extends Fragment implements BaseMethod {
                 globalApplication.setWaitingTime(object.getInt(Constants.PUSH_KEY_WAITING) * 1000);
                 globalApplication.setFragment("Guide", new GuideFragment());
                 globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                globalApplication.getSchoolActivity().initDrawer();
+           //     globalApplication.getSchoolActivity().initDrawer();
                 globalApplication.getSchoolActivity().initFragment();
                 Log.d(TAG, "RetryFragment initDrawer() code by : " + code);
             }

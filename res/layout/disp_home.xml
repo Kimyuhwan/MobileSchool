@@ -5,12 +5,15 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
     >
+
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:orientation="vertical"
-                  android:gravity="center">
+                  android:paddingTop="100dp"
+                  android:gravity="top">
 
-            <TextView android:layout_width="wrap_content"
+            <TextView android:id="@+id/home_subtitle"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_textView_introduction_title"
                     android:textSize="30dp"
@@ -20,7 +23,8 @@
                     android:layout_gravity="bottom"
                     android:gravity="bottom"/>
 
-            <TextView android:layout_width="wrap_content"
+            <TextView android:id="@+id/home_main_string"
+                      android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="@string/home_textView_introduction_body"
                       android:paddingBottom="10dp"
@@ -32,11 +36,14 @@
                           android:layout_height="wrap_content"
                           android:orientation="horizontal"
                           android:gravity="center"
+                          android:layout_gravity="center"
+
                           android:paddingTop="40dp">
                 <TextView android:id="@+id/home_textView_starting_point"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:textSize="15dp"
+                          android:gravity="center"
                           android:paddingRight="20dp"
                           android:textStyle="bold|italic"/>
 
@@ -44,11 +51,16 @@
                         android:layout_width="150dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:textColor="#ffffff"/>
+                        android:textColor="#ffffff"
+                        style="@style/Theme.Openschool2.ButtonAppTheme"
+                        />
 
 
             </LinearLayout>
 
-    </LinearLayout>
 
+
+
+    </LinearLayout>
+*
 </LinearLayout>

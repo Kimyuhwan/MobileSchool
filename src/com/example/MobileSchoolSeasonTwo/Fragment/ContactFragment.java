@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -23,7 +24,7 @@ import org.json.JSONObject;
  * Time: 오후 7:19
  */
 
-public class ContactFragment extends Fragment implements BaseMethod {
+public class ContactFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
     private String title = "Contact";

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 25
  * Time: 오후 9:26
  */
-public class RegistrationActivity extends Activity implements BaseMethod, RadioGroup.OnCheckedChangeListener {
+public class RegistrationActivity extends SherlockActivity implements BaseMethod, RadioGroup.OnCheckedChangeListener {
     private String TAG = Constants.TAG;
 
     private GlobalApplication globalApplication;
@@ -58,6 +59,7 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
         globalApplication = (GlobalApplication) getApplication();
         accountManager = globalApplication.getAccountManager();
         ajaxCallSender = new AjaxCallSender(getApplicationContext(), this);
+
 
         // Bug Sense
         BugSenseHandler.initAndStartSession(this, Constants.BUGSENSE_KEY);
@@ -106,6 +108,10 @@ public class RegistrationActivity extends Activity implements BaseMethod, RadioG
 
        TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
        String phoneNumber = mgr.getLine1Number();
+       if(phoneNumber== null)
+       {
+           Log.d(TAG, "RegistrationActivity : NO PHONE NUMBER");
+       }
        if(phoneNumber.contains("+"))
         phoneEditText.setText("0" + phoneNumber.substring(3, phoneNumber.length()));
        else

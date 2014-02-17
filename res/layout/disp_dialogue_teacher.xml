@@ -23,7 +23,11 @@
               android:paddingLeft="20dp"
               android:paddingBottom="5dp"/>
 
-    <Space android:layout_width="fill_parent" android:layout_height="15dp"/>
+    <TextView android:id="@+id/fakespace1"
+              android:layout_width="wrap_content"
+              android:layout_height="25dp"
+              android:text="    "
+              android:layout_gravity="center"/>
 
     <LinearLayout android:id="@+id/dialogue_teacher_question_root_layout"
                   android:animateLayoutChanges="true"
@@ -34,7 +38,11 @@
                   android:paddingLeft="20dp"
                   android:paddingRight="10dp"/>
 
-    <Space android:layout_width="fill_parent" android:layout_height="25dp"/>
+    <TextView android:id="@+id/fakespace2"
+              android:layout_width="wrap_content"
+              android:layout_height="25dp"
+              android:text="    "
+              android:layout_gravity="center"/>
 
     <LinearLayout android:id="@+id/dialogue_teacher_answer_root_layout"
                   android:animateLayoutChanges="true"
@@ -45,7 +53,11 @@
                   android:paddingLeft="20dp"
                   android:paddingRight="10dp"/>
 
-    <Space android:layout_width="fill_parent" android:layout_height="20dp"/>
+    <TextView android:id="@+id/fakespace3"
+              android:layout_width="wrap_content"
+              android:layout_height="25dp"
+              android:text="    "
+              android:layout_gravity="center"/>
 
     <LinearLayout android:layout_height="wrap_content"
                   android:layout_width="fill_parent"

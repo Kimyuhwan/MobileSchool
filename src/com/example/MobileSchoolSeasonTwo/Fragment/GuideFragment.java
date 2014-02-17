@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 16
  * Time: 오후 11:15
  */
-public class GuideFragment extends Fragment implements BaseMethod {
+public class GuideFragment extends SherlockFragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Guide";
 
@@ -167,6 +168,7 @@ public class GuideFragment extends Fragment implements BaseMethod {
                     globalApplication.setFragment("Home", new HomeFragment());
                     globalApplication.getSchoolActivity().initFragment();
                 }
+
             }
         } catch (JSONException e) { e.printStackTrace(); }
     }
@@ -177,13 +179,18 @@ public class GuideFragment extends Fragment implements BaseMethod {
         {
             wait_count++;
       //      main_string.setText(String.valueOf(wait_count));
-            if(wait_count>=20)
+            if(!(globalApplication.getFragmentName() == "Guide"))
+            {
+                wait_count=0;
+                return;
+            }
+            if(wait_count>=25)
             {
                 wait_count=0;
                 connectingTextView.clearAnimation();
                 connectingTextView.setText(R.string.guide_textView_no_class);
 
-                if(globalApplication.isSchoolActivityFront()) {
+                if(!globalApplication.isSession_connected()) {
                     globalApplication.setFragment("Retry", new RetryFragment());
                     globalApplication.getSchoolActivity().initFragment();
                 }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
@@ -31,7 +32,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 19
  * Time: 오후 4:47
  */
-public class LogInActivity extends Activity implements BaseMethod{
+public class LogInActivity extends SherlockActivity implements BaseMethod{
     private String TAG = Constants.TAG;
 
     private GlobalApplication globalApplication;

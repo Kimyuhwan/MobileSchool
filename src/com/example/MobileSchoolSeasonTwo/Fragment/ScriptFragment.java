@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -30,7 +31,7 @@ import java.util.List;
  * Date: 13. 10. 17
  * Time: 오후 9:01
  */
-public class ScriptFragment extends Fragment implements BaseMethod {
+public class ScriptFragment extends SherlockFragment implements BaseMethod {
     private String TAG = Constants.TAG;
     private String title = "Script";
 

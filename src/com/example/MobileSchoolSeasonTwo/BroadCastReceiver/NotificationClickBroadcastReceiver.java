@@ -31,7 +31,7 @@ public class NotificationClickBroadcastReceiver extends BroadcastReceiver {
                 globalApplication.setSession_type(Constants.CODE_SESSION_PASSIVE);
 
                 if(globalApplication.isSchoolActivityFront()) {
-                    globalApplication.getSchoolActivity().initDrawer();
+           //         globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
                     if(globalApplication.getSchoolActivity() != null)

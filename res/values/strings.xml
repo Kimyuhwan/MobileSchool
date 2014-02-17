@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OpenSchool (Dev)</string>
+    <string name="app_name">OpenSchool</string>
     <string-array name="Home_menu_array">
         <item>Home</item>
         <item>My Information</item>
@@ -46,12 +46,14 @@
     <string name="toast_textView_warning">현재 가능한 수업이 없습니다!</string>
     <string name="dialogue_textView_title">Dialogue</string>
     <string name="script_textView_title">Script</string>
+    <string name="home_searching">Matching Failed</string>
 
     <!-- app -->
     <string name="toast_login_wrong_id">존재하지 않는 ID 입니다.</string>
     <string name="toast_login_wrong_password">비밀번호가 일치하지 않습니다.</string>
     <string name="home_button_starting_point_student">New Class</string>
     <string name="home_button_starting_point_teacher">New Class</string>
+    <string name="search_button_restart">Restart Searching</string>
     <string name="home_textView_starting_point_student">Taking class? </string>
     <string name="home_textView_starting_point_teacher">Available now? </string>
     <string name="guide_textView_connected">Connected !</string>

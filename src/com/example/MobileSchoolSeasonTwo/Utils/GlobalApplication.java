@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.Fragment.HomeFragment;
 import com.example.MobileSchoolSeasonTwo.Model.DialogueItem;
@@ -41,7 +42,7 @@ public class GlobalApplication extends Application {
     // Status Check Variable
     private boolean isSchoolActivityFront;
     private String fragmentName = null;
-    private Fragment fragment = null;
+    private SherlockFragment fragment = null;
     private int drawerType = -1;
     private int recallNumber = 0;
     private boolean isRecording = false;
@@ -153,7 +154,7 @@ public class GlobalApplication extends Application {
         isSchoolActivityFront = schoolActivityFront;
     }
 
-    public void setFragment(String fragmentName, Fragment fragment) {
+    public void setFragment(String fragmentName, SherlockFragment fragment) {
         this.fragmentName = fragmentName;
         this.fragment = fragment;
     }
@@ -162,7 +163,7 @@ public class GlobalApplication extends Application {
         return this.fragmentName;
     }
 
-    public Fragment getFragment() {
+    public SherlockFragment getFragment() {
         if(fragment == null)
             return new HomeFragment();
         else

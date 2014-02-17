@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.R;
 import com.example.MobileSchoolSeasonTwo.Utils.AccountManager;
@@ -19,7 +21,7 @@ import com.example.MobileSchoolSeasonTwo.Utils.GlobalApplication;
  * Date: 13. 10. 11.
  * Time: 오후 4:43
  */
-public class ThankyouActivity extends Activity {
+public class ThankyouActivity extends SherlockActivity {
     private String TAG = Constants.TAG;
 
     private Handler mHandler;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.bugsense.trace.BugSenseHandler;
 import com.example.MobileSchoolSeasonTwo.Fragment.DialogueStudentFragment;
 import com.example.MobileSchoolSeasonTwo.Fragment.DialogueTeacherFragment;
@@ -17,7 +18,7 @@ import com.example.MobileSchoolSeasonTwo.Utils.GlobalApplication;
  * Date: 13. 10. 16
  * Time: 오후 2:53
  */
-public class EntryActivity extends Activity {
+public class EntryActivity extends SherlockActivity {
     // FakeActivity
     private String TAG = Constants.TAG;
     private GlobalApplication globalApplication;

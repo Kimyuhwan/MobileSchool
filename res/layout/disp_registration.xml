@@ -21,21 +21,27 @@
                    android:layout_height="40dp"
                    android:layout_gravity="center"
                    android:inputType="textShortMessage"
-                   android:hint="@string/registration_editText_hint_id"/>
+                   android:hint="@string/registration_editText_hint_id"
+                   style="@style/Theme.Openschool2.EditText"
+                />
 
         <EditText  android:id="@+id/registration_editText_password"
                    android:layout_width="150dp"
                    android:layout_height="40dp"
                    android:layout_gravity="center"
                    android:inputType="textPassword"
-                   android:hint="@string/registration_editText_hint_password"/>
+                   android:hint="@string/registration_editText_hint_password"
+                   style="@style/Theme.Openschool2.EditText"
+                />
 
         <EditText  android:id="@+id/registration_editText_name"
                    android:layout_width="150dp"
                    android:layout_height="40dp"
                    android:layout_gravity="center"
                    android:inputType="textShortMessage"
-                   android:hint="@string/registration_editText_hint_name"/>
+                   android:hint="@string/registration_editText_hint_name"
+                   style="@style/Theme.Openschool2.EditText"
+                />
 
         <RadioGroup
                 android:id="@+id/registration_radioGroup_gender"
@@ -48,13 +54,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:hint="@string/registration_radioButton_gender_male"/>
+                    android:hint="@string/registration_radioButton_gender_male"
+                    android:button="@drawable/btn_radio_holo_light"
+                    />
 
             <RadioButton
                     android:id="@+id/registration_radioGroup_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/registration_radioButton_gender_female"/>
+                    android:hint="@string/registration_radioButton_gender_female"
+                    android:button="@drawable/btn_radio_holo_light"
+                    />
         </RadioGroup>
 
         <RadioGroup
@@ -68,13 +78,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:hint="@string/registration_radioButton_type_student"/>
+                    android:hint="@string/registration_radioButton_type_student"
+                    android:button="@drawable/btn_radio_holo_light"
+                    />
 
             <RadioButton
                     android:id="@+id/registration_radioGroup_teacher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/registration_radioButton_type_teacher"/>
+                    android:hint="@string/registration_radioButton_type_teacher"
+                    android:button="@drawable/btn_radio_holo_light"
+                    />
         </RadioGroup>
 
         <EditText  android:id="@+id/registration_editText_phone"
@@ -82,9 +96,11 @@
                    android:layout_height="40dp"
                    android:layout_gravity="center"
                    android:inputType="phone"
-                   android:enabled="false"/>
+                   android:enabled="false"
+                   style="@style/Theme.Openschool2.EditText"
+                />
 
-        <Button android:id="@+id/registration_button_confirm" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/registration_button_confirm" android:textColor="#ffffff"/>
+        <Button android:id="@+id/registration_button_confirm" android:layout_height="40dp" android:layout_width="150dp" android:text="@string/registration_button_confirm" android:textColor="#ffffff" style="@style/Theme.Openschool2.ButtonAppTheme"/>
 
         <TextView android:id="@+id/registration_textView_msg"
                   android:layout_width="wrap_content"

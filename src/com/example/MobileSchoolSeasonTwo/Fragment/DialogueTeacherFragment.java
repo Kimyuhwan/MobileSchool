@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.MobileSchoolSeasonTwo.BaseMethod;
 import com.example.MobileSchoolSeasonTwo.Communication.AjaxCallSender;
 import com.example.MobileSchoolSeasonTwo.Communication.PushSender;
@@ -27,7 +28,7 @@ import org.json.JSONObject;
  * Date: 13. 10. 31
  * Time: 오후 2:29
  */
-public class DialogueTeacherFragment extends Fragment implements BaseMethod {
+public class DialogueTeacherFragment extends SherlockFragment implements BaseMethod {
 
     private String TAG = Constants.TAG;
     private String title = "Dialogue";
@@ -60,6 +61,7 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Log.d(TAG, "DialogueTeacherFragment : onCreateView");
+
         rootView = inflater.inflate(R.layout.disp_dialogue_teacher, container, false);
         getActivity().setTitle(title);
 
@@ -246,7 +248,7 @@ public class DialogueTeacherFragment extends Fragment implements BaseMethod {
                     socketCommunication.socketFinish();
                     globalApplication.setFragment("Script", new ScriptFragment());
                     globalApplication.setDrawerType(R.array.Waiting_menu_array);
-                    globalApplication.getSchoolActivity().initDrawer();
+            //        globalApplication.getSchoolActivity().initDrawer();
                     globalApplication.getSchoolActivity().initFragment();
                 } else {
                     //Student sentences
